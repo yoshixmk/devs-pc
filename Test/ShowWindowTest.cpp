@@ -10,7 +10,7 @@ ShowWindowTest::ShowWindowTest() {
 void ShowWindowTest::windowTest()
 {
 	Hardware::Camera camera;
-	ShowWindow::Window window("Test");
+	ShowWindows::Window window("Test");
 	Hardware::Camera::renew();
 	window.showImage(camera.getRobotSideImage());
 	while(1)
@@ -32,8 +32,8 @@ void ShowWindowTest::drawingTest()
 {
 	Hardware::Camera camera;
 
-	ShowWindow::Window window("Test");
-	ShowWindow::Drawing drawing;
+	ShowWindows::Window window("Test");
+	ShowWindows::Drawing drawing;
 	Color::TwoImageSynthesis twoImageSynthesis;
 	IplImage* testImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()), IPL_DEPTH_8U, 3);
 	while(1)

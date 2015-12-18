@@ -7,7 +7,7 @@
 #include "../Strategy/Locus.h"
 #include "../Strategy/FrameCoordinate.h"
 
-namespace ShowWindow {
+namespace ShowWindows {
 class Drawing {
 
 private:

@@ -1,6 +1,6 @@
 #include "WindowManagement.h"
 
-namespace ShowWindow {
+namespace ShowWindows {
 
 WindowManagement::WindowManagement() :window0("origin"), window1("pack"), window2("mallet"), window3("locus")
 {

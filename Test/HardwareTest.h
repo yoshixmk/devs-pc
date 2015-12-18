@@ -12,6 +12,7 @@
 //#include "Hardware/Speaker.h"
 //#include "Hardware/BGMSignal.h"
 #include "../Hardware/Camera.h"
+#include "../Hardware/Serial.h"
 #include <iostream>
 //#include <pigpio.h>
 #include <signal.h>
@@ -39,6 +40,7 @@ public:
 	void speakerTest();
 	void bgmSignalTest();
 	void cameraTest();
+	void serialTest();
 };
 
 }  // namespace Test

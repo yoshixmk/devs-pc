@@ -6,7 +6,7 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 
-namespace ShowWindow {
+namespace ShowWindows {
 class Window {
 private:
 	std::string mWindowName;

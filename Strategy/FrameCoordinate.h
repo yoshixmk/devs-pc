@@ -8,7 +8,6 @@
 namespace Strategy {
 class FrameCoordinate: public Coordinate {
 private:
-	//座標はすべて枠の内側
 	CvPoint mUpperLeftF;
 
 	CvPoint mLowerLeftF;

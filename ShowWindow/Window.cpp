@@ -1,6 +1,6 @@
 #include "Window.h"
 
-namespace ShowWindow {
+namespace ShowWindows {
 
 void Window::showImage(IplImage* image) {
 	cvShowImage(mCharWindowname, image);

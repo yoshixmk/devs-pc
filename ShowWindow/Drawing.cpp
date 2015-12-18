@@ -1,6 +1,6 @@
 #include "Drawing.h"
 
-namespace ShowWindow {
+namespace ShowWindows {
 
 void Drawing::drawPack(IplImage* aImage) {
 	CvPoint drawPoint = mPackCoordinate.getCoordinate();

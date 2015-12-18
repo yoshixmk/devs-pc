@@ -182,4 +182,19 @@ void HardwareTest::cameraTest() {
 
 }
 
+void HardwareTest::serialTest(){
+	std::cout << "Serial_test" << std::endl;
+	Hardware::Serial serial;
+	char buf[2] = {25, 50};
+	int i = 0;
+	while (1){
+		buf[0] += 1;
+		buf[1] += 1;
+		serial.serialWrite(buf, 2);
+		if (buf[0] == 110){
+			break;
+		}
+	}
+}
+
 }  // namespace Test

@@ -17,6 +17,7 @@ int main() {
 	//hardwareTest.speakerTest();
 //	hardwareTest.bgmSignalTest();
 	//hardwareTest.cameraTest();
+	hardwareTest.serialTest();
 
 	Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
@@ -38,7 +39,7 @@ int main() {
 
 	Test::ShowWindowTest showWindowTest;
 	//showWindowTest.windowTest();
-	showWindowTest.drawingTest();
+	//showWindowTest.drawingTest();
 //	showWindowTest.manageTest();
 	return 0;
 }

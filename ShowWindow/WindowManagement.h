@@ -4,7 +4,7 @@
 #include "Window.h"
 #include "Drawing.h"
 
-namespace ShowWindow {
+namespace ShowWindows{
 class WindowManagement {
 private:
 	Window window0;
