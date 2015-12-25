@@ -46,7 +46,7 @@ void Serial::serialWrite(char* aBuf, int aBytes)
 {
 	mLengthOfSent = aBytes; // 送信する文字数
 	 WriteFile(mComPort, aBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
-	cv::waitKey(1);
+	cv::waitKey(10);
 }
 
 } /* namespace Hardware */
