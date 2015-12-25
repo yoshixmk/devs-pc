@@ -1,4 +1,4 @@
-#include "HardwareTest.h"
+﻿#include "HardwareTest.h"
 
 namespace Test {
 /* シグナル受信/処理 */
@@ -26,24 +26,23 @@ HardwareTest::~HardwareTest() {
 	//gpioTerminate();
 }
 //
-//void HardwareTest::timerTest() {
-//	std::cout << "!!!Timer Test!!!" << std::endl; // Timer Test start!
-//
-//	Hardware::Timer timer;
-//
-//	timer.setTimer(10.5);
-//	while (!timer.getAlarm())
-//		;
-//	/*//while(!timer.getAlarm()){
-//	 if(timer.getAlarm()){
-//	 std::cout << "getAlarm() retun Bool OK." << std::endl;
-//	 }
-//	 else{
-//	 std::cout << "getAlarm() retun Bool NG." << std::endl;
-//	 }
-//	 //}*/
-//}
-//
+void HardwareTest::timerTest() {
+	std::cout << "!!!Timer Test!!!" << std::endl; // Timer Test start!
+
+	Hardware::Timer timer;
+
+	timer.setTimer(3.501);
+	while (!timer.getAlarm());
+	/*//while(!timer.getAlarm()){
+	 if(timer.getAlarm()){
+	 std::cout << "getAlarm() retun Bool OK." << std::endl;
+	 }
+	 else{
+	 std::cout << "getAlarm() retun Bool NG." << std::endl;
+	 }
+	 //}*/
+}
+
 //void HardwareTest::raspberryPiSignalTest() {
 //	Hardware::RaspberryPiSignal raspberryPiSignal(8);
 //

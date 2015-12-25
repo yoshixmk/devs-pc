@@ -1,17 +1,18 @@
 ﻿#ifndef HARDWARE_TIMER_H
 #define HARDWARE_TIMER_H
 
-#include <time.h>
 #include <iostream>
-#include <pigpio.h>
+#include <vector>
+#include <windows.h>
+#pragma comment(lib, "winmm.lib")
 
 namespace Hardware {
 class Timer {
 private:
-	double mStartTime;
-	double mNowTime;
+	DWORD mStartTime;
+	DWORD mNowTime;
 	double mNotificationTime;
-	double mStartOperatingTime;
+	DWORD mStartOperatingTime;
 
 public:
 	void setTimer(double aNotificationTime);

@@ -1,7 +1,7 @@
 #ifndef TEST_HARDWARETEST_H
 #define TEST_HARDWARETEST_H
 
-//#include "Hardware/Timer.h"
+#include "../Hardware/Timer.h"
 //#include "Hardware/RaspberryPiSignal.h"
 //#include "Hardware/PhotoelectricSensor.h"
 //#include "Hardware/Photomicrosensor.h"
