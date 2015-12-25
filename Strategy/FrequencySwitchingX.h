@@ -25,7 +25,13 @@ public:
 
 	~FrequencySwitchingX();
 
+	void setOutputInformation(char aDirection, double aTime);
+
 	void output();
+
+	void stop();
+
+	int getCurrentFrequency();
 
 };
 

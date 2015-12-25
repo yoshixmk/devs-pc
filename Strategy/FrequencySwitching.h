@@ -1,8 +1,7 @@
 ﻿#ifndef STRATEGY_FREQUENCY_SWITCHING_H
 #define STRATEGY_FREQUENCY_SWITCHING_H
 
-//#include "../Hardware/MotorDriver.h"
-//#include "../Hardware/Timer.h"
+#include "../Hardware/Timer.h"
 #include "../Hardware/Serial.h"
 #include <iostream>
 #include <cstdlib>
@@ -21,7 +20,8 @@ protected:
 	int mFrequency;
 	int mFrequencyIndex;
 	Hardware::Serial mSerial;
-
+	Hardware::Timer mTimer;
+	Hardware::Timer mMovingStopTimer;
 
 public:
 	//FrequencySwitching();
@@ -29,9 +29,13 @@ public:
 
 	~FrequencySwitching();
 
+	void setOutputInformation(char aDirection, double aTime);
+
 	void output();
 
 	void stop();
+
+	int getCurrentFrequency();
 };
 
 }  // namespace Strategy

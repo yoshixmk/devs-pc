@@ -7,7 +7,6 @@ FrequencySwitchingX::FrequencySwitchingX(char aXaxis) :FrequencySwitching(aXaxis
 	for (int i = 0; i < 4; i++){
 		mBuf[i] = 0;//500 / 10 /2
 	}
-	mBuf[1] = 0;
 	mBuf[2] = 'A';
 }
 
@@ -15,10 +14,18 @@ FrequencySwitchingX::~FrequencySwitchingX()
 {
 }
 
+void FrequencySwitchingX::setOutputInformation(char aDirection, double aTime)
+{
+	FrequencySwitching::setOutputInformation(aDirection, aTime);
+}
+
 void FrequencySwitchingX::output()
 {
+	//ŽŸ‰ñ‚±‚±‚©‚ç
+	//if (mTimer.getOperatingTime() < 0.01){//10ms
+
+	//}
 	for (int i = 0; i<freq_up_cnt; i++){
-		//closest_frequency = gpioHardwarePWM(18, 500 + freq_up, 500000);
 		mBuf[0] = (500 + freq_up) / 10 / 2;
 		mSerial.serialWrite(mBuf, 4);
 		if (i<freq_up_cnt){
@@ -122,6 +129,14 @@ void FrequencySwitchingX::output()
 		mBuf[i] = 0;
 	}
 	mSerial.serialWrite(mBuf, 4);
+}
+
+void stop(){
+
+}
+
+int getCurrentFrequency(){
+	return 0;
 }
 
 } /* namespace Strategy */
