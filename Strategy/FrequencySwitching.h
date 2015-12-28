@@ -14,6 +14,11 @@ protected:
 
 	double mTargetTime;
 	int mCurrentFrequency;
+	int mInitFrequency;
+
+	int mFrequencyUpCount;		//周波数を上げる回数
+	int mAmountOfChange;			//周波数変化量(Hz)
+	double mIntervaTime;		//時間間隔(s)
 
 	static char mBuf[4]; //送信する内容
 

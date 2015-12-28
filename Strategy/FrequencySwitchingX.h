@@ -8,12 +8,6 @@ namespace Strategy {
 
 class FrequencySwitchingX: public FrequencySwitching
 {
-private:
-	int mInitFrequency;
-	int mFrequencyUpCount;		//周波数を上げる回数
-	int mAmountOfChang;			//周波数変化量(Hz)
-	double mIntervaTime;		//時間間隔(s)
-
 public:
 	FrequencySwitchingX();
 

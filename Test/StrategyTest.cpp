@@ -1,4 +1,4 @@
-#include "StrategyTest.h"
+﻿#include "StrategyTest.h"
 
 namespace Test {
 	StrategyTest::StrategyTest() {
@@ -117,29 +117,21 @@ namespace Test {
 		while (1){
 			frequencySwitchingX.output();
 		}
-
 	}
 
 	void StrategyTest::frequencySwitching_Y_Test()
 	{
-		//std::cout << "!!!FrequencySwitching Y Test!!!" << std::endl;
-		//Strategy::FrequencySwitchingY frequencySwitchingY;
-		//frequencySwitchingY.setOutputInformation('U', 10);
+		std::cout << "!!!FrequencySwitching Y Test!!!" << std::endl;
 
-		//Hardware::Timer timer;
-		//timer.setTimer(5);
-
-		//while (1){
-		//	if (!timer.getAlarm()){
-		//		frequencySwitchingY.output();
-		//	}
-		//	else{
-		//		frequencySwitchingY.stop();
-		//	}
-		//	if (cv::waitKey(1) >= 0) {
-		//		break;
-		//	}
-		//}
+		Strategy::FrequencySwitchingX frequencySwitchingX;
+		Strategy::FrequencySwitchingY frequencySwitchingY;
+		
+		frequencySwitchingX.setOutputInformation('A', 2);
+		frequencySwitchingY.setOutputInformation('B', 3); //To check 'B' is priority
+		while (1){
+			frequencySwitchingX.output();
+			frequencySwitchingY.output();
+		}
 	}
 
 	void StrategyTest::frequency_X_Test()

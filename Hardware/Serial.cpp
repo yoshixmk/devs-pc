@@ -12,18 +12,22 @@ Serial::~Serial() {
 
 void Serial::serialOpen()
 {
-	mComPort = CreateFile("COM3",                //port name
-		GENERIC_READ | GENERIC_WRITE, //Read/Write
-		0,                            // No Sharing
-		NULL,                         // No Security
-		OPEN_EXISTING,// Open existing port only
-		0,            // Non Overlapped I/O
-		NULL);        // Null for Comm Devices
+	static int first_time;
+	if (first_time == 0){
+		mComPort = CreateFile("COM3",                //port name
+			GENERIC_READ | GENERIC_WRITE, //Read/Write
+			0,                            // No Sharing
+			NULL,                         // No Security
+			OPEN_EXISTING,// Open existing port only
+			0,            // Non Overlapped I/O
+			NULL);        // Null for Comm Devices
 
-	if (mComPort == INVALID_HANDLE_VALUE)
-		printf("Error in opening serial port");
-	else
-		printf("opening serial port successful");
+		if (mComPort == INVALID_HANDLE_VALUE)
+			printf("Error in opening serial port");
+		else
+			printf("opening serial port successful");
+		first_time++;
+	}
 
 	 // シリアルポートの構成情報が入る構造体
 	GetCommState(mComPort, &mDcb); // 現在の設定値を読み込み

@@ -11,6 +11,10 @@ FrequencySwitching::FrequencySwitching()
 	mTargetDirection = 'A';
 	mTargetTime = 0;
 	mTimer.resetStartOperatingTime();
+
+	for (int i = 0; i < 4; i++){
+		FrequencySwitching::mBuf[i] = 0;
+	}
 }
 
 FrequencySwitching::~FrequencySwitching()
@@ -25,6 +29,7 @@ void FrequencySwitching::setOutputInformation(char aTargetDirection, double aTar
 	if (mTargetTime != aTargetTime){
 		mTargetTime = aTargetTime;
 	}
+	mBuf[2] = mTargetDirection;
 	mTimer.resetStartOperatingTime();
 }
 

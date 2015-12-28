@@ -1,4 +1,4 @@
-#include "FrequencySwitchingX.h"
+ï»¿#include "FrequencySwitchingX.h"
 
 namespace Strategy {
 
@@ -6,15 +6,8 @@ FrequencySwitchingX::FrequencySwitchingX() :FrequencySwitching()
 {
 	mInitFrequency = 300;
 	mFrequencyUpCount = 32;
-	mAmountOfChang = 100;
+	mAmountOfChange = 100;
 	mIntervaTime = 0.010;
-
-	for (int i = 0; i < 4; i++){
-		FrequencySwitching::mBuf[i] = 0;
-	}
-	mTargetDirection = 'A';
-	mTargetTime = 0;
-	mCurrentFrequency = 0;
 }
 
 FrequencySwitchingX::~FrequencySwitchingX()
@@ -26,7 +19,7 @@ void FrequencySwitchingX::setOutputInformation(char aDirection, double aTime)
 	FrequencySwitching::setOutputInformation(aDirection, aTime);
 }
 
-//ŽžŠÔ“à‚É‚Å‚«‚é‚¾‚¯Žü”g”‚ðã‚°‚ÄAÅŒã‚ÉŽü”g”‚ð—Ž‚Æ‚·
+//æ™‚é–“å†…ã«ã§ãã‚‹ã ã‘å‘¨æ³¢æ•°ã‚’ä¸Šã’ã¦ã€æœ€å¾Œã«å‘¨æ³¢æ•°ã‚’è½ã¨ã™
 void FrequencySwitchingX::output()
 {	
 	double passed_time = mTimer.getOperatingTime();
@@ -34,24 +27,29 @@ void FrequencySwitchingX::output()
 	if (passed_time < mTargetTime - mIntervaTime * mFrequencyUpCount){ //upper and keeping time
 		for (int i = 0; i <= mFrequencyUpCount; i++){
 			if (passed_time < mIntervaTime * (i + 1)){
-				if (mCurrentFrequency != mInitFrequency + mAmountOfChang * i){
-					mCurrentFrequency = mInitFrequency + mAmountOfChang * i;
+				if (mCurrentFrequency != mInitFrequency + mAmountOfChange * i){
+					mCurrentFrequency = mInitFrequency + mAmountOfChange * i;
 					mBuf[0] = mCurrentFrequency / 10 / 2;
 				}
 				break;
 			}
 		}
 	}
-	else{ //downer
+	else if (passed_time <= mTargetTime){ //downer
 		for (int i = mFrequencyUpCount; 0 <= i; i--){
 			if (passed_time <= mTargetTime - mIntervaTime * i){
-				//Œ»Ý‚ÌŽü”g” != ‰Šú’l + Œ¸‚ç‚µ‚½Žü”g”
-				if (mCurrentFrequency != mInitFrequency + mAmountOfChang * i){
-					mCurrentFrequency = mInitFrequency + mAmountOfChang * i;
+				//ç¾åœ¨ã®å‘¨æ³¢æ•° != åˆæœŸå€¤ + æ¸›ã‚‰ã—ãŸå‘¨æ³¢æ•°
+				if (mCurrentFrequency != mInitFrequency + mAmountOfChange * i){
+					mCurrentFrequency = mInitFrequency + mAmountOfChange * i;
 					mBuf[0] = mCurrentFrequency / 10 / 2;
 				}
 				break;
 			}
+		}
+	}
+	else{
+		if (mCurrentFrequency != 0){
+			mBuf[0] = 0;
 		}
 	}
 	FrequencySwitching::output();
