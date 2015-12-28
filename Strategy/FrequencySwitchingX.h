@@ -9,14 +9,10 @@ namespace Strategy {
 class FrequencySwitchingX: public FrequencySwitching
 {
 private:
-	//mIsRightX 目標とする向き　時計回り＝1、　反時計回り＝0
-
-	int closest_frequency;
-
-	int freq_up = 0;
-	int mFrequencyUpCount = 32;		//周波数を上げる回数
-	int mAmountOfChang = 100;			//周波数変化量(Hz)
-	int std_time = 5000/1000;		//中間の間の時間
+	int mInitFrequency;
+	int mFrequencyUpCount;		//周波数を上げる回数
+	int mAmountOfChang;			//周波数変化量(Hz)
+	double mIntervaTime;		//時間間隔(s)
 
 public:
 	FrequencySwitchingX();
