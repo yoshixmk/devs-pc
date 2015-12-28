@@ -2,12 +2,11 @@
 
 namespace Strategy
 {
+char FrequencySwitching::mBuf[4];
 
-FrequencySwitching::FrequencySwitching(char aXaxisOrYaxis)
+FrequencySwitching::FrequencySwitching()
 {
-	mXaxisOrYaxis = aXaxisOrYaxis;
 	mCurrentFrequency = 0;
-	mNowDirection = 'R';
 	mTargetTime = 0;
 	mTargetDirection = 'A';
 	mTargetTime = 0;
@@ -20,18 +19,32 @@ FrequencySwitching::~FrequencySwitching()
 
 void FrequencySwitching::setOutputInformation(char aTargetDirection, double aTargetTime)
 {
-	mTargetDirection = aTargetDirection;
-	mTargetTime = aTargetTime;
+	if (mTargetDirection != aTargetDirection){
+		mTargetDirection = aTargetDirection;
+	}
+	if (mTargetTime != aTargetTime){
+		mTargetTime = aTargetTime;
+	}
 	mTimer.resetStartOperatingTime();
 }
 
 void FrequencySwitching::output()
 {
+	mSerial.serialWrite(mBuf, 4);
 }
 
 void FrequencySwitching::stop()
 {
-	
+	mBuf[0] = 0;
+	mBuf[1] = 0;
+}
+
+void FrequencySwitching::setFrequencyX(int aFrequency){
+	mBuf[0] = aFrequency;
+}
+
+void FrequencySwitching::setFrequencyY(int aFrequency){
+	mBuf[1] = aFrequency;
 }
 
 }  // namespace Strategy

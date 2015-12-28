@@ -13,6 +13,7 @@ namespace Hardware {
 class Serial {
 private:
 	HANDLE mComPort;
+	DCB mDcb;
 	DWORD mNumberOfPut;
 	DWORD mLengthOfSent;
 	void serialOpen();

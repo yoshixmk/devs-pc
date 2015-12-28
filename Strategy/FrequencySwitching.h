@@ -9,23 +9,21 @@
 
 namespace Strategy {
 class FrequencySwitching {
-private:
-	char mXaxisOrYaxis;
-
 protected:
-	char mNowDirection;
+	char mTargetDirection; //'A' 'B' 'C' 'D'
+
 	double mTargetTime;
 	int mCurrentFrequency;
-	char mTargetDirection;//X: 'L' or 'R' | Y: 'U' or 'D'
-	int mFrequency;
-	int mFrequencyIndex;
+
+	static char mBuf[4]; //送信する内容
+
 	Hardware::Serial mSerial;
 	Hardware::Timer mTimer;
 	Hardware::Timer mMovingStopTimer;
 
 public:
 	//FrequencySwitching();
-	FrequencySwitching(char aXaxisOrYaxis);
+	FrequencySwitching();
 
 	~FrequencySwitching();
 
@@ -36,6 +34,10 @@ public:
 	void stop();
 
 	int getCurrentFrequency();
+
+	void setFrequencyX(int aFrequency);
+
+	void setFrequencyY(int aFrequency);
 };
 
 }  // namespace Strategy

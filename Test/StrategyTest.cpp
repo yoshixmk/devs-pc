@@ -113,8 +113,11 @@ namespace Test {
 	{
 		std::cout << "!!!FrequencySwitching X Test!!!" << std::endl;
 		Strategy::FrequencySwitchingX frequencySwitchingX;
-		frequencySwitchingX.output();
-		std::cin;
+		frequencySwitchingX.setOutputInformation('A', 1);
+		while (1){
+			frequencySwitchingX.output();
+		}
+
 	}
 
 	void StrategyTest::frequencySwitching_Y_Test()

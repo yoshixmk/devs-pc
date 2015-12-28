@@ -6,7 +6,7 @@
 
 int main() {
 	Test::HardwareTest hardwareTest;
-	hardwareTest.timerTest();
+	//hardwareTest.timerTest();
 	//hardware_test.raspberryPiSignalTest();
 	//hardware_test.photoelectricSensor();
 	//hardware_test.photomicrosensor();
@@ -32,9 +32,7 @@ int main() {
 //	strategyTest.malletCoordinateTest();
 //	strategyTest.frameCoordinateTest();
 	//strategyTest.locusTest();
-	/*for (int i = 0; i < 10; i++){
-		strategyTest.frequencySwitching_X_Test();
-	}*/
+	strategyTest.frequencySwitching_X_Test();
 
 //	Test::UITest uiTest;
 //	uiTest.intelligentTest();
