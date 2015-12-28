@@ -18,14 +18,17 @@ FrequencySwitchingX::~FrequencySwitchingX()
 
 void FrequencySwitchingX::output()
 {
-	for (int i = 0; i<freq_up_x_cnt; i++){ //x ¨
+	for (int i = 0; i<freq_up_x_cnt; i++){ //x ¨ y ª
 		//closest_frequency = gpioHardwarePWM(18, 500 + freq_up, 500000);
 		mBuf[0] = (freq_x_start + freq_up) / 10 / 2;
+		mBuf[1] = (freq_y_start) / 10 / 2;
 		mSerial.serialWrite(mBuf, 4);
 		if (i<freq_up_x_cnt){
 			//usleep(10000);	//10ms
 			Sleep(10);
 			freq_up = freq_up + freq_ch;
+			//if(i <= freq_up_y_cnt)	freq_up_y = freq_up_y + freq_ch2;
+			//else  freq_up_y = -freq_y_start;
 		}
 		
 		/*else{
@@ -40,11 +43,14 @@ void FrequencySwitchingX::output()
 	for (int i = 0; i<=freq_up_x_cnt; i++){
 		//closest_frequency = gpioHardwarePWM(18, 500 + freq_up, 500000);
 		mBuf[0] = (freq_x_start + freq_up) / 10 / 2;
+		mBuf[1] = (freq_y_start) / 10 / 2;
 		mSerial.serialWrite(mBuf, 4);
 		if (i<freq_up_x_cnt){
 			//usleep(10000);	//10ms
 			Sleep(10);
 			freq_up = freq_up - freq_ch;
+			//if (i <= freq_up_y_cnt)	freq_up_y = freq_up_y + freq_ch2;
+			//else  freq_up_y = -freq_y_start;
 		}
 		
 		/*else{
@@ -57,6 +63,7 @@ void FrequencySwitchingX::output()
 	//closest_frequency = gpioHardwarePWM(18, 0, 500000);
 	mBuf[0] = 0;
 	mBuf[1] = 0;
+	mSerial.serialWrite(mBuf, 4);
 	mBuf[2] = 'A';
 	mSerial.serialWrite(mBuf, 4);
 	//sleep(1);
@@ -101,6 +108,7 @@ void FrequencySwitchingX::output()
 	//closest_frequency = gpioHardwarePWM(18, 0, 500000);
 	mBuf[0] = 0;
 	mBuf[1] = 0;
+	mSerial.serialWrite(mBuf, 4);
 	mBuf[2] = 'C';
 	mSerial.serialWrite(mBuf, 4);
 	//sleep(1);
@@ -127,7 +135,7 @@ void FrequencySwitchingX::output()
 
 	for (int i = 0; i <= freq_up_y_cnt; i++){
 		//closest_frequency = gpioHardwarePWM(18, 500 + freq_up, 500000);
-		mBuf[1] = (freq_y_start) / 10 / 2;
+		mBuf[1] = (freq_y_start + freq_up) / 10 / 2;
 		mSerial.serialWrite(mBuf, 4);
 		if (i<freq_up_y_cnt){
 			//usleep(10000);	//10ms
@@ -145,19 +153,24 @@ void FrequencySwitchingX::output()
 	//closest_frequency = gpioHardwarePWM(18, 0, 500000);
 	mBuf[0] = 0;
 	mBuf[1] = 0;
+	mSerial.serialWrite(mBuf, 4);
 	mBuf[2] = 'D';
 	mSerial.serialWrite(mBuf, 4);
 	//sleep(1);
 	Sleep(1000);
 
-	for (int i = 0; i<freq_up_x_cnt; i++){ //x ©
+	for (int i = 0; i<freq_up_x_cnt; i++){ //x © y «
 		//closest_frequency = gpioHardwarePWM(18, 500 + freq_up, 500000);
 		mBuf[0] = (freq_x_start + freq_up) / 10 / 2;
+		mBuf[1] = (freq_y_start) / 10 / 2;
+		//mBuf[1] = (freq_y_start) / 10 / 2;
 		mSerial.serialWrite(mBuf, 4);
 		if (i<freq_up_x_cnt){
 			//usleep(10000);	 // 1000=1ms
 			Sleep(10);
 			freq_up = freq_up + freq_ch;
+			//if (i <= freq_up_y_cnt)	freq_up_y = freq_up_y + freq_ch2;
+			//else  freq_up_y = -freq_y_start;
 		}
 		
 		/*else{
@@ -173,11 +186,15 @@ void FrequencySwitchingX::output()
 	for (int i = 0; i<=freq_up_x_cnt; i++){
 		//closest_frequency = gpioHardwarePWM(18, 500 + freq_up, 500000);
 		mBuf[0] = (freq_x_start + freq_up) / 10 / 2;
+		mBuf[1] = (freq_y_start) / 10 / 2;
+		//mBuf[1] = (freq_y_start) / 10 / 2;
 		mSerial.serialWrite(mBuf, 4);
 		if (i<freq_up_x_cnt){
 			//usleep(10000);	//10ms
 			Sleep(10);
 			freq_up = freq_up - freq_ch;
+			//if (i <= freq_up_y_cnt)	freq_up_y = freq_up_y + freq_ch2;
+			//else  freq_up_y = -freq_y_start;
 		}
 		
 		/*else{
@@ -189,6 +206,7 @@ void FrequencySwitchingX::output()
 	//closest_frequency = gpioHardwarePWM(18, 0, 500000);
 	mBuf[0] = 0;
 	mBuf[1] = 0;
+	mSerial.serialWrite(mBuf, 4);
 	mBuf[2] = 'B';
 	mSerial.serialWrite(mBuf, 4);
 	//sleep(1);
