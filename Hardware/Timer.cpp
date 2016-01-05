@@ -1,6 +1,10 @@
 ﻿#include "Timer.h"
 
 namespace Hardware {
+Timer::Timer(){
+	resetStartOperatingTime();
+}
+
 void Timer::setTimer(double aNotificationTime) {
 	mNotificationTime = aNotificationTime;
 	mStartTime = GetTickCount();

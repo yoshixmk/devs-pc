@@ -11,7 +11,7 @@
 #include "../Strategy/FrequencySwitchingY.h"
 //#include "../Strategy/FrequencyX.h"
 //#include "../Strategy/FrequencyY.h"
-//#include "../Strategy/RobotAction.h"
+#include "../Strategy/RobotAction.h"
 #include <iostream>
 
 namespace Test {

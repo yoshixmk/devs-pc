@@ -15,6 +15,7 @@ private:
 	DWORD mStartOperatingTime;
 
 public:
+	Timer();
 	void setTimer(double aNotificationTime);
 	bool getAlarm();
 	double getOperatingTime();

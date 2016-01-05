@@ -14,7 +14,7 @@ void Serial::serialOpen()
 {
 	static int first_time;
 	if (first_time == 0){
-		mComPort = CreateFile("COM3",                //port name
+		mComPort = CreateFile("COM4",                //port name
 			GENERIC_READ | GENERIC_WRITE, //Read/Write
 			0,                            // No Sharing
 			NULL,                         // No Security

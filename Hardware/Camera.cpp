@@ -10,7 +10,7 @@ int Camera::mWidth;
 int Camera::mHeight;
 Camera::Camera(int aWidth, int aHeight)
 {
-	const int FPS = 30;
+	const int FPS = 60;
 	mWidth = aWidth;
 	mHeight = aHeight;
 	if(!mCvCapture0)

@@ -23,14 +23,16 @@ FrequencySwitching::~FrequencySwitching()
 
 void FrequencySwitching::setOutputInformation(char aTargetDirection, double aTargetTime)
 {
+	//方向または時間が変わっていたら、時間をリセットする
 	if (mTargetDirection != aTargetDirection){
 		mTargetDirection = aTargetDirection;
+		mTimer.resetStartOperatingTime();
 	}
 	if (mTargetTime != aTargetTime){
 		mTargetTime = aTargetTime;
+		mTimer.resetStartOperatingTime();
 	}
 	mBuf[2] = mTargetDirection;
-	mTimer.resetStartOperatingTime();
 }
 
 void FrequencySwitching::output()

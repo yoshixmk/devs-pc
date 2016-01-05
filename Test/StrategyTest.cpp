@@ -178,27 +178,26 @@ namespace Test {
 		//}
 	}
 
-	/*void StrategyTest::robotActionTest()
+	void StrategyTest::robotActionTest()
 	{
 		std::cout << "!!!RobotAction Test!!!" << std::endl;
 		Hardware::Camera::renew();
 		Strategy::MalletCoordinate malletCoordinate;
 		Strategy::RobotAction robotAction;
+		Hardware::Timer timer;
+		double passed_time;
 		while (1){
-			double start_time = time_time();
 			Hardware::Camera::renew();
 			robotAction.moveToCenter(malletCoordinate.getCoordinate());
 			std::cout << malletCoordinate.getCoordinate().x << std::endl;
-			double end_time = time_time();
 
-			double time = end_time - start_time;
-
-			std::cout << "time: " << time << std::endl;
+			passed_time = timer.getOperatingTime();
+			std::cout << "time: " << passed_time << std::endl;
 
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
 		}
-	}*/
+	}
 
 }  // namespace Test

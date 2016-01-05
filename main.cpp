@@ -33,7 +33,8 @@ int main() {
 //	strategyTest.frameCoordinateTest();
 	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();
-	strategyTest.frequencySwitching_Y_Test();
+	//strategyTest.frequencySwitching_Y_Test();
+	strategyTest.robotActionTest();
 
 //	Test::UITest uiTest;
 //	uiTest.intelligentTest();

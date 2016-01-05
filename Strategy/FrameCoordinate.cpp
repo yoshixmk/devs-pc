@@ -2,77 +2,77 @@
 
 namespace Strategy
 {
+	CvPoint FrameCoordinate::mUpperLeftF = cvPoint(21, 33);
+	CvPoint FrameCoordinate::mLowerLeftF = cvPoint(19, 219);
+	CvPoint FrameCoordinate::mUpperRightF = cvPoint(139, 30);
+	CvPoint FrameCoordinate::mLowerRightF = cvPoint(138, 219);
+	CvPoint FrameCoordinate::mUpperLeftG = cvPoint(33, 22);
+	CvPoint FrameCoordinate::mLowerLeftG = cvPoint(27, 227);
+	CvPoint FrameCoordinate::mUpperRightG = cvPoint(128, 22);
+	CvPoint FrameCoordinate::mLowerRightG = cvPoint(127, 228);
+	CvPoint FrameCoordinate::mRobotGoalLeft = cvPoint(57, 229);
+	CvPoint FrameCoordinate::mRobotGoalRight = cvPoint(100, 229);
+	FrameCoordinate::FrameCoordinate()
+	{
+		//	mUpperLeftF = cvPoint(21, 33);
+		//	mLowerLeftF = cvPoint(19, 219);
+		//	mUpperRightF = cvPoint(139, 30);
+		//	mLowerRightF = cvPoint(138, 219);
+		//	mUpperLeftG = cvPoint(33, 22);
+		//	mLowerLeftG = cvPoint(27, 227);
+		//	mUpperRightG = cvPoint(128, 22);
+		//	mLowerRightG = cvPoint(127, 228);
+		//	mRobotGoalLeft = cvPoint(57, 229);
+		//	mRobotGoalRight = cvPoint(100, 229);
+	}
 
-FrameCoordinate::FrameCoordinate()
-{
-	mUpperLeftF = cvPoint(21, 33);
+	CvPoint FrameCoordinate::getUpperLeftF()
+	{
+		return mUpperLeftF;
+	}
 
-	mLowerLeftF = cvPoint(19, 219);
+	CvPoint FrameCoordinate::getLowerLeftF()
+	{
+		return mLowerLeftF;
+	}
 
-	mUpperRightF = cvPoint(139, 30);
+	CvPoint FrameCoordinate::getUpperRightF()
+	{
+		return mUpperRightF;
+	}
 
-	mLowerRightF = cvPoint(138, 219);
+	CvPoint FrameCoordinate::getLowerRightF()
+	{
+		return mLowerRightF;
+	}
 
-	mUpperLeftG = cvPoint(33, 22);
+	CvPoint FrameCoordinate::getUpperLeftG()
+	{
+		return mUpperLeftG;
+	}
 
-	mLowerLeftG = cvPoint(27, 227);
+	CvPoint FrameCoordinate::getLowerLeftG()
+	{
+		return mLowerLeftG;
+	}
 
-	mUpperRightG = cvPoint(128, 22);
+	CvPoint FrameCoordinate::getUpperRightG()
+	{
+		return mUpperRightG;
+	}
 
-	mLowerRightG = cvPoint(127, 228);
+	CvPoint FrameCoordinate::getLowerRightG()
+	{
+		return mLowerRightG;
+	}
 
-	mRobotGoalLeft = cvPoint(57, 229);
+	CvPoint FrameCoordinate::getRobotGoalLeft()
+	{
+		return mRobotGoalLeft;
+	}
 
-	mRobotGoalRight = cvPoint(100, 229);
-}
-
-CvPoint FrameCoordinate::getUpperLeftF()
-{
-	return mUpperLeftF;
-}
-
-CvPoint FrameCoordinate::getLowerLeftF()
-{
-	return mLowerLeftF;
-}
-
-CvPoint FrameCoordinate::getUpperRightF()
-{
-	return mUpperRightF;
-}
-
-CvPoint FrameCoordinate::getLowerRightF()
-{
-	return mLowerRightF;
-}
-
-CvPoint FrameCoordinate::getUpperLeftG()
-{
-	return mUpperLeftG;
-}
-
-CvPoint FrameCoordinate::getLowerLeftG()
-{
-	return mLowerLeftG;
-}
-
-CvPoint FrameCoordinate::getUpperRightG()
-{
-	return mUpperRightG;
-}
-
-CvPoint FrameCoordinate::getLowerRightG()
-{
-	return mLowerRightG;
-}
-
-CvPoint FrameCoordinate::getRobotGoalLeft()
-{
-	return mRobotGoalLeft;
-}
-
-CvPoint FrameCoordinate::getRobotGoalRight()
-{
-	return mRobotGoalRight;
-}
+	CvPoint FrameCoordinate::getRobotGoalRight()
+	{
+		return mRobotGoalRight;
+	}
 }  // namespace Strategy
