@@ -12,7 +12,9 @@
 //#include "../Strategy/FrequencyX.h"
 //#include "../Strategy/FrequencyY.h"
 #include "../Strategy/RobotAction.h"
+#include "../CLEye/CLEyeCameraCapture.h"
 #include <iostream>
+#include <windows.h>
 
 namespace Test {
 	class StrategyTest {

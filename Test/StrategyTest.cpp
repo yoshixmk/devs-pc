@@ -181,7 +181,32 @@ namespace Test {
 	void StrategyTest::robotActionTest()
 	{
 		std::cout << "!!!RobotAction Test!!!" << std::endl;
-		Hardware::Camera::renew();
+		/*CLEyeCameraInstance camera = CLEyeCreateCamera(CLEyeGetCameraUUID(0),
+			CLEYE_COLOR_PROCESSED, CLEYE_VGA, 60);
+
+		int width, height;
+		CLEyeCameraGetFrameDimensions(camera, width, height);
+
+		CLEyeSetCameraParameter(camera, CLEYE_GAIN, 5);
+		CLEyeSetCameraParameter(camera, CLEYE_EXPOSURE, 511);
+		CLEyeCameraStart(camera);
+
+		IplImage* iplImage =
+			cvCreateImage(cv::Size(width, height), IPL_DEPTH_8U, 4);
+		cv::Mat iplMat = cv::Mat(iplImage);
+		CLEyeCameraGetFrame(camera, (PBYTE)iplImage->imageData);
+
+		cv::Mat image;
+		cv::cvtColor(iplMat, image, CV_BGRA2BGR);*/
+
+		/*CvCapture* mCvCapture0;
+		mCvCapture0 = cvCreateCameraCapture(-1);
+		if (mCvCapture0 == NULL){
+			std::cout << "Camera Capture FAILED" << std::endl;
+			exit(-1);
+		}*/
+
+		/*Hardware::Camera::renew();
 		Strategy::MalletCoordinate malletCoordinate;
 		Strategy::RobotAction robotAction;
 		Hardware::Timer timer;
@@ -197,7 +222,7 @@ namespace Test {
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
-		}
+		}*/
 	}
 
 }  // namespace Test
