@@ -1,4 +1,4 @@
-#include "TwoImageSynthesis.h"
+﻿#include "TwoImageSynthesis.h"
 
 namespace Color
 {
