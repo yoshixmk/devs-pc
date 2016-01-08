@@ -1,4 +1,4 @@
-#ifndef STRATEGY_PACK_COORDINATE_H
+﻿#ifndef STRATEGY_PACK_COORDINATE_H
 #define STRATEGY_PACK_COORDINATE_H
 
 #include "Coordinate.h"

@@ -1,4 +1,4 @@
-#ifndef SHOWWINDOW_WINDOW_H
+﻿#ifndef SHOWWINDOW_WINDOW_H
 #define SHOWWINDOW_WINDOW_H
 
 #include <string.h>

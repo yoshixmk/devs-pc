@@ -1,4 +1,4 @@
-#ifndef UI_UI_H
+﻿#ifndef UI_UI_H
 #define UI_UI_H
 
 #include "../ShowWindow/WindowManagement.h"

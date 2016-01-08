@@ -1,4 +1,4 @@
-#ifndef UI_SETTING_MODE_H
+﻿#ifndef UI_SETTING_MODE_H
 #define UI_SETTING_MODE_H
 
 #include "Mode.h"

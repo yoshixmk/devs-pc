@@ -1,4 +1,4 @@
-#ifndef STRATEGY_OFFENSE_STRATEGY_H
+﻿#ifndef STRATEGY_OFFENSE_STRATEGY_H
 #define STRATEGY_OFFENSE_STRATEGY_H
 
 #include "Strategy.h"

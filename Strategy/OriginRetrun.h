@@ -1,4 +1,4 @@
-#ifndef STRATEGY_ORIGIN_RETRUN_H
+﻿#ifndef STRATEGY_ORIGIN_RETRUN_H
 #define STRATEGY_ORIGIN_RETRUN_H
 
 #include "RobotAction.h"

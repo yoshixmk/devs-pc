@@ -1,4 +1,4 @@
-#ifndef COLOR_TWO_IMAGE_SYNTHESIS_H
+﻿#ifndef COLOR_TWO_IMAGE_SYNTHESIS_H
 #define COLOR_TWO_IMAGE_SYNTHESIS_H
 
 #include "../Hardware/Camera.h"

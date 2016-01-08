@@ -1,4 +1,4 @@
-#ifndef COLOR_HOCKEY_TABLE_MASKING_H
+﻿#ifndef COLOR_HOCKEY_TABLE_MASKING_H
 #define COLOR_HOCKEY_TABLE_MASKING_H
 
 #include "Masking.h"

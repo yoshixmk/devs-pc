@@ -1,4 +1,4 @@
-#ifndef STRATEGY_LOCUS_H
+﻿#ifndef STRATEGY_LOCUS_H
 #define STRATEGY_LOCUS_H
 
 #include "Coordinate.h"

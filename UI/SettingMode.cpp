@@ -1,4 +1,4 @@
-#include "SettingMode.h"
+﻿#include "SettingMode.h"
 
 namespace UI {
 

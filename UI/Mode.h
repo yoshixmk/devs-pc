@@ -1,4 +1,4 @@
-#ifndef UI_MODE_H
+﻿#ifndef UI_MODE_H
 #define UI_MODE_H
 
 #include "../Strategy/Strategy.h"
