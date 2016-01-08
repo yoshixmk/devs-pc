@@ -2,8 +2,7 @@
 #define HARDWARE_CAMERA_H
 
 //#include <pigpio.h>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include "../CLEye/opencv.hpp"
 #include <iostream>
 
 namespace Hardware
