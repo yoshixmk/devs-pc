@@ -8,7 +8,7 @@
 
 int main() {
 	printf("hello world\n");
-	printf("hello world\n");
+	/*printf("hello world\n");
 	
 	CLEyeCameraCapture *cam[2] = { NULL };
 	srand(GetTickCount());
@@ -70,9 +70,9 @@ int main() {
 		printf("Stopping capture on camera %d\n", i+1);
 		cam[i]->StopCapture();
 		delete cam[i];
-	}
+	}*/
 
-	//Test::HardwareTest hardwareTest;
+	Test::HardwareTest hardwareTest;
 	//hardwareTest.timerTest();
 	//hardware_test.raspberryPiSignalTest();
 	//hardware_test.photoelectricSensor();
@@ -84,7 +84,7 @@ int main() {
 	//hardwareTest.speakerTest();
 //	hardwareTest.bgmSignalTest();
 	//hardwareTest.cameraTest();
-	//hardwareTest.serialTest();
+	hardwareTest.serialTest();
 
 	//Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
