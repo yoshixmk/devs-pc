@@ -1,8 +1,7 @@
 #ifndef UI_PACK_SPEED_H
 #define UI_PACK_SPEED_H
 
-#include "Hardware/Timer.h"
-#include "Hardware/PhotoelectricSensor.h"
+#include "../Hardware/Timer.h"
 
 namespace UI {
 class PackSpeed {

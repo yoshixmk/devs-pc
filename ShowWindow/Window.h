@@ -3,8 +3,7 @@
 
 #include <string.h>
 #include <iostream>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include "../CLEye/opencv.hpp"
 
 namespace ShowWindows {
 class Window {
@@ -17,9 +16,6 @@ public:
 	void showImage(IplImage* aImage);
 
 	void destroyWindow();
-
-
-
 };
 
 }  // namespace ShowWindow

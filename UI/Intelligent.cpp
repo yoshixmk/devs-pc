@@ -2,20 +2,15 @@
 
 namespace UI {
 
-Intelligent::Intelligent() :mPushSwitchStrong(10), mPushSwitchWeak(11)
+Intelligent::Intelligent()
 {
 	//default = strong
 	mStrongOrWeak = true;
 }
 
-void Intelligent::renew()
+int Intelligent::getIntelligent()
 {
-	if(mPushSwitchStrong.readLevel() == 1){
-		mStrongOrWeak = true;
-	}
-	else if(mPushSwitchWeak.readLevel() == 1){
-		mStrongOrWeak = false;
-	}
+	return 0;
 }
 
 bool Intelligent::isStrong()
