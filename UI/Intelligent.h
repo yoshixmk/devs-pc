@@ -1,20 +1,19 @@
-#ifndef UI_INTELLIGENT_H
+﻿#ifndef UI_INTELLIGENT_H
 #define UI_INTELLIGENT_H
 
-#include "Hardware/PushSwitch.h"
+#include "../Hardware/Serial.h"
 
 namespace UI {
 class Intelligent {
 private:
 	bool mStrongOrWeak;
 
-	Hardware::PushSwitch mPushSwitchStrong;
-	Hardware::PushSwitch mPushSwitchWeak;
+	Hardware::Serial mSerial;
 
 public:
 	Intelligent();
 
-	void renew();
+	int getIntelligent();
 
 	bool isStrong();
 

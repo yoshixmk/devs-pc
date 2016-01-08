@@ -1,4 +1,4 @@
-#include "HockeyTableMasking.h"
+﻿#include "HockeyTableMasking.h"
 
 namespace Color
 {

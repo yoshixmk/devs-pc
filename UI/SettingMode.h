@@ -1,7 +1,7 @@
-#ifndef UI_SETTING_MODE_H
+﻿#ifndef UI_SETTING_MODE_H
 #define UI_SETTING_MODE_H
 
-#include "UI/Mode.h"
+#include "Mode.h"
 
 namespace UI {
 class SettingMode: public Mode {

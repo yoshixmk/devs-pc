@@ -1,7 +1,5 @@
-#include "ColorExtraction.h"
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+﻿#include "ColorExtraction.h"
+#include "../CLEye/opencv.hpp"
 
 namespace Color
 {

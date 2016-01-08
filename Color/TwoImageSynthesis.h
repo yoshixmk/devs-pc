@@ -1,12 +1,9 @@
-#ifndef COLOR_TWO_IMAGE_SYNTHESIS_H
+﻿#ifndef COLOR_TWO_IMAGE_SYNTHESIS_H
 #define COLOR_TWO_IMAGE_SYNTHESIS_H
 
 #include "../Hardware/Camera.h"
 #include "PerspectiveTransformation.h"
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include "../CLEye/opencv.hpp"
 #include <iostream>
 
 namespace Color

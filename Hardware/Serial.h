@@ -6,7 +6,7 @@
 #include <tchar.h>
 #include <math.h>
 //送信待ち用にcv::waitKeyを使う
-#include <opencv2/highgui/highgui.hpp>  // highguiモジュールのヘッダーをインクルード
+#include "../CLEye/opencv.hpp"  // highguiモジュールのヘッダーをインクルード
 
 namespace Hardware {
 

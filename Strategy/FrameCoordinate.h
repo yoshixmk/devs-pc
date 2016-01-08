@@ -2,8 +2,7 @@
 #define STRATEGY_FRAME_COORDINATE_H
 
 #include "../Strategy/Coordinate.h"
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include "../CLEye/opencv.hpp"
 
 namespace Strategy {
 	class FrameCoordinate : public Coordinate {

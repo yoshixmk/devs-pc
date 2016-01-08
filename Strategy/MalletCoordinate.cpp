@@ -1,4 +1,4 @@
-#include "MalletCoordinate.h"
+﻿#include "MalletCoordinate.h"
 
 namespace Strategy
 {
