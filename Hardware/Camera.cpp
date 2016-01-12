@@ -43,11 +43,19 @@ Camera::Camera(int aWidth, int aHeight)
 														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 60);
 		// Create camera capture object
 		printf("Starting capture on camera %d\n", i+1);
-
-		cam[i]->StartCapture();
 		cam[i]->initCamera();
 			
 		printf("start ok.", i+1);
+	}
+	//additional settings 
+	cam[0]->setPerspectiveTransform(0, 180);//pack
+	cam[1]->setPerspectiveTransform(10, -180);//mallet
+	cam[0]->setVerticalFlip(true);
+	cam[0]->setHorizontalFlip(true);
+
+	for(int i = 0; i < mNumCamera; i++)
+	{
+		cam[i]->StartCapture();
 	}
 
     renew();

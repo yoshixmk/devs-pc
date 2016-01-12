@@ -49,6 +49,10 @@ class CLEyeCameraCapture
 		void initCamera();
 		void finalCamera();
 		void run(); //->Runからrunに変更
+	
+		void setPerspectiveTransform(int horizontalValue, int verticalValue);
+		void setHorizontalFlip(bool value);
+		void setVerticalFlip(bool value);
 };
 
 #endif

@@ -126,3 +126,19 @@ void CLEyeCameraCapture::finalCamera()
 	//cvReleaseImage(&pCapImage);
 	_cam = NULL;
 }
+
+void CLEyeCameraCapture::setPerspectiveTransform(int horizontalValue, int verticalValue)
+{
+	CLEyeSetCameraParameter(_cam, CLEYE_HKEYSTONE, horizontalValue);
+	CLEyeSetCameraParameter(_cam, CLEYE_VKEYSTONE, verticalValue);
+}
+
+void CLEyeCameraCapture::setHorizontalFlip(bool value)
+{
+	CLEyeSetCameraParameter(_cam, CLEYE_HFLIP, value);
+}
+
+void CLEyeCameraCapture::setVerticalFlip(bool value)
+{
+	CLEyeSetCameraParameter(_cam, CLEYE_VFLIP, value);
+}
