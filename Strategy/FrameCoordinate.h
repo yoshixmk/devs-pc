@@ -1,57 +1,57 @@
 #ifndef STRATEGY_FRAME_COORDINATE_H
 #define STRATEGY_FRAME_COORDINATE_H
 
-#include "Coordinate.h"
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include "../Strategy/Coordinate.h"
+#include "../CLEye/opencv.hpp"
 
 namespace Strategy {
-class FrameCoordinate: public Coordinate {
-private:
-	CvPoint mUpperLeftF;
+	class FrameCoordinate : public Coordinate {
+	private:
+		//ç¿ïWÇÕÇ∑Ç◊ÇƒògÇÃì‡ë§
+		static CvPoint mUpperLeftF;
 
-	CvPoint mLowerLeftF;
+		static CvPoint mLowerLeftF;
 
-	CvPoint mUpperRightF;
+		static CvPoint mUpperRightF;
 
-	CvPoint mLowerRightF;
+		static CvPoint mLowerRightF;
 
-	CvPoint mUpperLeftG;
+		static CvPoint mUpperLeftG;
 
-	CvPoint mLowerLeftG;
+		static CvPoint mLowerLeftG;
 
-	CvPoint mUpperRightG;
+		static CvPoint mUpperRightG;
 
-	CvPoint mLowerRightG;
+		static CvPoint mLowerRightG;
 
-	CvPoint mRobotGoalLeft;
+		static CvPoint mRobotGoalLeft;
 
-	CvPoint mRobotGoalRight;
+		static CvPoint mRobotGoalRight;
 
-public:
-	FrameCoordinate();
+	public:
+		FrameCoordinate();
 
-	CvPoint getUpperLeftF();
+		static CvPoint getUpperLeftF();
 
-	CvPoint getLowerLeftF();
+		static CvPoint getLowerLeftF();
 
-	CvPoint getUpperRightF();
+		static CvPoint getUpperRightF();
 
-	CvPoint getLowerRightF();
+		static CvPoint getLowerRightF();
 
-	CvPoint getUpperLeftG();
+		static CvPoint getUpperLeftG();
 
-	CvPoint getLowerLeftG();
+		static CvPoint getLowerLeftG();
 
-	CvPoint getUpperRightG();
+		static CvPoint getUpperRightG();
 
-	CvPoint getLowerRightG();
+		static CvPoint getLowerRightG();
 
-	CvPoint getRobotGoalLeft();
+		static CvPoint getRobotGoalLeft();
 
-	CvPoint getRobotGoalRight();
+		static CvPoint getRobotGoalRight();
 
-};
+	};
 
 }  // namespace Strategy
 #endif

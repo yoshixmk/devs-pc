@@ -1,8 +1,7 @@
 ﻿#ifndef STRATEGY_FREQUENCY_SWITCHING_H
 #define STRATEGY_FREQUENCY_SWITCHING_H
 
-//#include "../Hardware/MotorDriver.h"
-//#include "../Hardware/Timer.h"
+#include "../Hardware/Timer.h"
 #include "../Hardware/Serial.h"
 #include <iostream>
 #include <cstdlib>
@@ -10,28 +9,40 @@
 
 namespace Strategy {
 class FrequencySwitching {
-private:
-	char mXaxisOrYaxis;
-
 protected:
-	char mNowDirection;
+	char mTargetDirection; //'A' 'B' 'C' 'D'
+
 	double mTargetTime;
 	int mCurrentFrequency;
-	char mTargetDirection;//X: 'L' or 'R' | Y: 'U' or 'D'
-	int mFrequency;
-	int mFrequencyIndex;
-	Hardware::Serial mSerial;
+	int mInitFrequency;
 
+	int mFrequencyUpCount;		//周波数を上げる回数
+	int mAmountOfChange;			//周波数変化量(Hz)
+	double mIntervaTime;		//時間間隔(s)
+
+	static char mBuf[4]; //送信する内容
+
+	Hardware::Serial mSerial;
+	Hardware::Timer mTimer;
+	Hardware::Timer mMovingStopTimer;
 
 public:
 	//FrequencySwitching();
-	FrequencySwitching(char aXaxisOrYaxis);
+	FrequencySwitching();
 
 	~FrequencySwitching();
+
+	void setOutputInformation(char aDirection, double aTime);
 
 	void output();
 
 	void stop();
+
+	int getCurrentFrequency();
+
+	void setFrequencyX(int aFrequency);
+
+	void setFrequencyY(int aFrequency);
 };
 
 }  // namespace Strategy

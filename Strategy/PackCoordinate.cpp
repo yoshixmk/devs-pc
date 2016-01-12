@@ -1,4 +1,4 @@
-#include "PackCoordinate.h"
+﻿#include "PackCoordinate.h"
 
 namespace Strategy
 {

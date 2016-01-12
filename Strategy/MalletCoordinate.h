@@ -1,9 +1,8 @@
-#ifndef STRATEGY_MALLET_COORDINATE_H
+﻿#ifndef STRATEGY_MALLET_COORDINATE_H
 #define STRATEGY_MALLET_COORDINATE_H
 
 #include "Coordinate.h"
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include "../CLEye/opencv.hpp"
 
 namespace Strategy
 {

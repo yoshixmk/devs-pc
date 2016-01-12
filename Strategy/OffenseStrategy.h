@@ -1,7 +1,7 @@
-#ifndef STRATEGY_OFFENSE_STRATEGY_H
+﻿#ifndef STRATEGY_OFFENSE_STRATEGY_H
 #define STRATEGY_OFFENSE_STRATEGY_H
 
-#include "Strategy/Strategy.h"
+#include "Strategy.h"
 
 namespace Strategy {
 class OffenseStrategy: public Strategy {

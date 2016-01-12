@@ -1,7 +1,5 @@
-#include "ColorExtraction.h"
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+﻿#include "ColorExtraction.h"
+#include "../CLEye/opencv.hpp"
 
 namespace Color
 {
@@ -157,22 +155,22 @@ IplImage* ColorExtraction::extractRobotSideHockeyTable()
 
 void ColorExtraction::setMalletHSV()
 {
-	mHMin = 106;
-	mHMax = 135;
-	mSMin = 218;
-	mSMax = 255;
-	mVMin = 0;
-	mVMax = 105;
+	mHMin = 16;// 106;
+	mHMax = 25;// 135;
+	mSMin = 178;// 218;
+	mSMax = 255;// 255;
+	mVMin = 120;// 0;
+	mVMax = 181;// 105;
 }
 
 void ColorExtraction::setPackHSV()
 {
-	mHMin = 54;
-	mHMax = 84;
-	mSMin = 100;
-	mSMax = 255;
-	mVMin = 0;
-	mVMax = 255;
+	mHMin = 46;// 54;
+	mHMax = 70;// 84;
+	mSMin = 115;// 100;
+	mSMax = 255;// 255;
+	mVMin = 0;// 0;
+	mVMax = 255;// 255;
 }
 
 }  // namespace Color

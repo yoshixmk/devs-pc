@@ -1,17 +1,21 @@
 ﻿#include "Timer.h"
 
 namespace Hardware {
+Timer::Timer(){
+	resetStartOperatingTime();
+}
+
 void Timer::setTimer(double aNotificationTime) {
 	mNotificationTime = aNotificationTime;
-	mStartTime = time_time();
-	mNowTime = time_time();
+	mStartTime = GetTickCount();
+	mNowTime = GetTickCount();
 }
 
 bool Timer::getAlarm() {
 	double passed_time;
 	//現在時刻、経過時刻を取得、計算
-	mNowTime = time_time();
-	passed_time = mNowTime - mStartTime;
+	mNowTime = GetTickCount();
+	passed_time = (double)(mNowTime - mStartTime) / 1000;
 	//std::cout<< passed_time <<std::endl;
 	//アラーム判定
 	if (passed_time >= mNotificationTime) {
@@ -23,17 +27,17 @@ bool Timer::getAlarm() {
 
 double Timer::getOperatingTime()
 {
-	double now_time;
+	DWORD  now_time;
 	double passed_time;
 	//現在時刻、経過時刻を取得、計算
-	now_time = time_time();
-	passed_time = now_time - mStartOperatingTime;
+	now_time = GetTickCount();
+	passed_time = (double)(now_time - mStartOperatingTime) / 1000;
 	return passed_time;
 }
 
 void Timer::resetStartOperatingTime()
 {
-	mStartOperatingTime = time_time();
+	mStartOperatingTime = GetTickCount();
 }
 
 }  // namespace Hardware

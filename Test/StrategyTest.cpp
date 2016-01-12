@@ -1,4 +1,4 @@
-#include "StrategyTest.h"
+﻿#include "StrategyTest.h"
 
 namespace Test {
 	StrategyTest::StrategyTest() {
@@ -113,30 +113,25 @@ namespace Test {
 	{
 		std::cout << "!!!FrequencySwitching X Test!!!" << std::endl;
 		Strategy::FrequencySwitchingX frequencySwitchingX;
-		frequencySwitchingX.output();
-		std::cin;
+		frequencySwitchingX.setOutputInformation('A', 3);
+		while (1){
+			frequencySwitchingX.output();
+		}
 	}
 
 	void StrategyTest::frequencySwitching_Y_Test()
 	{
-		//std::cout << "!!!FrequencySwitching Y Test!!!" << std::endl;
-		//Strategy::FrequencySwitchingY frequencySwitchingY;
-		//frequencySwitchingY.setOutputInformation('U', 10);
+		std::cout << "!!!FrequencySwitching Y Test!!!" << std::endl;
 
-		//Hardware::Timer timer;
-		//timer.setTimer(5);
-
-		//while (1){
-		//	if (!timer.getAlarm()){
-		//		frequencySwitchingY.output();
-		//	}
-		//	else{
-		//		frequencySwitchingY.stop();
-		//	}
-		//	if (cv::waitKey(1) >= 0) {
-		//		break;
-		//	}
-		//}
+		Strategy::FrequencySwitchingX frequencySwitchingX;
+		Strategy::FrequencySwitchingY frequencySwitchingY;
+		
+		frequencySwitchingX.setOutputInformation('A', 2);
+		frequencySwitchingY.setOutputInformation('B', 3); //To check 'B' is priority
+		while (1){
+			frequencySwitchingX.output();
+			frequencySwitchingY.output();
+		}
 	}
 
 	void StrategyTest::frequency_X_Test()
@@ -183,27 +178,51 @@ namespace Test {
 		//}
 	}
 
-	/*void StrategyTest::robotActionTest()
+	void StrategyTest::robotActionTest()
 	{
 		std::cout << "!!!RobotAction Test!!!" << std::endl;
-		Hardware::Camera::renew();
+		/*CLEyeCameraInstance camera = CLEyeCreateCamera(CLEyeGetCameraUUID(0),
+			CLEYE_COLOR_PROCESSED, CLEYE_VGA, 60);
+
+		int width, height;
+		CLEyeCameraGetFrameDimensions(camera, width, height);
+
+		CLEyeSetCameraParameter(camera, CLEYE_GAIN, 5);
+		CLEyeSetCameraParameter(camera, CLEYE_EXPOSURE, 511);
+		CLEyeCameraStart(camera);
+
+		IplImage* iplImage =
+			cvCreateImage(cv::Size(width, height), IPL_DEPTH_8U, 4);
+		cv::Mat iplMat = cv::Mat(iplImage);
+		CLEyeCameraGetFrame(camera, (PBYTE)iplImage->imageData);
+
+		cv::Mat image;
+		cv::cvtColor(iplMat, image, CV_BGRA2BGR);*/
+
+		/*CvCapture* mCvCapture0;
+		mCvCapture0 = cvCreateCameraCapture(-1);
+		if (mCvCapture0 == NULL){
+			std::cout << "Camera Capture FAILED" << std::endl;
+			exit(-1);
+		}*/
+
+		/*Hardware::Camera::renew();
 		Strategy::MalletCoordinate malletCoordinate;
 		Strategy::RobotAction robotAction;
+		Hardware::Timer timer;
+		double passed_time;
 		while (1){
-			double start_time = time_time();
 			Hardware::Camera::renew();
 			robotAction.moveToCenter(malletCoordinate.getCoordinate());
 			std::cout << malletCoordinate.getCoordinate().x << std::endl;
-			double end_time = time_time();
 
-			double time = end_time - start_time;
-
-			std::cout << "time: " << time << std::endl;
+			passed_time = timer.getOperatingTime();
+			std::cout << "time: " << passed_time << std::endl;
 
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
-		}
-	}*/
+		}*/
+	}
 
 }  // namespace Test
