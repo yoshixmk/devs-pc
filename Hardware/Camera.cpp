@@ -39,11 +39,14 @@ Camera::Camera(int aWidth, int aHeight)
 		sprintf(windowName, "Camera Window %d", i+1);
 		// Create camera capture object
 		// Randomize resolution and color mode
-		cam[i] = new CLEyeCameraCapture(windowName, guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
-														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 30);
+		cam[i] = new CLEyeCameraCapture(guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
+														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 60);
 		// Create camera capture object
 		printf("Starting capture on camera %d\n", i+1);
+
 		cam[i]->StartCapture();
+		cam[i]->initCamera();
+			
 		printf("start ok.", i+1);
 	}
 
@@ -82,17 +85,11 @@ IplImage* Camera::getHumanSideImage()
 
 void Camera::renew()
 {
-	for(int i = 0; i < 2; i++)
-	{
-		if(i == 0){
-			mRobotSideImage = cam[i]->getCameraImage();
-		}
-		else if(i == 1){
-			mHumanSideImage = cam[i]->getCameraImage();
-		}
-		
-	}
-	printf("renew affter\n");
+	cam[0]->run();
+	cam[1]->run();
+	mRobotSideImage = cam[0]->getCameraImage();
+	mHumanSideImage = cam[1]->getCameraImage();
+	//printf("renew affter\n");
 }
 
 }  // namespace Hardware

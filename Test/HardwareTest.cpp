@@ -58,24 +58,15 @@ void HardwareTest::cameraTest() {
 	cvNamedWindow("HumanSide", CV_WINDOW_AUTOSIZE);
 
 	int key;
-	while((key = cvWaitKey(0)) != 0x1b)
-	{
-		Hardware::Camera::renew();
-		cvShowImage("RobotSide", camera.getRobotSideImage());
-		cvShowImage("HumanSide", camera.getHumanSideImage());
-		switch(key)
-		{
-			case 'e':	case 'E':	break;
-		}
-	}
-	/*while (1) {
+
+	while (1) {
 		Hardware::Camera::renew();
 		cvShowImage("RobotSide", camera.getRobotSideImage());
 		cvShowImage("HumanSide", camera.getHumanSideImage());
 		if (cv::waitKey(1) >= 0) {
 			break;
 		}
-	}*/
+	}
 }
 
 void HardwareTest::serialTest(){

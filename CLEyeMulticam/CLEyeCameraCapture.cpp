@@ -12,22 +12,22 @@
 
 #include "CLEyeCameraCapture.h"
 
-CLEyeCameraCapture::CLEyeCameraCapture(LPSTR windowName, GUID cameraGUID, CLEyeCameraColorMode mode, CLEyeCameraResolution resolution, float fps) :
+CLEyeCameraCapture::CLEyeCameraCapture(GUID cameraGUID, CLEyeCameraColorMode mode, CLEyeCameraResolution resolution, float fps) :
 	_cameraGUID(cameraGUID), _cam(NULL), _mode(mode), _resolution(resolution), _fps(fps), _running(false)
 {
-	strcpy(_windowName, windowName);
+	//strcpy(_windowName, windowName);
 }
 bool CLEyeCameraCapture::StartCapture()
 {
 	_running = true;
-	cvNamedWindow(_windowName, CV_WINDOW_AUTOSIZE);
+	//cvNamedWindow(_windowName, CV_WINDOW_AUTOSIZE);
 	// Start CLEye image capture thread
-	_hThread = CreateThread(NULL, 0, &CLEyeCameraCapture::CaptureThread, this, 0, 0);
+	/*_hThread = CreateThread(NULL, 0, &CLEyeCameraCapture::CaptureThread, this, 0, 0);
 	if(_hThread == NULL)
 	{
 		MessageBox(NULL,"Could not create capture thread","CLEyeMulticamTest", MB_ICONEXCLAMATION);
 		return false;
-	}
+	}*/
 	return true;
 }
 void CLEyeCameraCapture::StopCapture()
@@ -35,7 +35,7 @@ void CLEyeCameraCapture::StopCapture()
 	if(!_running)	return;
 	_running = false;
 	WaitForSingleObject(_hThread, 1000);
-	cvDestroyWindow(_windowName);
+	//cvDestroyWindow(_windowName);
 }
 void CLEyeCameraCapture::IncrementCameraParameter(int param)
 {
@@ -49,43 +49,10 @@ void CLEyeCameraCapture::DecrementCameraParameter(int param)
 	printf("CLEyeGetCameraParameter %d\n", CLEyeGetCameraParameter(_cam, (CLEyeCameraParameter)param));
 	CLEyeSetCameraParameter(_cam, (CLEyeCameraParameter)param, CLEyeGetCameraParameter(_cam, (CLEyeCameraParameter)param)-10);
 }
-void CLEyeCameraCapture::Run()
+
+void CLEyeCameraCapture::run()
 {
-	int w, h;
-	IplImage *pCapImage;
-	PBYTE pCapBuffer = NULL;
-	// Create camera instance
-	_mode = CLEYE_COLOR_PROCESSED;
-	_fps = 60;
-	_resolution = CLEYE_QVGA;
-	_cam = CLEyeCreateCamera(_cameraGUID, _mode, _resolution, _fps);
-	if(_cam == NULL)		return;
-	// Get camera frame dimensions
-	CLEyeCameraGetFrameDimensions(_cam, w, h);
-	// Depending on color mode chosen, create the appropriate OpenCV image
-	//if(_mode == CLEYE_COLOR_PROCESSED || _mode == CLEYE_COLOR_RAW)
-		pCapImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
-	//else
-		//pCapImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 1);
-
-	// Set some camera parameters
-	CLEyeSetCameraParameter(_cam, CLEYE_GAIN, 0);
-	CLEyeSetCameraParameter(_cam, CLEYE_EXPOSURE, 90);
-	CLEyeSetCameraParameter(_cam, CLEYE_ZOOM, 0);
-	CLEyeSetCameraParameter(_cam, CLEYE_ROTATION, 0);
-
-	// Start capturing
-	CLEyeCameraStart(_cam);
-	cvGetImageRawData(pCapImage, &pCapBuffer);
-
-	IplImage *pDestinationImage;
-	//if(_mode == CLEYE_COLOR_PROCESSED || _mode == CLEYE_COLOR_RAW)
-	pDestinationImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
-	//else
-		//pDestinationImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 1);
-	mCameraImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
-
-	CvMat *map_matrix;
+	/*CvMat *map_matrix;
 	CvPoint2D32f src_pnt[4], dst_pnt[4];
 	src_pnt[0] = cvPoint2D32f (25*2, 12*2);
 	src_pnt[1] = cvPoint2D32f (4*2, 120*2);
@@ -95,29 +62,14 @@ void CLEyeCameraCapture::Run()
 	dst_pnt[0] = cvPoint2D32f (19*2, 12*2);
 	dst_pnt[1] = cvPoint2D32f (19*2, 120*2);
 	dst_pnt[2] = cvPoint2D32f (141*2, 120*2);
-	dst_pnt[3] = cvPoint2D32f (141*2, 12*2);
+	dst_pnt[3] = cvPoint2D32f (141*2, 12*2);*/
 
-	// image capturing loop
-	while(_running)
-	{
-		CLEyeCameraGetFrame(_cam, pCapBuffer);
+	CLEyeCameraGetFrame(_cam, pCapBuffer);
 
-		map_matrix = cvCreateMat (3, 3, CV_32FC1);
-		cvGetPerspectiveTransform (src_pnt, dst_pnt, map_matrix);
+	/*map_matrix = cvCreateMat (3, 3, CV_32FC1);
+	cvGetPerspectiveTransform (src_pnt, dst_pnt, map_matrix);
 
-		cvWarpPerspective (pCapImage, pDestinationImage, map_matrix, CV_INTER_LINEAR + CV_WARP_FILL_OUTLIERS, cvScalarAll (100));
-
-		cvShowImage(_windowName, pDestinationImage);
-
-		cvCopy(pDestinationImage, mCameraImage);
-	}
-	// Stop camera capture
-	CLEyeCameraStop(_cam);
-	// Destroy camera object
-	CLEyeDestroyCamera(_cam);
-	// Destroy the allocated OpenCV image
-	cvReleaseImage(&pCapImage);
-	_cam = NULL;
+	cvWarpPerspective (pCapImage, mCameraImage, map_matrix, CV_INTER_LINEAR + CV_WARP_FILL_OUTLIERS, cvScalarAll (100));*/
 }
 DWORD WINAPI CLEyeCameraCapture::CaptureThread(LPVOID instance)
 {
@@ -125,7 +77,7 @@ DWORD WINAPI CLEyeCameraCapture::CaptureThread(LPVOID instance)
 	srand(GetTickCount() + GetCurrentThreadId());
 	// forward thread to Capture function
 	CLEyeCameraCapture *pThis = (CLEyeCameraCapture *)instance;
-	pThis->Run();
+	//pThis->Run();
 	return 0;
 }
 
@@ -137,4 +89,40 @@ double CLEyeCameraCapture::GetRandomNormalized()
 
 IplImage* CLEyeCameraCapture::getCameraImage(){
 	return mCameraImage;
+}
+
+void CLEyeCameraCapture::initCamera()
+{
+	// Create camera instance
+	_mode = CLEYE_COLOR_PROCESSED;
+	_fps = 60;
+	_resolution = CLEYE_QVGA;
+	_cam = CLEyeCreateCamera(_cameraGUID, _mode, _resolution, _fps);
+	if(_cam == NULL)		return;
+	// Get camera frame dimensions
+	CLEyeCameraGetFrameDimensions(_cam, w, h);
+	//pCapImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
+	mCameraImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
+
+	// Set some camera parameters
+	CLEyeSetCameraParameter(_cam, CLEYE_GAIN, 0);
+	CLEyeSetCameraParameter(_cam, CLEYE_EXPOSURE, 90);
+	CLEyeSetCameraParameter(_cam, CLEYE_ZOOM, 0);
+	CLEyeSetCameraParameter(_cam, CLEYE_ROTATION, 0);
+
+	// Start capturing
+	CLEyeCameraStart(_cam);
+	//(pCapImage, &pCapBuffer);
+	cvGetImageRawData(mCameraImage, &pCapBuffer);
+}
+
+void CLEyeCameraCapture::finalCamera()
+{
+	// Stop camera capture
+	CLEyeCameraStop(_cam);
+	// Destroy camera object
+	CLEyeDestroyCamera(_cam);
+	// Destroy the allocated OpenCV image
+	//cvReleaseImage(&pCapImage);
+	_cam = NULL;
 }
