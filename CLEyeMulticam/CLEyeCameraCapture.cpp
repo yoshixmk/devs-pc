@@ -34,8 +34,6 @@ void CLEyeCameraCapture::StopCapture()
 {
 	if(!_running)	return;
 	_running = false;
-	WaitForSingleObject(_hThread, 1000);
-	//cvDestroyWindow(_windowName);
 }
 void CLEyeCameraCapture::IncrementCameraParameter(int param)
 {
@@ -70,21 +68,6 @@ void CLEyeCameraCapture::run()
 	cvGetPerspectiveTransform (src_pnt, dst_pnt, map_matrix);
 
 	cvWarpPerspective (pCapImage, mCameraImage, map_matrix, CV_INTER_LINEAR + CV_WARP_FILL_OUTLIERS, cvScalarAll (100));*/
-}
-DWORD WINAPI CLEyeCameraCapture::CaptureThread(LPVOID instance)
-{
-	// seed the rng with current tick count and thread id
-	srand(GetTickCount() + GetCurrentThreadId());
-	// forward thread to Capture function
-	CLEyeCameraCapture *pThis = (CLEyeCameraCapture *)instance;
-	//pThis->Run();
-	return 0;
-}
-
-
-double CLEyeCameraCapture::GetRandomNormalized()
-{
-	return (double)(rand()-(RAND_MAX>>1))/(double)(RAND_MAX>>1);
 }
 
 IplImage* CLEyeCameraCapture::getCameraImage(){

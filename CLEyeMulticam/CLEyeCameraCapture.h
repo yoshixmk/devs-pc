@@ -39,11 +39,8 @@ class CLEyeCameraCapture
 		CLEyeCameraCapture(GUID cameraGUID, CLEyeCameraColorMode mode, CLEyeCameraResolution resolution, float fps);
 		bool StartCapture();
 		void StopCapture();
-		void IncrementCameraParameter(int param);
-		void DecrementCameraParameter(int param);
-		
-		static DWORD WINAPI CaptureThread(LPVOID instance); //使用しない
-		double GetRandomNormalized(); //使用しない
+		void IncrementCameraParameter(int param);//デバッグ用
+		void DecrementCameraParameter(int param);//デバッグ用
 		
 		IplImage* getCameraImage();
 		void initCamera();
