@@ -31,6 +31,7 @@ class CLEyeCameraCapture
 		float _fps;
 		HANDLE _hThread;
 		bool _running;
+		IplImage* mCameraImage;
 
 	public:
 		CLEyeCameraCapture(LPSTR windowName, GUID cameraGUID, CLEyeCameraColorMode mode, CLEyeCameraResolution resolution, float fps);
@@ -42,6 +43,7 @@ class CLEyeCameraCapture
 		static DWORD WINAPI CaptureThread(LPVOID instance);
 		int cameraMain();
 		double GetRandomNormalized();
+		IplImage* getCameraImage();
 };
 
 #endif

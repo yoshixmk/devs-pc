@@ -4,6 +4,7 @@
 //#include <pigpio.h>
 #include "../CLEye/opencv.hpp"
 #include <iostream>
+#include "../CLEyeMulticam/CLEyeCameraCapture.h"
 
 namespace Hardware
 {
@@ -16,6 +17,8 @@ private:
 	static CvCapture* mCvCapture1;
 	static int mWidth;
 	static int mHeight;
+	int mNumCamera;
+	static CLEyeCameraCapture *cam[2];
 
 public:
 	Camera(int aWidth=160, int aHeight=120);

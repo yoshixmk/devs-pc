@@ -69,9 +69,9 @@ void CLEyeCameraCapture::Run()
 		//pCapImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 1);
 
 	// Set some camera parameters
-	CLEyeSetCameraParameter(_cam, CLEYE_GAIN, 50);
-	CLEyeSetCameraParameter(_cam, CLEYE_EXPOSURE, 511);
-	CLEyeSetCameraParameter(_cam, CLEYE_ZOOM, 100);
+	CLEyeSetCameraParameter(_cam, CLEYE_GAIN, 0);
+	CLEyeSetCameraParameter(_cam, CLEYE_EXPOSURE, 90);
+	CLEyeSetCameraParameter(_cam, CLEYE_ZOOM, 0);
 	CLEyeSetCameraParameter(_cam, CLEYE_ROTATION, 0);
 
 	// Start capturing
@@ -80,9 +80,10 @@ void CLEyeCameraCapture::Run()
 
 	IplImage *pDestinationImage;
 	//if(_mode == CLEYE_COLOR_PROCESSED || _mode == CLEYE_COLOR_RAW)
-		pDestinationImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
+	pDestinationImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
 	//else
 		//pDestinationImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 1);
+	mCameraImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
 
 	CvMat *map_matrix;
 	CvPoint2D32f src_pnt[4], dst_pnt[4];
@@ -107,6 +108,8 @@ void CLEyeCameraCapture::Run()
 		cvWarpPerspective (pCapImage, pDestinationImage, map_matrix, CV_INTER_LINEAR + CV_WARP_FILL_OUTLIERS, cvScalarAll (100));
 
 		cvShowImage(_windowName, pDestinationImage);
+
+		cvCopy(pDestinationImage, mCameraImage);
 	}
 	// Stop camera capture
 	CLEyeCameraStop(_cam);
@@ -130,4 +133,8 @@ DWORD WINAPI CLEyeCameraCapture::CaptureThread(LPVOID instance)
 double CLEyeCameraCapture::GetRandomNormalized()
 {
 	return (double)(rand()-(RAND_MAX>>1))/(double)(RAND_MAX>>1);
+}
+
+IplImage* CLEyeCameraCapture::getCameraImage(){
+	return mCameraImage;
 }
