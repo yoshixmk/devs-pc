@@ -6,6 +6,7 @@
 #include "../Color/RobotSideHockeyTableMasking.h"
 #include "../Color/PerspectiveTransformation.h"
 #include "../Color/ColorExtraction.h"
+#include "../Color/NonFlipTwoImageSynthesis.h"
 
 namespace Test {
 
@@ -17,6 +18,7 @@ public:
 	void robotSideHockeyTableMaskingTest();
 	void perspectiveTransformationTest();
 	void colorExtractionTest();
+	void nonFlipTwoImageSynthesisTest();
 };
 
 } /* namespace Test */

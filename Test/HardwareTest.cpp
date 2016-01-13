@@ -57,8 +57,6 @@ void HardwareTest::cameraTest() {
 	cvNamedWindow("RobotSide", CV_WINDOW_AUTOSIZE);
 	cvNamedWindow("HumanSide", CV_WINDOW_AUTOSIZE);
 
-	int key;
-
 	while (1) {
 		Hardware::Camera::renew();
 		cvShowImage("RobotSide", camera.getRobotSideImage());

@@ -96,4 +96,19 @@ void ColorTest::colorExtractionTest()
 	}
 }
 
+void ColorTest::nonFlipTwoImageSynthesisTest()
+{
+	std::cout << "NonFlip_TwoImageSynthesis_test" << std::endl;
+	Color::NonFlipTwoImageSynthesis nonFlipTwoImageSynthesis;
+
+	while(1)
+	{
+		Hardware::Camera::renew();
+		cvShowImage("SynthesisImage", nonFlipTwoImageSynthesis.synthesizeNonDistortion());
+		if (cv::waitKey(1) >= 0) {
+			break;
+		}
+	}
+}
+
 } /* namespace Test */

@@ -11,10 +11,12 @@ namespace Color
 class TwoImageSynthesis
 {
 private:
-	Hardware::Camera mCamera;
 	Color::PerspectiveTransformation perspectiveTransformation;
 	cv::Mat mMatSynthesisImage;
 	cv::Mat mMatNonDistortionImage;
+
+protected:
+	Hardware::Camera mCamera;
 
 public:
 	TwoImageSynthesis();

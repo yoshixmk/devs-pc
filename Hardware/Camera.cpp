@@ -8,10 +8,14 @@ CvCapture* Camera::mCvCapture0;
 CvCapture* Camera::mCvCapture1;
 int Camera::mWidth;
 int Camera::mHeight;
+int Camera::mNumCamera;
 CLEyeCameraCapture* Camera::cam[2];
 
-Camera::Camera(int aWidth, int aHeight)
+void Camera::initialize(int aWidth, int aHeight)
 {
+	mWidth = aWidth;
+	mHeight = aHeight;
+
 	cam[0] = NULL;
 	cam[1] = NULL;
 
@@ -27,29 +31,42 @@ Camera::Camera(int aWidth, int aHeight)
 
 	for(int i = 0; i < mNumCamera; i++)
 	{
-		char windowName[64];
-
 		// Query unique camera uuid
 		GUID guid = CLEyeGetCameraUUID(i);
+			
 		printf("Camera %d GUID: [%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x]\n", 
 						i+1, guid.Data1, guid.Data2, guid.Data3,
 						guid.Data4[0], guid.Data4[1], guid.Data4[2],
 						guid.Data4[3], guid.Data4[4], guid.Data4[5],
 						guid.Data4[6], guid.Data4[7]);
-		sprintf(windowName, "Camera Window %d", i+1);
 		// Create camera capture object
 		// Randomize resolution and color mode
-		cam[i] = new CLEyeCameraCapture(guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
+		//exchange camera by UUID if Upside down
+		if(guid.Data1 == 0x91cbacac){
+			cam[0] = new CLEyeCameraCapture(guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
 														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 60);
-		// Create camera capture object
-		printf("Starting capture on camera %d\n", i+1);
-		cam[i]->initCamera();
+			// Create camera capture object
+			printf("Starting capture on camera %d\n", i+1);
+			cam[0]->initCamera();
+		}
+		else if(guid.Data1 == 0xe6e7718e){
+			cam[1] = new CLEyeCameraCapture(guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
+														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 60);
+			// Create camera capture object
+			printf("Starting capture on camera %d\n", i+1);
+			cam[1]->initCamera();
+		}
+		else{
+			printf("‚¢‚Â‚à‚ÌƒJƒƒ‰‚Å‚Í‚ ‚è‚Ü‚¹‚ñB\nFrom Camera.cpp\n");
+			exit(-1);
+		}
 			
 		printf("start ok.", i+1);
 	}
+
 	//additional settings 
 	cam[0]->setPerspectiveTransform(0, 180);//pack
-	cam[1]->setPerspectiveTransform(10, -180);//mallet
+	cam[1]->setPerspectiveTransform(0, -180);//mallet
 	cam[0]->setVerticalFlip(true);
 	cam[0]->setHorizontalFlip(true);
 
@@ -57,8 +74,6 @@ Camera::Camera(int aWidth, int aHeight)
 	{
 		cam[i]->StartCapture();
 	}
-
-    renew();
 }
 
 void Camera::setSize(int aWidth, int aHeight)
@@ -97,7 +112,6 @@ void Camera::renew()
 	cam[1]->run();
 	mRobotSideImage = cam[0]->getCameraImage();
 	mHumanSideImage = cam[1]->getCameraImage();
-	//printf("renew affter\n");
 }
 
 }  // namespace Hardware
