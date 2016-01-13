@@ -1,4 +1,4 @@
-#include "Camera.h"
+Ôªø#include "Camera.h"
 
 namespace Hardware
 {
@@ -46,21 +46,21 @@ void Camera::initialize(int aWidth, int aHeight)
 			cam[0] = new CLEyeCameraCapture(guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
 														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 60);
 			// Create camera capture object
-			printf("Starting capture on camera %d\n", i+1);
+			std::cout << "Starting capture on Human Side camera" << i+1 << ". ";
 			cam[0]->initCamera();
 		}
 		else if(guid.Data1 == 0xe6e7718e){
 			cam[1] = new CLEyeCameraCapture(guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
 														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 60);
 			// Create camera capture object
-			printf("Starting capture on camera %d\n", i+1);
+			std::cout << "Starting capture on Robot Side camera" << i+1 << ". ";
 			cam[1]->initCamera();
 		}
 		else{
-			printf("Ç¢Ç¬Ç‡ÇÃÉJÉÅÉâÇ≈ÇÕÇ†ÇËÇ‹ÇπÇÒÅB\nFrom Camera.cpp\n");
+			printf("„ÅÑ„Å§„ÇÇ„ÅÆPS3Eye„Åß„ÅØ„ÅÇ„Çä„Åæ„Åõ„Çì„ÄÇ\nFrom Camera.cpp\n");
 			exit(-1);
 		}
-		printf("start ok.", i+1);
+		printf("start ok.\n", i+1);
 	}
 
 	//additional settings 

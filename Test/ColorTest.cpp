@@ -30,7 +30,6 @@ void ColorTest::hockeyTableMaskingTest() {
 	while (1) {
 		Hardware::Camera::renew();
 		cvShowImage("HockeyTableMacking", hockeyTableMasking.mask());
-		cvSaveImage("hockeyTablemasking.png", hockeyTableMasking.mask());
 		if(cv::waitKey(1) >= 0) {
 			break;
 		}

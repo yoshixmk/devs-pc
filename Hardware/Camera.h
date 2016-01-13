@@ -1,4 +1,4 @@
-#ifndef HARDWARE_CAMERA_H
+﻿#ifndef HARDWARE_CAMERA_H
 #define HARDWARE_CAMERA_H
 
 //#include <pigpio.h>

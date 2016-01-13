@@ -24,8 +24,8 @@ int main() {
 
 	Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
-	//colorTest.hockeyTableMaskingTest();
-	colorTest.robotSideHockeyTableMaskingTest();
+	colorTest.hockeyTableMaskingTest();
+	//colorTest.robotSideHockeyTableMaskingTest();
 	//colorTest.perspectiveTransformationTest();
 	//colorTest.colorExtractionTest();
 	//colorTest.nonFlipTwoImageSynthesisTest();
