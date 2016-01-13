@@ -78,7 +78,7 @@ void ColorTest::colorExtractionTest()
 {
 	std::cout<<"ColorExtraction_test"<<std::endl;
 	cvNamedWindow("ColorExtractionAll", CV_WINDOW_AUTOSIZE);
-	cvNamedWindow("ColorExtractionR", CV_WINDOW_AUTOSIZE);
+	cvNamedWindow("ColorExtractionRS", CV_WINDOW_AUTOSIZE);
 
 	Color::ColorExtraction colorExtractionMallet;
 	Color::ColorExtraction colorExtractionPack;
@@ -87,8 +87,8 @@ void ColorTest::colorExtractionTest()
 	while(1)
 	{
 		Hardware::Camera::renew();
-		cvShowImage("ColorExtractionAll", colorExtractionMallet.extractRobotSideHockeyTable());
-		cvShowImage("ColorExtractionR", colorExtractionPack.extractHockeyTable());
+		cvShowImage("ColorExtractionAll", colorExtractionPack.extractHockeyTable());
+		cvShowImage("ColorExtractionRS", colorExtractionMallet.extractRobotSideHockeyTable());
 		if(cv::waitKey(1) >= 0) {
 			break;
 		}

@@ -42,14 +42,14 @@ void Camera::initialize(int aWidth, int aHeight)
 		// Create camera capture object
 		// Randomize resolution and color mode
 		// exchange camera by UUID if Upside down
-		if(guid.Data1 == 0x91cbacac){
+		if(guid.Data1 == 0xe6e7718e){
 			cam[0] = new CLEyeCameraCapture(guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
 														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 60);
 			// Create camera capture object
 			std::cout << "Starting capture on Human Side camera" << i+1 << ". ";
 			cam[0]->initCamera();
 		}
-		else if(guid.Data1 == 0xe6e7718e){
+		else if(guid.Data1 == 0x91cbacac){
 			cam[1] = new CLEyeCameraCapture(guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
 														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 60);
 			// Create camera capture object

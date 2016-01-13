@@ -24,10 +24,10 @@ int main() {
 
 	Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
-	colorTest.hockeyTableMaskingTest();
+	//colorTest.hockeyTableMaskingTest();
 	//colorTest.robotSideHockeyTableMaskingTest();
 	//colorTest.perspectiveTransformationTest();
-	//colorTest.colorExtractionTest();
+	colorTest.colorExtractionTest();
 	//colorTest.nonFlipTwoImageSynthesisTest();
 
 	//Test::StrategyTest strategyTest;
