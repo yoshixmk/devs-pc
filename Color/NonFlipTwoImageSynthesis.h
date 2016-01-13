@@ -7,7 +7,7 @@
 
 namespace Color
 {
-class NonFlipTwoImageSynthesis// : public TwoImageSynthesis
+class NonFlipTwoImageSynthesis : public TwoImageSynthesis
 {
 private:
 	cv::Mat mMatSynthesisImage;

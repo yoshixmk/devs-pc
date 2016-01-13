@@ -15,9 +15,6 @@ private:
 	cv::Mat mMatSynthesisImage;
 	cv::Mat mMatNonDistortionImage;
 
-protected:
-	Hardware::Camera mCamera;
-
 public:
 	TwoImageSynthesis();
 	IplImage* synthesize();

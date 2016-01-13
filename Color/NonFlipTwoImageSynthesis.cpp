@@ -2,7 +2,7 @@
 
 namespace Color
 {
-NonFlipTwoImageSynthesis::NonFlipTwoImageSynthesis()// : TwoImageSynthesis()
+NonFlipTwoImageSynthesis::NonFlipTwoImageSynthesis() : TwoImageSynthesis()
 {
 	mSynthesisImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()* 2), IPL_DEPTH_8U, 4);
 }

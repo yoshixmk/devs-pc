@@ -34,14 +34,14 @@ void Camera::initialize(int aWidth, int aHeight)
 		// Query unique camera uuid
 		GUID guid = CLEyeGetCameraUUID(i);
 			
-		printf("Camera %d GUID: [%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x]\n", 
+		/*printf("Camera %d GUID: [%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x]\n", 
 						i+1, guid.Data1, guid.Data2, guid.Data3,
 						guid.Data4[0], guid.Data4[1], guid.Data4[2],
 						guid.Data4[3], guid.Data4[4], guid.Data4[5],
-						guid.Data4[6], guid.Data4[7]);
+						guid.Data4[6], guid.Data4[7]);*/
 		// Create camera capture object
 		// Randomize resolution and color mode
-		//exchange camera by UUID if Upside down
+		// exchange camera by UUID if Upside down
 		if(guid.Data1 == 0x91cbacac){
 			cam[0] = new CLEyeCameraCapture(guid, rand()<(RAND_MAX>>1) ? CLEYE_COLOR_PROCESSED : CLEYE_MONO_PROCESSED, 
 														rand()<(RAND_MAX>>1) ? CLEYE_VGA : CLEYE_QVGA, 60);
@@ -60,7 +60,6 @@ void Camera::initialize(int aWidth, int aHeight)
 			printf("Ç¢Ç¬Ç‡ÇÃÉJÉÅÉâÇ≈ÇÕÇ†ÇËÇ‹ÇπÇÒÅB\nFrom Camera.cpp\n");
 			exit(-1);
 		}
-			
 		printf("start ok.", i+1);
 	}
 

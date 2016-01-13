@@ -108,6 +108,9 @@ void ColorTest::nonFlipTwoImageSynthesisTest()
 		if (cv::waitKey(1) >= 0) {
 			break;
 		}
+		//int param[]={CV_IMWRITE_JPEG_QUALITY,100};
+		//cvSaveImage("../output.jpg", nonFlipTwoImageSynthesis.synthesizeNonDistortion(), param);
+		
 	}
 }
 
