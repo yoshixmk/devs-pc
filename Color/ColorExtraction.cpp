@@ -155,12 +155,12 @@ IplImage* ColorExtraction::extractRobotSideHockeyTable()
 void ColorExtraction::setMalletHSV()
 {
 	//黄色の場合
-	//mHMin = 25;
-	//mHMax = 44;
-	//mSMin = 171;
-	//mSMax = 255;
-	//mVMin = 126;
-	//mVMax = 255;
+	mHMin = 13;
+	mHMax = 44;
+	mSMin = 92;
+	mSMax = 255;
+	mVMin = 136;
+	mVMax = 174;
 
 //  青の場合
 	//mHMin = 106;
@@ -173,12 +173,13 @@ void ColorExtraction::setMalletHSV()
 
 void ColorExtraction::setPackHSV()
 {
-	//mHMin = 54;
-	//mHMax = 84;
-	//mSMin = 100;
-	//mSMax = 255;
-	//mVMin = 0;
-	//mVMax = 255;
+	//緑
+	mHMin = 61;
+	mHMax = 72;
+	mSMin = 31;
+	mSMax = 88;
+	mVMin = 39;
+	mVMax = 63;
 }
 
 }  // namespace Color

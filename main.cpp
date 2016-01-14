@@ -20,15 +20,15 @@ int main() {
 	//hardwareTest.speakerTest();
 //	hardwareTest.bgmSignalTest();
 	//hardwareTest.cameraTest();
-	//hardwareTest.serialTest();
+	hardwareTest.serialTest();
 
 	Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
 	//colorTest.hockeyTableMaskingTest();
 	//colorTest.robotSideHockeyTableMaskingTest();
 	//colorTest.perspectiveTransformationTest();
-	colorTest.colorExtractionTest();
 	//colorTest.nonFlipTwoImageSynthesisTest();
+	//colorTest.colorExtractionTest();
 
 	//Test::StrategyTest strategyTest;
 	//strategyTest.anomalyDetectionTest();
