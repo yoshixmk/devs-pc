@@ -5,12 +5,15 @@ namespace Strategy
 
 MalletCoordinate::MalletCoordinate()
 {
-	mColorExtraction.setPackHSV();
-	IplImage* packMasikingImage = mColorExtraction.extractRobotSideHockeyTable();
-	cvSetImageCOI(packMasikingImage, 1);
+	mColorExtraction.setMalletHSV();
+
+	//1ch画像から、重心計算はできる。
+	mColorExtraction.extractRobotSideHockeyTable();
+	//cvSetImageCOI(malletMasikingImage, 1); //左は使用できなくなった
+	IplImage* malletMasikingImage = mColorExtraction.getSingleColorExtraction();
 
 	CvMoments moment_mallet;
-	cvMoments(packMasikingImage, &moment_mallet, 0);
+	cvMoments(malletMasikingImage, &moment_mallet, 0);
 
 	double m00_now_mallet = cvGetSpatialMoment(&moment_mallet, 0, 0);
 	double m10_now_mallet = cvGetSpatialMoment(&moment_mallet, 1, 0);
@@ -25,10 +28,10 @@ MalletCoordinate::MalletCoordinate()
 
 CvPoint MalletCoordinate::getCoordinate()
 {
-	mColorExtraction.setMalletHSV();
-	IplImage* malletMasikingImage = mColorExtraction.extractRobotSideHockeyTable();
-
-	cvSetImageCOI(malletMasikingImage, 1);
+	//1ch画像から、重心計算はできる。
+	mColorExtraction.extractRobotSideHockeyTable();
+	//cvSetImageCOI(malletMasikingImage, 1); //左は使用できなくなった
+	IplImage* malletMasikingImage = mColorExtraction.getSingleColorExtraction();
 
 	CvMoments moment_mallet;
 	cvMoments(malletMasikingImage, &moment_mallet, 0);

@@ -7,7 +7,7 @@ PackCoordinate::PackCoordinate()
 {
 	mColorExtraction.setPackHSV();
 
-	//いずれかのチャネルで取得すれば、重心計算はできる。使用するのは赤とした。
+	//1ch画像から、重心計算はできる。
 	mColorExtraction.extractHockeyTable();
 	//cvSetImageCOI(packMasikingImage, 1); //左は使用できなくなった
 	IplImage* packMasikingImage = mColorExtraction.getSingleColorExtraction();
@@ -32,7 +32,7 @@ CvPoint PackCoordinate::getCoordinate()
 	//現在の座標を、前回の座標に変える
 	mPreviousXYCoordinate = mXYCoordinate;
 	
-	//いずれかのチャネルで取得すれば、重心計算はできる。使用するのは赤とした。
+	//1ch画像から、重心計算はできる。
 	mColorExtraction.extractHockeyTable();
 
 	//cvSetImageCOI(packMasikingImage, 1); //左は使用できなくなった
