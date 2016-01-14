@@ -8,7 +8,6 @@ PackCoordinate::PackCoordinate()
 	mColorExtraction.setPackHSV();
 
 	//いずれかのチャネルで取得すれば、重心計算はできる。使用するのは赤とした。
-	printf("error before\n");
 	mColorExtraction.extractHockeyTable();
 	//cvSetImageCOI(packMasikingImage, 1); //左は使用できなくなった
 	IplImage* packMasikingImage = mColorExtraction.getSingleColorExtraction();
@@ -50,9 +49,6 @@ CvPoint PackCoordinate::getCoordinate()
 	double gY_now_pack = m01_now_pack / m00_now_pack;
 
 	mXYCoordinate = cvPoint(gX_now_pack, gY_now_pack);
-
-      cvCircle(packMasikingImage, mXYCoordinate, 80, CV_RGB(0,0,255), 6, 8, 0);
-	  cvShowImage("packMasikingImage", packMasikingImage);
 
 	return mXYCoordinate;
 }
