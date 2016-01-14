@@ -26,16 +26,18 @@ private:
 						   int aCh3Lower, int aCh3Upper);
 	IplImage* mColorExtractionImage;
 	IplImage* mSrc3Ch;
-
+	IplImage* mSingleColorImage;
 
 public:
 	ColorExtraction();
 	ColorExtraction(int aHMin, int aHMax, int aSMin, int aSMax, int aVMin, int aVMax);
+	~ColorExtraction();
 	void setHSV(int aHMin, int aHMax, int aSMin, int aSMax, int aVMin, int aVMax);
 	IplImage* extractHockeyTable();
 	IplImage* extractRobotSideHockeyTable();
 	void setMalletHSV();
 	void setPackHSV();
+	IplImage* getSingleColorExtraction();
 };
 
 }  // namespace Color

@@ -1,6 +1,6 @@
 ﻿#include "Test/HardwareTest.h"
 #include "Test/ColorTest.h"
-//#include "Test/StrategyTest.h"
+#include "Test/StrategyTest.h"
 //#include "Test/UITest.h"
 //#include "Test/ShowWindowTest.h"
 #include <stdio.h>
@@ -20,7 +20,7 @@ int main() {
 	//hardwareTest.speakerTest();
 //	hardwareTest.bgmSignalTest();
 	//hardwareTest.cameraTest();
-	hardwareTest.serialTest();
+	//hardwareTest.serialTest();
 
 	Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
@@ -30,11 +30,10 @@ int main() {
 	//colorTest.nonFlipTwoImageSynthesisTest();
 	//colorTest.colorExtractionTest();
 
-	//Test::StrategyTest strategyTest;
-	//strategyTest.anomalyDetectionTest();
-	//strategyTest.packCoordinateTest();
-//	strategyTest.malletCoordinateTest();
-//	strategyTest.frameCoordinateTest();
+	Test::StrategyTest strategyTest;
+	strategyTest.packCoordinateTest();
+	//strategyTest.malletCoordinateTest();
+	//strategyTest.frameCoordinateTest();
 	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();
 	//strategyTest.frequencySwitching_Y_Test();

@@ -6,9 +6,13 @@ namespace Strategy
 PackCoordinate::PackCoordinate()
 {
 	mColorExtraction.setPackHSV();
-	IplImage* packMasikingImage = mColorExtraction.extractHockeyTable();
-	cvSetImageCOI(packMasikingImage, 1);
 
+	//いずれかのチャネルで取得すれば、重心計算はできる。使用するのは赤とした。
+	printf("error before\n");
+	mColorExtraction.extractHockeyTable();
+	//cvSetImageCOI(packMasikingImage, 1); //左は使用できなくなった
+	IplImage* packMasikingImage = mColorExtraction.getSingleColorExtraction();
+	
 	CvMoments moment_pack;
 	cvMoments(packMasikingImage, &moment_pack, 0);
 
@@ -28,11 +32,12 @@ CvPoint PackCoordinate::getCoordinate()
 {
 	//現在の座標を、前回の座標に変える
 	mPreviousXYCoordinate = mXYCoordinate;
+	
+	//いずれかのチャネルで取得すれば、重心計算はできる。使用するのは赤とした。
+	mColorExtraction.extractHockeyTable();
 
-	mColorExtraction.setPackHSV();
-	IplImage* packMasikingImage = mColorExtraction.extractHockeyTable();
-
-	cvSetImageCOI(packMasikingImage, 1);
+	//cvSetImageCOI(packMasikingImage, 1); //左は使用できなくなった
+	IplImage* packMasikingImage = mColorExtraction.getSingleColorExtraction();
 
 	CvMoments moment_pack;
 	cvMoments(packMasikingImage, &moment_pack, 0);
@@ -44,7 +49,10 @@ CvPoint PackCoordinate::getCoordinate()
 	double gX_now_pack = m10_now_pack / m00_now_pack;
 	double gY_now_pack = m01_now_pack / m00_now_pack;
 
-	CvPoint mXYCoordinate = cvPoint(gX_now_pack, gY_now_pack);
+	mXYCoordinate = cvPoint(gX_now_pack, gY_now_pack);
+
+      cvCircle(packMasikingImage, mXYCoordinate, 80, CV_RGB(0,0,255), 6, 8, 0);
+	  cvShowImage("packMasikingImage", packMasikingImage);
 
 	return mXYCoordinate;
 }

@@ -19,7 +19,6 @@ public:
 	CvPoint getCoordinate();
 
 	CvPoint getPreviousCoordinate();
-
 };
 
 }  // namespace Strategy

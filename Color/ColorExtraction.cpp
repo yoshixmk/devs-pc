@@ -6,6 +6,7 @@ namespace Color
 ColorExtraction::ColorExtraction():mHockeyTableMasking(), mRobotSideHockeyTableMasking()
 {
 	mColorExtractionImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
+	mSingleColorImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 1);
 	mSrc3Ch = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
 	mHMin = 0;
 	mHMax = 255;
@@ -18,6 +19,7 @@ ColorExtraction::ColorExtraction():mHockeyTableMasking(), mRobotSideHockeyTableM
 ColorExtraction::ColorExtraction(int aHMin, int aHMax, int aSMin, int aSMax, int aVMin, int aVMax) :mHockeyTableMasking(), mRobotSideHockeyTableMasking()
 {
 	mColorExtractionImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
+	mSingleColorImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 1);
 	mSrc3Ch = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
 	mHMax = aHMax;
 	mHMin = aHMin;
@@ -25,6 +27,13 @@ ColorExtraction::ColorExtraction(int aHMin, int aHMax, int aSMin, int aSMax, int
 	mSMin = aSMin;
 	mVMax = aVMax;
 	mVMin = aVMin;
+};
+
+ColorExtraction::~ColorExtraction()
+{
+	cvReleaseImage(&mColorExtractionImage);
+	cvReleaseImage(&mSingleColorImage);
+	cvReleaseImage(&mSrc3Ch);
 };
 
 void ColorExtraction::cvColorExtraction(IplImage* aSrcImg, IplImage* aDstImg,
@@ -117,13 +126,15 @@ void ColorExtraction::cvColorExtraction(IplImage* aSrcImg, IplImage* aDstImg,
 	cvZero(aDstImg);
 	cvCopy(aSrcImg, aDstImg, Mask_img);
 
+	//座標計算用に、1チャネルで利用できるようにしておく。
+	cvCopy(Mask_img, mSingleColorImage);
+
 	//解放
 	cvReleaseImage(&Color_img);
 	cvReleaseImage(&ch1_img);
 	cvReleaseImage(&ch2_img);
 	cvReleaseImage(&ch3_img);
 	cvReleaseImage(&Mask_img);
-
 }
 
 void ColorExtraction::setHSV(int aHMin, int aHMax, int aSMin, int aSMax, int aVMin, int aVMax)
@@ -180,6 +191,11 @@ void ColorExtraction::setPackHSV()
 	mSMax = 88;
 	mVMin = 39;
 	mVMax = 63;
+}
+
+IplImage* ColorExtraction::getSingleColorExtraction()
+{
+	return mSingleColorImage;
 }
 
 }  // namespace Color

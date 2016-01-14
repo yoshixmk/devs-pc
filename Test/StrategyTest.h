@@ -11,7 +11,7 @@
 //#include "../Strategy/FrequencyX.h"
 //#include "../Strategy/FrequencyY.h"
 #include "../Strategy/RobotAction.h"
-#include "../CLEyeMulticam/CLEyeCameraCapture.h"
+#include "../Hardware/Camera.h"
 #include <iostream>
 #include <windows.h>
 
@@ -21,7 +21,6 @@ namespace Test {
 
 	public:
 		StrategyTest();
-		void anomalyDetectionTest();
 		void packCoordinateTest();
 		void malletCoordinateTest();
 		void frameCoordinateTest();

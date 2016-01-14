@@ -5,22 +5,20 @@ namespace Test {
 
 	}
 
-	/*void StrategyTest::anomalyDetectionTest()
-	{
-		std::cout << "!!!anomalyDetection Test!!!" << std::endl;
-		Strategy::AnomalyDetection anomalyDetectionTest;
-
-		std::cout << anomalyDetectionTest.detect() << std::endl;
-	}*/
-
 	void StrategyTest::packCoordinateTest()
 	{
 		std::cout << "!!!packCoordinate Test!!!" << std::endl;
 
 		Hardware::Camera::renew();
 		Strategy::PackCoordinate packCoordinate;
-		std::cout << "X: " << packCoordinate.getCoordinate().x << std::endl;
-		std::cout << "Y: " << packCoordinate.getCoordinate().y << std::endl;
+		while (1){
+			Hardware::Camera::renew();
+			std::cout << "X: " << packCoordinate.getCoordinate().x;
+			std::cout << "  Y: " << packCoordinate.getCoordinate().y << std::endl;
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 		//	packCoordinate.getPreviousCoordinate();
 	}
 
@@ -32,8 +30,8 @@ namespace Test {
 		Strategy::MalletCoordinate malletCoordinate;
 		while (1){
 			Hardware::Camera::renew();
-			std::cout << "X: " << malletCoordinate.getCoordinate().x << std::endl;
-			std::cout << "Y: " << malletCoordinate.getCoordinate().y << std::endl;
+			std::cout << "X: " << malletCoordinate.getCoordinate().x;
+			std::cout << "  Y: " << malletCoordinate.getCoordinate().y << std::endl;
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
