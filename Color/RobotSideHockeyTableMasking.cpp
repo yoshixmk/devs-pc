@@ -40,4 +40,10 @@ IplImage* RobotSideHockeyTableMasking::mask()
 
 	return mRobotSideHockeyTableImage;
 }
+
+//更新なしで取得。更新＆取得は、mask()を呼び出し。
+IplImage* RobotSideHockeyTableMasking::getMaskingImage()
+{
+	return mRobotSideHockeyTableImage;
+}
 }  // namespace Color

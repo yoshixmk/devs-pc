@@ -4,7 +4,7 @@
 #include "../Strategy/PackCoordinate.h"
 #include "../Strategy/MalletCoordinate.h"
 #include "../Strategy/FrameCoordinate.h"
-//#include "../Strategy/Locus.h"
+#include "../Strategy/Locus.h"
 #include "../Strategy/FrequencySwitching.h"
 #include "../Strategy/FrequencySwitchingX.h"
 #include "../Strategy/FrequencySwitchingY.h"

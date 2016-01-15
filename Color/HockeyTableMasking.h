@@ -17,6 +17,7 @@ private:
 public:
 	HockeyTableMasking();
 	IplImage* mask();
+	IplImage* getMaskingImage();
 };
 
 }  // namespace Color

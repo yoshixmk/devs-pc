@@ -75,23 +75,31 @@ namespace Test {
 
 	void StrategyTest::locusTest()
 	{
-		//std::cout << "!!!Locus Test!!!" << std::endl;
-		//Hardware::Camera::renew();
-		//Strategy::PackCoordinate packCoordinate;
-		//Strategy::Locus locus;
-		//while (1){
-		//	Hardware::Camera::renew();
-		//	CvPoint coordinate = packCoordinate.getCoordinate();
-		//	CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
-		//	locus.calculateLocus(coordinate, previousCoordinate);
-		//	double a_inclination = locus.getAInclination();
-		//	double b_intercept = locus.getBIntercept();
-		//	std::cout << "a: " << a_inclination << std::endl;
-		//	std::cout << "b: " << b_intercept << std::endl;
-		//	if (cv::waitKey(1) >= 0) {
-		//		break;
-		//	}
-		//}
+		std::cout << "!!!Locus Test!!!" << std::endl;
+		Hardware::Camera::renew();
+		Strategy::PackCoordinate packCoordinate;
+		Strategy::Locus locus;
+		Color::HockeyTableMasking hockeyTableMasking;
+		IplImage* locusMasking;
+		int yLine = 350;
+		while (1){
+			Hardware::Camera::renew();
+			CvPoint coordinate = packCoordinate.getCoordinate();
+			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
+			locus.calculateLocus(coordinate, previousCoordinate);
+			double a_inclination = locus.getAInclination();
+			double b_intercept = locus.getBIntercept();
+			std::cout << "a: " << a_inclination;
+			std::cout << "  b: " << b_intercept << std::endl;
+			locusMasking = hockeyTableMasking.mask();
+			cvLine(locusMasking, cvPoint(0, yLine), cvPoint(320, yLine), cvScalar(0, 0, 255));
+			cvCircle(locusMasking, cvPoint((yLine - b_intercept)/a_inclination, yLine), 10, cvScalar(255, 0, 0));
+			cvShowImage("Locas", locusMasking);
+
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 	}
 
 	void StrategyTest::frequencySwitchingTest()

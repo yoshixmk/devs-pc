@@ -15,6 +15,7 @@ private:
 public:
 	RobotSideHockeyTableMasking();
 	IplImage* mask();
+	IplImage* getMaskingImage();
 };
 
 }  // namespace Color

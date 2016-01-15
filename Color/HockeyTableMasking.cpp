@@ -44,4 +44,11 @@ IplImage* HockeyTableMasking::mask()
 
 	return mHockeyTableImage;
 }
+
+//更新なしで取得。更新＆取得は、mask()を呼び出し。
+IplImage* HockeyTableMasking::getMaskingImage()
+{
+	return mHockeyTableImage;
+}
+
 }  // namespace Color
