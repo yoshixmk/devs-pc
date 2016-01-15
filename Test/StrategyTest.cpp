@@ -89,15 +89,14 @@ namespace Test {
 			locus.calculateLocus(coordinate, previousCoordinate);
 			double a_inclination = locus.getAInclination();
 			double b_intercept = locus.getBIntercept();
-			std::cout << "a: " << a_inclination;
+			//std::cout << "a: " << a_inclination;
 			//std::cout << "  b: " << b_intercept << std::endl;
 
 			CvPoint framePoint = locus.getFrameOutPoint(yLine); //X座標がフレームではない場合が目標座標
+			locus.setNextAB();
 			CvPoint preFramePoint = coordinate;
 			locusMasking = hockeyTableMasking.mask();
-			std::cout << "  x: " << framePoint.x;
-			std::cout << "  y: " << framePoint.y << std::endl;
-
+			/*
 			cvLine(locusMasking, Strategy::FrameCoordinate::getLowerLeftF(), Strategy::FrameCoordinate::getUpperLeftF(), cvScalar(0, 255, 255));
 			cvLine(locusMasking, Strategy::FrameCoordinate::getLowerRightF(), Strategy::FrameCoordinate::getUpperRightF(), cvScalar(0, 255, 255));
 			while(1){
@@ -112,10 +111,11 @@ namespace Test {
 					cvLine(locusMasking, preFramePoint, framePoint, cvScalar(0, 255, 0));
 					preFramePoint = framePoint;
 					framePoint = locus.getFrameOutPoint(yLine);
+					locus.setNextAB();
 					locus.calculateLocus(preFramePoint, framePoint);
 				}
-			}
-			
+			}*/
+			locus.oldLocus(locusMasking);
 			
 			//cvLine(locusMasking, cvPoint(0, yLine), cvPoint(320, yLine), cvScalar(0, 0, 255));
 			//cvCircle(locusMasking, cvPoint((yLine - b_intercept)/a_inclination, yLine), 10, cvScalar(255, 0, 0));

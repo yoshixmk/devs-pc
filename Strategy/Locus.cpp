@@ -20,6 +20,9 @@ void Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2)
 		mAInclination = 0;
 		mBIntercept = 0;
 	}
+
+	mCoordinate1 = aCoordinate1;
+	mCoordinate2 = aCoordinate2;
 }
 
 double Locus::getAInclination()
@@ -75,4 +78,99 @@ void Locus::setRandom(bool aIsRandoem)
 {
 	mIsRandom = aIsRandoem;
 }
+
+//äÓñ{ìIÇ…ÇÕÅAgetFrameOutPoint()ÇÃå„Ç…óòópÇ∑ÇÍÇŒÇ¢Ç¢ÅB
+void Locus::setNextAB()
+{
+	int a = getAInclination();
+	int b = getBIntercept();
+	int frameWidth = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x) / 2 - (FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x) / 2;
+	int frameX = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x) / 2;
+	int h = frameWidth * a;
+
+	if(a < 0){
+		h *= -1;
+	}
+	
+	if(a > 0){
+		int y = a * frameX + b;
+		mBIntercept += h;//(y - a * frameX) * 2;
+		std::cout << "a: " << a;
+		std::cout << "  b: " << b << std::endl;
+	}
+	mAInclination *= -1;
+}
+
+void Locus::oldLocus(IplImage* show_img)
+{
+	int a_inclination = mAInclination;
+	int b_intercept = mBIntercept;
+	
+	
+
+	int left_frame = FrameCoordinate::getLowerLeftF().x;
+	int right_frame = FrameCoordinate::getUpperRightF().x;
+	int origin_coordinateY = a_inclination * left_frame + b_intercept;
+	int gX_after = mCoordinate1.x;
+	int gY_after = mCoordinate1.y;
+	int center_line = FrameCoordinate::getLowerRightF().x  - FrameCoordinate::getLowerLeftF().x;
+	int target_coordinateY = 350;
+	int target_coordinateX = (target_coordinateY - mBIntercept) - mAInclination;
+	int target_destanceY = 350 - gY_after;
+		//àÍéüä÷êîÇ≈ñ⁄ïWXç¿ïWÇÃåvéZ
+	if(a_inclination){
+		target_coordinateX = (int)((target_destanceY - b_intercept) / a_inclination);
+	}
+	if(target_coordinateX < left_frame){
+		cvLine(show_img, cvPoint((int)gX_after, (int)gY_after), cvPoint(left_frame, origin_coordinateY), cvScalar(0,255,255), 2);
+	}
+	else if(FrameCoordinate::getUpperRightF().x < target_coordinateX){
+		cvLine(show_img, cvPoint((int)gX_after, (int)gY_after), cvPoint(right_frame, origin_coordinateY), cvScalar(0,255,255), 2);
+	}
+	else{
+		cvLine(show_img, cvPoint((int)gX_after, (int)gY_after), cvPoint((int)target_coordinateX, target_destanceY), cvScalar(0,255,255), 2);
+	}
+
+	int rebound_max = 5;
+	int rebound_num = 0;
+
+	while(target_coordinateX < left_frame || right_frame < target_coordinateX){
+		if(target_coordinateX < left_frame){ //ç∂ë§ÇÃògÇ≈ÇÃíµÇÀï‘ÇËå„ÇÃãOê’ÅBç∂ògë§ïΩãœ
+			target_coordinateX = 2 * left_frame - target_coordinateX;
+			b_intercept -= 2 * ((-a_inclination) * left_frame);
+			a_inclination = -a_inclination;
+			origin_coordinateY = a_inclination * left_frame + b_intercept;
+			if(target_coordinateX < right_frame){
+				cvLine(show_img, cvPoint(left_frame, origin_coordinateY), cvPoint((int)target_coordinateX, target_destanceY), cvScalar(0,255,255), 2);
+			}
+			else{
+				//ç∂ë§ÇÃògÇ©ÇÁâEë§ÇÃògÇ…ìñÇΩÇÈÇ∆Ç´ÇÃYç¿ïW
+				target_coordinateY = a_inclination * right_frame + b_intercept;
+				cvLine(show_img, cvPoint(left_frame, origin_coordinateY), cvPoint(right_frame, target_coordinateY), cvScalar(0,255,255), 2);
+			}
+		}
+		else if(right_frame < target_coordinateX){ //âEë§ÇÃògÇ≈ÇÃíµÇÀï‘ÇËå„ÇÃãOê’ÅBâEògë§ïΩãœ
+			target_coordinateX = 2 * right_frame - target_coordinateX;
+			b_intercept += 2 * (a_inclination * right_frame);
+			a_inclination= -a_inclination;
+			//cvLine(show_img, cvPoint(right_frame, b_intercept), cvPoint((int)target_coordinateX, target_destanceY), cvScalar(0,0,255), 2);
+			origin_coordinateY = a_inclination * right_frame + b_intercept;
+			if(left_frame < target_coordinateX){
+				cvLine(show_img, cvPoint(right_frame, origin_coordinateY), cvPoint((int)target_coordinateX, target_destanceY), cvScalar(0,255,255), 2);
+			}
+			else{
+				//âEë§ÇÃògÇ©ÇÁç∂ë§ÇÃògÇ…ìñÇΩÇÈÇ∆Ç´ÇÃYç¿ïW
+				target_coordinateY = a_inclination * left_frame + b_intercept;
+				cvLine(show_img, cvPoint(right_frame, origin_coordinateY), cvPoint(left_frame, target_coordinateY), cvScalar(0,255,255), 2);
+			}
+		}
+		rebound_num++;
+		if(rebound_max < rebound_num){
+			//íµÇÀï‘ÇËÇ™ëΩÇ∑Ç¨ÇÈéûÇÕÅAíÜâõÇéwíË
+			target_coordinateX = center_line;
+			break;
+		}
+	}
+}
+
 }  // namespace Strategy
