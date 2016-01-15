@@ -11,14 +11,14 @@ class PackCoordinate : public Coordinate
 private:
 	CvPoint mXYCoordinate;
 
-	CvPoint mPreviousXYCoordinate;
+	CvPoint mPreviousXYCoordinate[10];
 
 public:
 	PackCoordinate();
 
 	CvPoint getCoordinate();
 
-	CvPoint getPreviousCoordinate();
+	CvPoint getPreviousCoordinate(int aryNum=0);
 };
 
 }  // namespace Strategy
