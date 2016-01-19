@@ -86,15 +86,15 @@ namespace Test {
 			Hardware::Camera::renew();
 			CvPoint coordinate = packCoordinate.getCoordinate();
 			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
-			locus.calculateLocus(coordinate, previousCoordinate);
-			double a_inclination = locus.getAInclination();
-			double b_intercept = locus.getBIntercept();
+			//locus.calculateLocus(coordinate, previousCoordinate);
+			//double a_inclination = locus.getAInclination();
+			//double b_intercept = locus.getBIntercept();
 			//std::cout << "a: " << a_inclination;
 			//std::cout << "  b: " << b_intercept << std::endl;
 
-			CvPoint framePoint = locus.getFrameOutPoint(yLine); //X座標がフレームではない場合が目標座標
-			locus.setNextAB();
-			CvPoint preFramePoint = coordinate;
+			//CvPoint framePoint = locus.getFrameOutPoint(yLine); //X座標がフレームではない場合が目標座標
+			//locus.setNextAB();
+			//CvPoint preFramePoint = coordinate;
 			locusMasking = hockeyTableMasking.mask();
 			/*
 			cvLine(locusMasking, Strategy::FrameCoordinate::getLowerLeftF(), Strategy::FrameCoordinate::getUpperLeftF(), cvScalar(0, 255, 255));
@@ -115,10 +115,12 @@ namespace Test {
 					locus.calculateLocus(preFramePoint, framePoint);
 				}
 			}*/
-			locus.oldLocus(locusMasking);
 			
 			//cvLine(locusMasking, cvPoint(0, yLine), cvPoint(320, yLine), cvScalar(0, 0, 255));
 			//cvCircle(locusMasking, cvPoint((yLine - b_intercept)/a_inclination, yLine), 10, cvScalar(255, 0, 0));
+
+			CvPoint point = locus.getLocusCoordinate(coordinate, previousCoordinate, yLine);
+			cvCircle(locusMasking, point, 10, cvScalar(255, 0, 0));
 			cvShowImage("Locas", locusMasking);
 
 			if (cv::waitKey(1) >= 0) {

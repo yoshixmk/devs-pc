@@ -9,6 +9,49 @@ Locus::Locus()
 	mIsRandom = false;
 }
 
+CvPoint Locus::getLocusCoordinate(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLine)
+{
+	CvPoint targetCoordinate;
+	targetCoordinate.y = aYLine;
+	int left_frame = FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x ;
+	int right_frame = FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x;
+	if((aCoordinate2.x - aCoordinate1.x) != 0){
+		mAInclination = (aCoordinate2.y - aCoordinate1.y) / (aCoordinate2.x - aCoordinate1.x);
+		mBIntercept = aCoordinate2.y - mAInclination * aCoordinate2.x;
+		targetCoordinate.x = (int)((aYLine - mBIntercept) / mAInclination);
+		
+		
+		int rebound_max = 3; //3回以上跳ね返る軌跡の場合、当たり障りのない位置（中央）を指定
+		int rebound_num = 0;
+		while(targetCoordinate.x < left_frame || right_frame < targetCoordinate.x){
+			if(targetCoordinate.x < left_frame){
+				targetCoordinate.x = 2 * left_frame - targetCoordinate.x;
+				mBIntercept -= 2 * ((-mAInclination) * left_frame);
+				mAInclination = -mAInclination;
+			}
+			else if(right_frame < targetCoordinate.x){
+				targetCoordinate.x = 2 * right_frame - targetCoordinate.x;
+				mBIntercept += 2 * (mAInclination * right_frame);
+				mAInclination = -mAInclination;
+			}
+			rebound_num++;
+			if(rebound_max < rebound_num){
+				//跳ね返りが多すぎる時は、中央を指定
+				targetCoordinate.x = (left_frame + right_frame) / 2;
+				break;
+			}
+		}
+	}
+	else{
+		mAInclination = 0;
+		mBIntercept = 0;
+		//当たり障りのない位置（中央）を指定
+		int centerLine = FrameCoordinate::getLowerRightF().x + FrameCoordinate::getLowerLeftF().x;
+		targetCoordinate = cvPoint(centerLine, aYLine);
+	}
+
+	return targetCoordinate;
+}
 
 void Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2)
 {
@@ -20,9 +63,6 @@ void Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2)
 		mAInclination = 0;
 		mBIntercept = 0;
 	}
-
-	mCoordinate1 = aCoordinate1;
-	mCoordinate2 = aCoordinate2;
 }
 
 double Locus::getAInclination()
@@ -101,7 +141,7 @@ void Locus::setNextAB()
 	mAInclination *= -1;
 }
 
-void Locus::oldLocus(IplImage* show_img)
+/*void Locus::oldLocus(IplImage* show_img)
 {
 	int a_inclination = mAInclination;
 	int b_intercept = mBIntercept;
@@ -171,6 +211,6 @@ void Locus::oldLocus(IplImage* show_img)
 			break;
 		}
 	}
-}
+}*/
 
 }  // namespace Strategy
