@@ -234,4 +234,26 @@ namespace Test {
 		}*/
 	}
 
+	void StrategyTest::frequencyManualTest()
+	{
+		std::cout << "!!!FrequencyManual Test!!!" << std::endl;
+		Strategy::FrequencyManual frequencyManual;
+		frequencyManual.setOutputInformation('A', 1000, 500);
+	}
+
+	void StrategyTest::frequencyManualXTest()
+	{
+		std::cout << "!!!FrequencyManualX Test!!!" << std::endl;
+		Strategy::FrequencyManual frequencyManual;
+		frequencyManual.setOutputInformation('B', 900, 400);
+
+	}
+
+	void StrategyTest::frequencyManualYTest()
+	{
+		std::cout << "!!!FrequencyManualY Test!!!" << std::endl;
+		Strategy::FrequencyManual frequencyManual;
+		frequencyManual.setOutputInformation('C', 800, 300);
+	}
+
 }  // namespace Test

@@ -11,6 +11,9 @@
 //#include "../Strategy/FrequencyX.h"
 //#include "../Strategy/FrequencyY.h"
 #include "../Strategy/RobotAction.h"
+#include "../Strategy/FrequencyManual.h"
+#include "../Strategy/FrequencyManualX.h"
+#include "../Strategy/FrequencyManualY.h"
 #include "../Hardware/Camera.h"
 #include <iostream>
 #include <windows.h>
@@ -32,6 +35,9 @@ namespace Test {
 		void frequency_X_Test();
 		void frequency_Y_Test();
 		void robotActionTest();
+		void frequencyManualTest();
+		void frequencyManualXTest();
+		void frequencyManualYTest();
 	};
 
 }  // namespace Test

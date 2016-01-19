@@ -1,6 +1,7 @@
 ﻿#include "FrequencySwitchingX.h"
 
-namespace Strategy {
+namespace Strategy 
+{
 
 FrequencySwitchingX::FrequencySwitchingX() :FrequencySwitching()
 {
@@ -64,7 +65,7 @@ int FrequencySwitchingX::getCurrentFrequency(){
 	return mCurrentFrequency;
 }
 
-void FrequencySwitchingX::sankakuProcess(char aDistination, int aMoveDistance)
+void FrequencySwitchingX::sankakuProcess(char aDirection, int aMoveDistance)
 {
 	int closest_frequency;
 	float ossum = 0;
@@ -80,21 +81,21 @@ void FrequencySwitchingX::sankakuProcess(char aDistination, int aMoveDistance)
 		max_freq = max_freq + 100;
 	}
 	max_freq = max_freq - 100;																	
-	printf("move_dist: %c\n", aDistination);
-	printf("max_freq: %d\n",max_freq);
+	//printf("move_dist: %c\n", aDirection);
+	//printf("max_freq: %d\n",max_freq);
 
 	mBuf[1] = nowFrequency / 20;
-	mBuf[2] = aDistination;
+	mBuf[2] = aDirection;
 	while(max_freq > nowFrequency){
 		mBuf[0] = nowFrequency / 20;
-		std::cout << "output: " << nowFrequency << std::endl;
+		//std::cout << "output: " << nowFrequency << std::endl;
 		nowFrequency = nowFrequency+100;
 		Sleep(10);	//10ms
 		FrequencySwitching::output();
 	}
 	while(mInitFrequency <= nowFrequency){
 		mBuf[0] = nowFrequency / 20;
-		std::cout << "output: " << nowFrequency << std::endl;
+		//std::cout << "output: " << nowFrequency << std::endl;
 		nowFrequency = nowFrequency - 100;
 		Sleep(10);	//10ms
 		FrequencySwitching::output();

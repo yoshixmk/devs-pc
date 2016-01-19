@@ -13,7 +13,7 @@ FrequencySwitching::FrequencySwitching()
 	mTimer.resetStartOperatingTime();
 
 	for (int i = 0; i < 4; i++){
-		FrequencySwitching::mBuf[i] = 0;
+		mBuf[i] = 0;
 	}
 }
 
