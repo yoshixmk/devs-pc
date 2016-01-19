@@ -86,41 +86,16 @@ namespace Test {
 			Hardware::Camera::renew();
 			CvPoint coordinate = packCoordinate.getCoordinate();
 			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
-			//locus.calculateLocus(coordinate, previousCoordinate);
-			//double a_inclination = locus.getAInclination();
-			//double b_intercept = locus.getBIntercept();
-			//std::cout << "a: " << a_inclination;
-			//std::cout << "  b: " << b_intercept << std::endl;
-
-			//CvPoint framePoint = locus.getFrameOutPoint(yLine); //X座標がフレームではない場合が目標座標
-			//locus.setNextAB();
-			//CvPoint preFramePoint = coordinate;
-			locusMasking = hockeyTableMasking.mask();
-			/*
-			cvLine(locusMasking, Strategy::FrameCoordinate::getLowerLeftF(), Strategy::FrameCoordinate::getUpperLeftF(), cvScalar(0, 255, 255));
-			cvLine(locusMasking, Strategy::FrameCoordinate::getLowerRightF(), Strategy::FrameCoordinate::getUpperRightF(), cvScalar(0, 255, 255));
-			while(1){
-				if(framePoint.x == 0 && framePoint.y == 0){
-					break;
-				}
-				else if(framePoint.y == yLine){
-					cvLine(locusMasking, preFramePoint, framePoint, cvScalar(0, 255, 0));
-					break;
-				}
-				else{
-					cvLine(locusMasking, preFramePoint, framePoint, cvScalar(0, 255, 0));
-					preFramePoint = framePoint;
-					framePoint = locus.getFrameOutPoint(yLine);
-					locus.setNextAB();
-					locus.calculateLocus(preFramePoint, framePoint);
-				}
-			}*/
 			
-			//cvLine(locusMasking, cvPoint(0, yLine), cvPoint(320, yLine), cvScalar(0, 0, 255));
-			//cvCircle(locusMasking, cvPoint((yLine - b_intercept)/a_inclination, yLine), 10, cvScalar(255, 0, 0));
+			locusMasking = hockeyTableMasking.mask();
+			if( abs(coordinate.x - previousCoordinate.x) > 1){
+				if(locus.calculateLocus(coordinate, previousCoordinate, yLine) == true){
+					CvPoint forecastPoint = locus.getLocusCoordinate();
 
-			CvPoint point = locus.getLocusCoordinate(coordinate, previousCoordinate, yLine);
-			cvCircle(locusMasking, point, 10, cvScalar(255, 0, 0));
+					cvCircle(locusMasking, forecastPoint, 10, cvScalar(0, 0, 255));
+				}
+			}
+
 			cvShowImage("Locas", locusMasking);
 
 			if (cv::waitKey(1) >= 0) {
@@ -146,10 +121,11 @@ namespace Test {
 	{
 		std::cout << "!!!FrequencySwitching X Test!!!" << std::endl;
 		Strategy::FrequencySwitchingX frequencySwitchingX;
-		frequencySwitchingX.setOutputInformation('A', 3);
+		/*frequencySwitchingX.setOutputInformation('A', 3);
 		while (1){
 			frequencySwitchingX.output();
-		}
+		}*/
+		frequencySwitchingX.sankakuProcess('A', 100);
 	}
 
 	void StrategyTest::frequencySwitching_Y_Test()

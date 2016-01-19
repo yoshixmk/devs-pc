@@ -4,7 +4,7 @@ namespace Strategy {
 
 FrequencySwitchingX::FrequencySwitchingX() :FrequencySwitching()
 {
-	mInitFrequency = 300;
+	mInitFrequency = 400;
 	mFrequencyUpCount = 32;
 	mAmountOfChange = 100;
 	mIntervaTime = 0.010;
@@ -62,6 +62,46 @@ void FrequencySwitchingX::stop(){
 
 int FrequencySwitchingX::getCurrentFrequency(){
 	return mCurrentFrequency;
+}
+
+void FrequencySwitchingX::sankakuProcess(char aDistination, int aMoveDistance)
+{
+	int closest_frequency;
+	float ossum = 0;
+	float sum = 0.176;
+	float next_freq = 0;
+	int max_freq = 100;
+	int freq =0;
+	int nowFrequency = mInitFrequency;
+	
+	while(aMoveDistance >= next_freq * 2){
+		next_freq = next_freq + sum +0.10*freq;
+		freq++;
+		max_freq = max_freq + 100;
+	}
+	max_freq = max_freq - 100;																	
+	printf("move_dist: %c\n", aDistination);
+	printf("max_freq: %d\n",max_freq);
+
+	mBuf[1] = nowFrequency / 20;
+	mBuf[2] = aDistination;
+	while(max_freq > nowFrequency){
+		mBuf[0] = nowFrequency / 20;
+		std::cout << "output: " << nowFrequency << std::endl;
+		nowFrequency = nowFrequency+100;
+		Sleep(10);	//10ms
+		FrequencySwitching::output();
+	}
+	while(mInitFrequency <= nowFrequency){
+		mBuf[0] = nowFrequency / 20;
+		std::cout << "output: " << nowFrequency << std::endl;
+		nowFrequency = nowFrequency - 100;
+		Sleep(10);	//10ms
+		FrequencySwitching::output();
+	}
+	mBuf[0] = 0;
+
+	FrequencySwitching::output();
 }
 
 } /* namespace Strategy */

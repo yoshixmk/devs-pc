@@ -12,19 +12,17 @@ private:
 	double mAInclination;
 	double mBIntercept;
 	bool mIsRandom;
-	//CvPoint mCoordinate1;
-	//CvPoint mCoordinate2;
+	CvPoint mForecastPoint;
+
 
 public:
 	Locus();
-	CvPoint Locus::getLocusCoordinate(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLine);
-	void calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2);
+	CvPoint Locus::getLocusCoordinate();
+	bool calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLine);
 	double getAInclination();
 	double getBIntercept();
 	CvPoint getFrameOutPoint(int aLineY);
 	void setRandom(bool aIsRandoem);
-	void setNextAB();
-	//void oldLocus(IplImage* show_img);
 };
 
 }  // namespace Strategy
