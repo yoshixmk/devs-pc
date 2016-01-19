@@ -5,22 +5,20 @@ namespace Test {
 
 	}
 
-	/*void StrategyTest::anomalyDetectionTest()
-	{
-		std::cout << "!!!anomalyDetection Test!!!" << std::endl;
-		Strategy::AnomalyDetection anomalyDetectionTest;
-
-		std::cout << anomalyDetectionTest.detect() << std::endl;
-	}*/
-
 	void StrategyTest::packCoordinateTest()
 	{
 		std::cout << "!!!packCoordinate Test!!!" << std::endl;
 
 		Hardware::Camera::renew();
 		Strategy::PackCoordinate packCoordinate;
-		std::cout << "X: " << packCoordinate.getCoordinate().x << std::endl;
-		std::cout << "Y: " << packCoordinate.getCoordinate().y << std::endl;
+		while (1){
+			Hardware::Camera::renew();
+			std::cout << "X: " << packCoordinate.getCoordinate().x;
+			std::cout << "  Y: " << packCoordinate.getCoordinate().y << std::endl;
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 		//	packCoordinate.getPreviousCoordinate();
 	}
 
@@ -32,8 +30,8 @@ namespace Test {
 		Strategy::MalletCoordinate malletCoordinate;
 		while (1){
 			Hardware::Camera::renew();
-			std::cout << "X: " << malletCoordinate.getCoordinate().x << std::endl;
-			std::cout << "Y: " << malletCoordinate.getCoordinate().y << std::endl;
+			std::cout << "X: " << malletCoordinate.getCoordinate().x;
+			std::cout << "  Y: " << malletCoordinate.getCoordinate().y << std::endl;
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
@@ -77,23 +75,56 @@ namespace Test {
 
 	void StrategyTest::locusTest()
 	{
-		//std::cout << "!!!Locus Test!!!" << std::endl;
-		//Hardware::Camera::renew();
-		//Strategy::PackCoordinate packCoordinate;
-		//Strategy::Locus locus;
-		//while (1){
-		//	Hardware::Camera::renew();
-		//	CvPoint coordinate = packCoordinate.getCoordinate();
-		//	CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
-		//	locus.calculateLocus(coordinate, previousCoordinate);
-		//	double a_inclination = locus.getAInclination();
-		//	double b_intercept = locus.getBIntercept();
-		//	std::cout << "a: " << a_inclination << std::endl;
-		//	std::cout << "b: " << b_intercept << std::endl;
-		//	if (cv::waitKey(1) >= 0) {
-		//		break;
-		//	}
-		//}
+		std::cout << "!!!Locus Test!!!" << std::endl;
+		Hardware::Camera::renew();
+		Strategy::PackCoordinate packCoordinate;
+		Strategy::Locus locus;
+		Color::HockeyTableMasking hockeyTableMasking;
+		IplImage* locusMasking;
+		int yLine = 350;
+		while (1){
+			Hardware::Camera::renew();
+			CvPoint coordinate = packCoordinate.getCoordinate();
+			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
+			locus.calculateLocus(coordinate, previousCoordinate);
+			double a_inclination = locus.getAInclination();
+			double b_intercept = locus.getBIntercept();
+			//std::cout << "a: " << a_inclination;
+			//std::cout << "  b: " << b_intercept << std::endl;
+
+			CvPoint framePoint = locus.getFrameOutPoint(yLine); //X座標がフレームではない場合が目標座標
+			locus.setNextAB();
+			CvPoint preFramePoint = coordinate;
+			locusMasking = hockeyTableMasking.mask();
+			/*
+			cvLine(locusMasking, Strategy::FrameCoordinate::getLowerLeftF(), Strategy::FrameCoordinate::getUpperLeftF(), cvScalar(0, 255, 255));
+			cvLine(locusMasking, Strategy::FrameCoordinate::getLowerRightF(), Strategy::FrameCoordinate::getUpperRightF(), cvScalar(0, 255, 255));
+			while(1){
+				if(framePoint.x == 0 && framePoint.y == 0){
+					break;
+				}
+				else if(framePoint.y == yLine){
+					cvLine(locusMasking, preFramePoint, framePoint, cvScalar(0, 255, 0));
+					break;
+				}
+				else{
+					cvLine(locusMasking, preFramePoint, framePoint, cvScalar(0, 255, 0));
+					preFramePoint = framePoint;
+					framePoint = locus.getFrameOutPoint(yLine);
+					locus.setNextAB();
+					locus.calculateLocus(preFramePoint, framePoint);
+				}
+			}*/
+			locus.oldLocus(locusMasking);
+			
+			//cvLine(locusMasking, cvPoint(0, yLine), cvPoint(320, yLine), cvScalar(0, 0, 255));
+			//cvCircle(locusMasking, cvPoint((yLine - b_intercept)/a_inclination, yLine), 10, cvScalar(255, 0, 0));
+			cvShowImage("Locas", locusMasking);
+
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 	}
 
 	void StrategyTest::frequencySwitchingTest()

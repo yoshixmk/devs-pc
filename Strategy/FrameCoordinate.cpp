@@ -1,29 +1,19 @@
-#include "FrameCoordinate.h"
+﻿#include "FrameCoordinate.h"
 
 namespace Strategy
 {
-	CvPoint FrameCoordinate::mUpperLeftF = cvPoint(21, 33);
-	CvPoint FrameCoordinate::mLowerLeftF = cvPoint(19, 219);
-	CvPoint FrameCoordinate::mUpperRightF = cvPoint(139, 30);
-	CvPoint FrameCoordinate::mLowerRightF = cvPoint(138, 219);
-	CvPoint FrameCoordinate::mUpperLeftG = cvPoint(33, 22);
-	CvPoint FrameCoordinate::mLowerLeftG = cvPoint(27, 227);
-	CvPoint FrameCoordinate::mUpperRightG = cvPoint(128, 22);
-	CvPoint FrameCoordinate::mLowerRightG = cvPoint(127, 228);
-	CvPoint FrameCoordinate::mRobotGoalLeft = cvPoint(57, 229);
-	CvPoint FrameCoordinate::mRobotGoalRight = cvPoint(100, 229);
+	CvPoint FrameCoordinate::mUpperLeftF = cvPoint(31, 66);
+	CvPoint FrameCoordinate::mLowerLeftF = cvPoint(33, 398);
+	CvPoint FrameCoordinate::mUpperRightF = cvPoint(297, 73);
+	CvPoint FrameCoordinate::mLowerRightF = cvPoint(290, 410);
+	CvPoint FrameCoordinate::mUpperLeftG = cvPoint(76, 28);
+	CvPoint FrameCoordinate::mLowerLeftG = cvPoint(83, 441);
+	CvPoint FrameCoordinate::mUpperRightG = cvPoint(247, 25);
+	CvPoint FrameCoordinate::mLowerRightG = cvPoint(233, 448);
+	CvPoint FrameCoordinate::mRobotGoalLeft = cvPoint(116, 447);
+	CvPoint FrameCoordinate::mRobotGoalRight = cvPoint(202, 450);
 	FrameCoordinate::FrameCoordinate()
 	{
-		//	mUpperLeftF = cvPoint(21, 33);
-		//	mLowerLeftF = cvPoint(19, 219);
-		//	mUpperRightF = cvPoint(139, 30);
-		//	mLowerRightF = cvPoint(138, 219);
-		//	mUpperLeftG = cvPoint(33, 22);
-		//	mLowerLeftG = cvPoint(27, 227);
-		//	mUpperRightG = cvPoint(128, 22);
-		//	mLowerRightG = cvPoint(127, 228);
-		//	mRobotGoalLeft = cvPoint(57, 229);
-		//	mRobotGoalRight = cvPoint(100, 229);
 	}
 
 	CvPoint FrameCoordinate::getUpperLeftF()

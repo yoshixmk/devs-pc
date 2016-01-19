@@ -4,14 +4,14 @@
 #include "../Strategy/PackCoordinate.h"
 #include "../Strategy/MalletCoordinate.h"
 #include "../Strategy/FrameCoordinate.h"
-//#include "../Strategy/Locus.h"
+#include "../Strategy/Locus.h"
 #include "../Strategy/FrequencySwitching.h"
 #include "../Strategy/FrequencySwitchingX.h"
 #include "../Strategy/FrequencySwitchingY.h"
 //#include "../Strategy/FrequencyX.h"
 //#include "../Strategy/FrequencyY.h"
 #include "../Strategy/RobotAction.h"
-#include "../CLEyeMulticam/CLEyeCameraCapture.h"
+#include "../Hardware/Camera.h"
 #include <iostream>
 #include <windows.h>
 
@@ -21,7 +21,6 @@ namespace Test {
 
 	public:
 		StrategyTest();
-		void anomalyDetectionTest();
 		void packCoordinateTest();
 		void malletCoordinateTest();
 		void frameCoordinateTest();

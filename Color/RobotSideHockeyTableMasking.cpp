@@ -28,21 +28,22 @@ IplImage* RobotSideHockeyTableMasking::mask()
 	pts[0][2] = cvPoint(width, height*2);
 	pts[0][3] = cvPoint(0, height*2);
 
-	pts[1][0] = cvPoint(29, height);
-	pts[1][1] = cvPoint(24, 409);
-	pts[1][2] = cvPoint(75, 465);
-	pts[1][3] = cvPoint(246, 463);
-	pts[1][4] = cvPoint(310, 410);
-	pts[1][5] = cvPoint(299, height);
-//	pts[1][6] = cvPoint(39, 233);
-//	pts[1][7] = cvPoint(15, 217);
+	pts[1][0] = cvPoint(35, height);
+	pts[1][1] = cvPoint(33, 398);
+	pts[1][2] = cvPoint(83, 441);
+	pts[1][3] = cvPoint(233, 448);
+	pts[1][4] = cvPoint(290, 410);
+	pts[1][5] = cvPoint(297, height);
 
-
-//    cvLine(src_img, center_frame_left, center_frame_right, CV_RGB( 0, 255, 255 ));
 	cvCopy(src_img, mRobotSideHockeyTableImage);
-//    mRobotSideHockeyTableImage = src_img;
     cvFillPoly(mRobotSideHockeyTableImage, pts, npts, 2, CV_RGB(0, 0, 0));
 
+	return mRobotSideHockeyTableImage;
+}
+
+//更新なしで取得。更新＆取得は、mask()を呼び出し。
+IplImage* RobotSideHockeyTableMasking::getMaskingImage()
+{
 	return mRobotSideHockeyTableImage;
 }
 }  // namespace Color
