@@ -11,6 +11,11 @@ FrequencyManualX::~FrequencyManualX(void)
 {
 }
 
+void FrequencyManualX::setOutputInformation(int aFrequencyX)
+{
+	mBuf[1] = aFrequencyX;
+}
+
 void FrequencyManualX::setOutputInformation(char aDirection, int aFrequencyX)
 {
 	mBuf[0] = aFrequencyX;

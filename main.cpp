@@ -40,7 +40,7 @@ int main() {
 	//strategyTest.robotActionTest();
 	//strategyTest.frequencyManualTest();
 	//strategyTest.frequencyManualXTest();
-	strategyTest.frequencyManualYTest();
+	//strategyTest.frequencyManualYTest();
 
 //	Test::UITest uiTest;
 //	uiTest.intelligentTest();

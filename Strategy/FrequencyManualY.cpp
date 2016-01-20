@@ -10,6 +10,11 @@ FrequencyManualY::~FrequencyManualY()
 {
 }
 
+void FrequencyManualY::setOutputInformation(int aFrequencyY)
+{
+	mBuf[1] = aFrequencyY;
+}
+
 void FrequencyManualY::setOutputInformation(char aDirection, int aFrequencyY)
 {
 	mBuf[1] = aFrequencyY;

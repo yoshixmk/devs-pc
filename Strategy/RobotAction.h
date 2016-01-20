@@ -1,18 +1,20 @@
 #ifndef STRATEGY_ROBOT_ACTION_H
 #define STRATEGY_ROBOT_ACTION_H
 
-#include "../Strategy/FrequencySwitching.h"
+//#include "../Strategy/FrequencySwitching.h"
 #include "../Strategy/FrequencySwitchingX.h"
-#include "../Strategy/FrequencySwitchingY.h"
+//#include "../Strategy/FrequencySwitchingY.h"
 #include "../Strategy/FrameCoordinate.h"
-//#include "../Strategy/AnomalyDetection.h"
+#include "../Strategy/FrequencyManualX.h"
+#include "../Strategy/FrequencyManualY.h"
 
 namespace Strategy {
 class RobotAction {
 private:
 	FrequencySwitchingX mFrequencySwitchingX;
-	FrequencySwitchingY mFrequencySwitchingY;
-	//AnomalyDetection anomalyDetection;
+	//FrequencySwitchingY mFrequencySwitchingY;
+	FrequencyManualX mFrequencyManualX;
+	FrequencyManualY mFrequencyManualY;
 
 	void moveForLimit();
 

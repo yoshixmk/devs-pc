@@ -10,6 +10,7 @@ class FrequencyManualY : public FrequencyManual
 public:
 	FrequencyManualY();
 	~FrequencyManualY();
+	void setOutputInformation(int aFrequencyY);
 	void setOutputInformation(char aDirection, int aFrequencyY);
 	void setDirection();
 	void setFrequencyY();
