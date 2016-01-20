@@ -8,12 +8,13 @@
 #include "../Strategy/FrequencySwitching.h"
 #include "../Strategy/FrequencySwitchingX.h"
 #include "../Strategy/FrequencySwitchingY.h"
-//#include "../Strategy/FrequencyX.h"
-//#include "../Strategy/FrequencyY.h"
 #include "../Strategy/RobotAction.h"
 #include "../Strategy/FrequencyManual.h"
 #include "../Strategy/FrequencyManualX.h"
 #include "../Strategy/FrequencyManualY.h"
+#include "../Strategy/RobotAction.h"
+#include "../Strategy/OffenseDefenseStrategy.h"
+
 #include "../Hardware/Camera.h"
 #include <iostream>
 #include <windows.h>
@@ -34,10 +35,11 @@ namespace Test {
 		void frequencyTest();
 		void frequency_X_Test();
 		void frequency_Y_Test();
-		void robotActionTest();
 		void frequencyManualTest();
 		void frequencyManualXTest();
 		void frequencyManualYTest();
+		void robotActionTest();
+		void offenseDeffenseStrategyTest();
 	};
 
 }  // namespace Test
