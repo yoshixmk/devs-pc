@@ -6,6 +6,7 @@
 #include "MalletCoordinate.h"
 #include "Locus.h"
 #include "RobotAction.h"
+#include "FrameCoordinate.h"
 
 namespace Strategy {
 class OffenseDefenseStrategy: public Strategy {
