@@ -1,5 +1,4 @@
 ﻿#include "ColorExtraction.h"
-#include "../CLEye/opencv.hpp"
 
 namespace Color
 {
@@ -7,6 +6,8 @@ namespace Color
 ColorExtraction::ColorExtraction():mHockeyTableMasking(), mRobotSideHockeyTableMasking()
 {
 	mColorExtractionImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
+	mSingleColorImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 1);
+	mSrc3Ch = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
 	mHMin = 0;
 	mHMax = 255;
 	mSMin = 0;
@@ -18,12 +19,21 @@ ColorExtraction::ColorExtraction():mHockeyTableMasking(), mRobotSideHockeyTableM
 ColorExtraction::ColorExtraction(int aHMin, int aHMax, int aSMin, int aSMax, int aVMin, int aVMax) :mHockeyTableMasking(), mRobotSideHockeyTableMasking()
 {
 	mColorExtractionImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
+	mSingleColorImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 1);
+	mSrc3Ch = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
 	mHMax = aHMax;
 	mHMin = aHMin;
 	mSMax = aSMax;
 	mSMin = aSMin;
 	mVMax = aVMax;
 	mVMin = aVMin;
+};
+
+ColorExtraction::~ColorExtraction()
+{
+	cvReleaseImage(&mColorExtractionImage);
+	cvReleaseImage(&mSingleColorImage);
+	cvReleaseImage(&mSrc3Ch);
 };
 
 void ColorExtraction::cvColorExtraction(IplImage* aSrcImg, IplImage* aDstImg,
@@ -116,13 +126,15 @@ void ColorExtraction::cvColorExtraction(IplImage* aSrcImg, IplImage* aDstImg,
 	cvZero(aDstImg);
 	cvCopy(aSrcImg, aDstImg, Mask_img);
 
+	//座標計算用に、1チャネルで利用できるようにしておく。
+	cvCopy(Mask_img, mSingleColorImage);
+
 	//解放
 	cvReleaseImage(&Color_img);
 	cvReleaseImage(&ch1_img);
 	cvReleaseImage(&ch2_img);
 	cvReleaseImage(&ch3_img);
 	cvReleaseImage(&Mask_img);
-
 }
 
 void ColorExtraction::setHSV(int aHMin, int aHMax, int aSMin, int aSMax, int aVMin, int aVMax)
@@ -137,40 +149,53 @@ void ColorExtraction::setHSV(int aHMin, int aHMax, int aSMin, int aSMax, int aVM
 
 IplImage* ColorExtraction::extractHockeyTable()
 {
-	mColorExtractionImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
-	IplImage* src_img = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
-	src_img = mHockeyTableMasking.mask();
-	cvColorExtraction(src_img, mColorExtractionImage, CV_BGR2HSV, mHMin, mHMax, mSMin, mSMax, mVMin, mVMax);
+	IplImage* src_img = mHockeyTableMasking.mask();
+	cvCvtColor(src_img, mSrc3Ch, CV_BGRA2BGR);
+	cvColorExtraction(mSrc3Ch, mColorExtractionImage, CV_BGR2HSV, mHMin, mHMax, mSMin, mSMax, mVMin, mVMax);
 	return mColorExtractionImage;
 }
 
 IplImage* ColorExtraction::extractRobotSideHockeyTable()
 {
-	mColorExtractionImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
-	IplImage* src_img = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
-	src_img = mRobotSideHockeyTableMasking.mask();
-	cvColorExtraction(src_img, mColorExtractionImage, CV_BGR2HSV, mHMin, mHMax, mSMin, mSMax, mVMin, mVMax);
+	IplImage* src_img = mRobotSideHockeyTableMasking.mask();
+	cvCvtColor(src_img, mSrc3Ch, CV_BGRA2BGR);
+	cvColorExtraction(mSrc3Ch, mColorExtractionImage, CV_BGR2HSV, mHMin, mHMax, mSMin, mSMax, mVMin, mVMax);
 	return mColorExtractionImage;
 }
 
 void ColorExtraction::setMalletHSV()
 {
-	mHMin = 16;// 106;
-	mHMax = 25;// 135;
-	mSMin = 178;// 218;
-	mSMax = 255;// 255;
-	mVMin = 120;// 0;
-	mVMax = 181;// 105;
+	//黄色の場合
+	mHMin = 13;
+	mHMax = 44;
+	mSMin = 92;
+	mSMax = 255;
+	mVMin = 136;
+	mVMax = 174;
+
+//  青の場合
+	//mHMin = 106;
+	//mHMax = 135;
+	//mSMin = 218;
+	//mSMax = 255;
+	//mVMin = 0;
+	//mVMax = 105;
 }
 
 void ColorExtraction::setPackHSV()
 {
-	mHMin = 46;// 54;
-	mHMax = 70;// 84;
-	mSMin = 115;// 100;
-	mSMax = 255;// 255;
-	mVMin = 0;// 0;
-	mVMax = 255;// 255;
+	//緑
+	mHMin = 61;
+	mHMax = 72;
+	mSMin = 31;
+	mSMax = 88;
+	mVMin = 39;
+	mVMax = 63;
+}
+
+IplImage* ColorExtraction::getSingleColorExtraction()
+{
+	return mSingleColorImage;
 }
 
 }  // namespace Color

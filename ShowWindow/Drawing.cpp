@@ -17,12 +17,12 @@ void Drawing::drawDefenseLine(IplImage* aImage) {
 }
 
 void Drawing::drawPackLocus(IplImage* aImage) {
-	mLocus.calculateLocus(mPackCoordinate.getCoordinate(), mPackCoordinate.getPreviousCoordinate());
-	if(mLocus.getAInclination() < 0){
-		cvLine(aImage, mPackCoordinate.getCoordinate(), cvPoint(mFrameCoordinate.getLowerLeftF().x, mLocus.getAInclination() * mFrameCoordinate.getLowerLeftF().x + mLocus.getBIntercept()), cvScalar(0, 255, 255), 2);
-	}
-	else{
-		cvLine(aImage, mPackCoordinate.getCoordinate(), cvPoint(mFrameCoordinate.getLowerRightF().x, mLocus.getAInclination() * mFrameCoordinate.getLowerRightF().x + mLocus.getBIntercept()), cvScalar(0, 255, 255), 2);
-	}
+	//mLocus.calculateLocus(mPackCoordinate.getCoordinate(), mPackCoordinate.getPreviousCoordinate());
+	//if(mLocus.getAInclination() < 0){
+	//	cvLine(aImage, mPackCoordinate.getCoordinate(), cvPoint(mFrameCoordinate.getLowerLeftF().x, mLocus.getAInclination() * mFrameCoordinate.getLowerLeftF().x + mLocus.getBIntercept()), cvScalar(0, 255, 255), 2);
+	//}
+	//else{
+	//	cvLine(aImage, mPackCoordinate.getCoordinate(), cvPoint(mFrameCoordinate.getLowerRightF().x, mLocus.getAInclination() * mFrameCoordinate.getLowerRightF().x + mLocus.getBIntercept()), cvScalar(0, 255, 255), 2);
+	//}
 }
 }  // namespace ShowWindow

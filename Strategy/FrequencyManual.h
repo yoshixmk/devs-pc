@@ -2,17 +2,26 @@
 #define FREQUENCY_MANUAL_H
 
 #include "../Hardware/Serial.h"
+#include <iostream>
+#include <cstdlib>
+#include <windows.h>
 
 namespace Strategy
 {
 class FrequencyManual
 {
 protected:
-	Hardware::Serial serial;
+	Hardware::Serial mSerial;
+	char mTargetDirection; //'A' 'B' 'C' 'D'
+	int mFrequencyX;
+	int mFrequencyY;
+	static char mBuf[4]; //送信する内容
 
 public:
-	FrequencyManual(void);
-	~FrequencyManual(void);
+	FrequencyManual();
+	~FrequencyManual();
+	void setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY);
+	void output();
 };
 
 }  // namespace Strategy

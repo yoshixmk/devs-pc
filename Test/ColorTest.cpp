@@ -30,7 +30,6 @@ void ColorTest::hockeyTableMaskingTest() {
 	while (1) {
 		Hardware::Camera::renew();
 		cvShowImage("HockeyTableMacking", hockeyTableMasking.mask());
-		cvSaveImage("hockeyTablemasking.png", hockeyTableMasking.mask());
 		if(cv::waitKey(1) >= 0) {
 			break;
 		}
@@ -79,20 +78,71 @@ void ColorTest::colorExtractionTest()
 {
 	std::cout<<"ColorExtraction_test"<<std::endl;
 	cvNamedWindow("ColorExtractionAll", CV_WINDOW_AUTOSIZE);
-	cvNamedWindow("ColorExtractionR", CV_WINDOW_AUTOSIZE);
+	cvNamedWindow("ColorExtractionRS", CV_WINDOW_AUTOSIZE);
 
 	Color::ColorExtraction colorExtractionMallet;
 	Color::ColorExtraction colorExtractionPack;
 	colorExtractionMallet.setMalletHSV();
 	colorExtractionPack.setPackHSV();
+
+	int iSliderValuePack1 = 61; 
+	cvCreateTrackbar("minH", "ColorExtractionAll", &iSliderValuePack1, 255);
+	int iSliderValuePack2 = 72;
+	cvCreateTrackbar("maxH", "ColorExtractionAll", &iSliderValuePack2, 255);
+	int iSliderValuePack3 = 31;
+	cvCreateTrackbar("minS", "ColorExtractionAll", &iSliderValuePack3, 255);
+	int iSliderValuePack4 = 88;
+	cvCreateTrackbar("maxS", "ColorExtractionAll", &iSliderValuePack4, 255);
+	int iSliderValuePack5 = 39;
+	cvCreateTrackbar("minV", "ColorExtractionAll", &iSliderValuePack5, 255);
+	int iSliderValuePack6 = 63;
+	cvCreateTrackbar("maxV", "ColorExtractionAll", &iSliderValuePack6, 255);
+	//mallet threthold 0, 255, 100, 255, 140, 200
+	int iSliderValuemallet1 = 13;
+	cvCreateTrackbar("minH", "ColorExtractionRS", &iSliderValuemallet1, 255);
+	int iSliderValuemallet2 = 44;
+	cvCreateTrackbar("maxH", "ColorExtractionRS", &iSliderValuemallet2, 255);
+	int iSliderValuemallet3 = 92;
+	cvCreateTrackbar("minS", "ColorExtractionRS", &iSliderValuemallet3, 255);
+	int iSliderValuemallet4 = 255;
+	cvCreateTrackbar("maxS", "ColorExtractionRS", &iSliderValuemallet4, 255);
+	int iSliderValuemallet5 = 136;
+	cvCreateTrackbar("minV", "ColorExtractionRS", &iSliderValuemallet5, 255);
+	int iSliderValuemallet6 = 174;
+	cvCreateTrackbar("maxV", "ColorExtractionRS", &iSliderValuemallet6, 255);
+
+	Color::HockeyTableMasking hockeyTableMasking;
+	//cvNamedWindow("HockeyTableMacking", CV_WINDOW_AUTOSIZE);
 	while(1)
 	{
 		Hardware::Camera::renew();
-		cvShowImage("ColorExtractionAll", colorExtractionMallet.extractRobotSideHockeyTable());
-		cvShowImage("ColorExtractionR", colorExtractionPack.extractHockeyTable());
+		//colorExtractionPack.setHSV(iSliderValuePack1, iSliderValuePack2, iSliderValuePack3, iSliderValuePack4, iSliderValuePack5, iSliderValuePack6);
+		//colorExtractionMallet.setHSV(iSliderValuemallet1, iSliderValuemallet2, iSliderValuemallet3, iSliderValuemallet4, iSliderValuemallet5, iSliderValuemallet6);
+		cvShowImage("ColorExtractionAll", colorExtractionPack.extractHockeyTable());
+		cvShowImage("ColorExtractionRS", colorExtractionMallet.extractRobotSideHockeyTable());
+		//cvShowImage("HockeyTableMacking", hockeyTableMasking.mask());
 		if(cv::waitKey(1) >= 0) {
 			break;
 		}
+	}
+}
+
+void ColorTest::nonFlipTwoImageSynthesisTest()
+{
+	std::cout << "NonFlip_TwoImageSynthesis_test" << std::endl;
+	Color::NonFlipTwoImageSynthesis nonFlipTwoImageSynthesis;
+
+	while(1)
+	{
+		Hardware::Camera::renew();
+		cvShowImage("SynthesisImage", nonFlipTwoImageSynthesis.synthesizeNonDistortion());
+		//cvSaveImage("../output2.jpg", nonFlipTwoImageSynthesis.synthesizeNonDistortion());
+		if (cv::waitKey(1) >= 0) {
+			break;
+		}
+		//int param[]={CV_IMWRITE_JPEG_QUALITY,100};
+		//cvSaveImage("../output.jpg", nonFlipTwoImageSynthesis.synthesizeNonDistortion(), param);
+		
 	}
 }
 

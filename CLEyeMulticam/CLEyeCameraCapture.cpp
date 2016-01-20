@@ -50,24 +50,7 @@ void CLEyeCameraCapture::DecrementCameraParameter(int param)
 
 void CLEyeCameraCapture::run()
 {
-	/*CvMat *map_matrix;
-	CvPoint2D32f src_pnt[4], dst_pnt[4];
-	src_pnt[0] = cvPoint2D32f (25*2, 12*2);
-	src_pnt[1] = cvPoint2D32f (4*2, 120*2);
-	src_pnt[2] = cvPoint2D32f (154*2, 120*2);
-	src_pnt[3] = cvPoint2D32f (136*2, 14*2);
-
-	dst_pnt[0] = cvPoint2D32f (19*2, 12*2);
-	dst_pnt[1] = cvPoint2D32f (19*2, 120*2);
-	dst_pnt[2] = cvPoint2D32f (141*2, 120*2);
-	dst_pnt[3] = cvPoint2D32f (141*2, 12*2);*/
-
 	CLEyeCameraGetFrame(_cam, pCapBuffer);
-
-	/*map_matrix = cvCreateMat (3, 3, CV_32FC1);
-	cvGetPerspectiveTransform (src_pnt, dst_pnt, map_matrix);
-
-	cvWarpPerspective (pCapImage, mCameraImage, map_matrix, CV_INTER_LINEAR + CV_WARP_FILL_OUTLIERS, cvScalarAll (100));*/
 }
 
 IplImage* CLEyeCameraCapture::getCameraImage(){
@@ -84,7 +67,6 @@ void CLEyeCameraCapture::initCamera()
 	if(_cam == NULL)		return;
 	// Get camera frame dimensions
 	CLEyeCameraGetFrameDimensions(_cam, w, h);
-	//pCapImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
 	mCameraImage = cvCreateImage(cvSize(w, h), IPL_DEPTH_8U, 4);
 
 	// Set some camera parameters
@@ -95,7 +77,6 @@ void CLEyeCameraCapture::initCamera()
 
 	// Start capturing
 	CLEyeCameraStart(_cam);
-	//(pCapImage, &pCapBuffer);
 	cvGetImageRawData(mCameraImage, &pCapBuffer);
 }
 
@@ -106,7 +87,7 @@ void CLEyeCameraCapture::finalCamera()
 	// Destroy camera object
 	CLEyeDestroyCamera(_cam);
 	// Destroy the allocated OpenCV image
-	//cvReleaseImage(&pCapImage);
+	cvReleaseImage(&mCameraImage);
 	_cam = NULL;
 }
 

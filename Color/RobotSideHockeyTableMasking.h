@@ -3,17 +3,19 @@
 
 #include "Masking.h"
 #include "../CLEye/opencv.hpp"
+#include "NonFlipTwoImageSynthesis.h"
 
 namespace Color {
 class RobotSideHockeyTableMasking: public Masking {
 private:
 	IplImage* mRobotSideHockeyTableImage;
-	TwoImageSynthesis mTwoImageSynthesis;
+	//TwoImageSynthesis -> NonFlipTwoImageSynthesis へ変更
+	NonFlipTwoImageSynthesis mTwoImageSynthesis;
 
 public:
 	RobotSideHockeyTableMasking();
-//	~RobotSideHockeyTableMasking();
 	IplImage* mask();
+	IplImage* getMaskingImage();
 };
 
 }  // namespace Color

@@ -23,9 +23,9 @@ void Serial::serialOpen()
 			NULL);        // Null for Comm Devices
 
 		if (mComPort == INVALID_HANDLE_VALUE)
-			printf("Error in opening serial port");
+			printf("Error in opening serial port\n");
 		else
-			printf("opening serial port successful");
+			printf("opening serial port successful\n");
 		first_time++;
 	}
 
@@ -50,7 +50,7 @@ void Serial::serialClose()
 void Serial::serialWrite(char* aBuf, int aBytes)
 {
 	mLengthOfSent = aBytes; // 送信する文字数
-	 WriteFile(mComPort, aBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
+	WriteFile(mComPort, aBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
 	cv::waitKey(10);
 }
 

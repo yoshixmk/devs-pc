@@ -57,8 +57,6 @@ void HardwareTest::cameraTest() {
 	cvNamedWindow("RobotSide", CV_WINDOW_AUTOSIZE);
 	cvNamedWindow("HumanSide", CV_WINDOW_AUTOSIZE);
 
-	int key;
-
 	while (1) {
 		Hardware::Camera::renew();
 		cvShowImage("RobotSide", camera.getRobotSideImage());
@@ -72,31 +70,34 @@ void HardwareTest::cameraTest() {
 void HardwareTest::serialTest(){
 	std::cout << "Serial_test" << std::endl;
 	Hardware::Serial serial;
-	unsigned char buf[] = { 50, 0, 'A', 100, 100, 100, 100, 100, 100 };
-	int i = 0;
-	while (1){
-		serial.serialWrite((char*)buf, 4);
-		if (buf[0] == 255){
-			break;
-		}
+	
+	while(1){
+		unsigned char buf[] = { 50, 0, 'A', 100, 100, 100, 100, 100, 100 };
+		int i = 0;
+		while (1){
+			serial.serialWrite((char*)buf, 4);
+			if (buf[0] == 255){
+				break;
+			}
 
-		if (buf[0] < 255){
-			buf[0] += 1;
-		}
-		if (buf[1] < 255){
-			buf[1] += 1;
-		}
-		if (buf[2] == 'A'){
-			buf[2] = 'B';
-		}
-		else if (buf[2] == 'B'){
-			buf[2] = 'C';
-		}
-		else if (buf[2] == 'C'){
-			buf[2] = 'D';
-		}
-		else if (buf[2] == 'D'){
-			buf[2] = 'A';
+			if (buf[0] < 255){
+				buf[0] += 1;
+			}
+			if (buf[1] < 255){
+				buf[1] += 1;
+			}
+			if (buf[2] == 'A'){
+				buf[2] = 'B';
+			}
+			else if (buf[2] == 'B'){
+				buf[2] = 'C';
+			}
+			else if (buf[2] == 'C'){
+				buf[2] = 'D';
+			}
+			else if (buf[2] == 'D'){
+				buf[2] = 'A';
+			}
 		}
 	}
 }

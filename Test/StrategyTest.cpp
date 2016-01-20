@@ -5,22 +5,20 @@ namespace Test {
 
 	}
 
-	/*void StrategyTest::anomalyDetectionTest()
-	{
-		std::cout << "!!!anomalyDetection Test!!!" << std::endl;
-		Strategy::AnomalyDetection anomalyDetectionTest;
-
-		std::cout << anomalyDetectionTest.detect() << std::endl;
-	}*/
-
 	void StrategyTest::packCoordinateTest()
 	{
 		std::cout << "!!!packCoordinate Test!!!" << std::endl;
 
 		Hardware::Camera::renew();
 		Strategy::PackCoordinate packCoordinate;
-		std::cout << "X: " << packCoordinate.getCoordinate().x << std::endl;
-		std::cout << "Y: " << packCoordinate.getCoordinate().y << std::endl;
+		while (1){
+			Hardware::Camera::renew();
+			std::cout << "X: " << packCoordinate.getCoordinate().x;
+			std::cout << "  Y: " << packCoordinate.getCoordinate().y << std::endl;
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 		//	packCoordinate.getPreviousCoordinate();
 	}
 
@@ -32,8 +30,8 @@ namespace Test {
 		Strategy::MalletCoordinate malletCoordinate;
 		while (1){
 			Hardware::Camera::renew();
-			std::cout << "X: " << malletCoordinate.getCoordinate().x << std::endl;
-			std::cout << "Y: " << malletCoordinate.getCoordinate().y << std::endl;
+			std::cout << "X: " << malletCoordinate.getCoordinate().x;
+			std::cout << "  Y: " << malletCoordinate.getCoordinate().y << std::endl;
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
@@ -77,23 +75,33 @@ namespace Test {
 
 	void StrategyTest::locusTest()
 	{
-		//std::cout << "!!!Locus Test!!!" << std::endl;
-		//Hardware::Camera::renew();
-		//Strategy::PackCoordinate packCoordinate;
-		//Strategy::Locus locus;
-		//while (1){
-		//	Hardware::Camera::renew();
-		//	CvPoint coordinate = packCoordinate.getCoordinate();
-		//	CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
-		//	locus.calculateLocus(coordinate, previousCoordinate);
-		//	double a_inclination = locus.getAInclination();
-		//	double b_intercept = locus.getBIntercept();
-		//	std::cout << "a: " << a_inclination << std::endl;
-		//	std::cout << "b: " << b_intercept << std::endl;
-		//	if (cv::waitKey(1) >= 0) {
-		//		break;
-		//	}
-		//}
+		std::cout << "!!!Locus Test!!!" << std::endl;
+		Hardware::Camera::renew();
+		Strategy::PackCoordinate packCoordinate;
+		Strategy::Locus locus;
+		Color::HockeyTableMasking hockeyTableMasking;
+		IplImage* locusMasking;
+		int yLine = 350;
+		while (1){
+			Hardware::Camera::renew();
+			CvPoint coordinate = packCoordinate.getCoordinate();
+			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
+			
+			locusMasking = hockeyTableMasking.mask();
+			if( abs(coordinate.x - previousCoordinate.x) > 1){
+				if(locus.calculateLocus(coordinate, previousCoordinate, yLine) == true){
+					CvPoint forecastPoint = locus.getLocusCoordinate();
+
+					cvCircle(locusMasking, forecastPoint, 10, cvScalar(0, 0, 255));
+				}
+			}
+
+			cvShowImage("Locas", locusMasking);
+
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 	}
 
 	void StrategyTest::frequencySwitchingTest()
@@ -113,10 +121,11 @@ namespace Test {
 	{
 		std::cout << "!!!FrequencySwitching X Test!!!" << std::endl;
 		Strategy::FrequencySwitchingX frequencySwitchingX;
-		frequencySwitchingX.setOutputInformation('A', 3);
+		/*frequencySwitchingX.setOutputInformation('A', 3);
 		while (1){
 			frequencySwitchingX.output();
-		}
+		}*/
+		frequencySwitchingX.sankakuProcess('A', 100);
 	}
 
 	void StrategyTest::frequencySwitching_Y_Test()
@@ -223,6 +232,28 @@ namespace Test {
 				break;
 			}
 		}*/
+	}
+
+	void StrategyTest::frequencyManualTest()
+	{
+		std::cout << "!!!FrequencyManual Test!!!" << std::endl;
+		Strategy::FrequencyManual frequencyManual;
+		frequencyManual.setOutputInformation('A', 1000, 500);
+	}
+
+	void StrategyTest::frequencyManualXTest()
+	{
+		std::cout << "!!!FrequencyManualX Test!!!" << std::endl;
+		Strategy::FrequencyManual frequencyManual;
+		frequencyManual.setOutputInformation('B', 900, 400);
+
+	}
+
+	void StrategyTest::frequencyManualYTest()
+	{
+		std::cout << "!!!FrequencyManualY Test!!!" << std::endl;
+		Strategy::FrequencyManual frequencyManual;
+		frequencyManual.setOutputInformation('C', 800, 300);
 	}
 
 }  // namespace Test

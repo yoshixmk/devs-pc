@@ -3,19 +3,14 @@
 namespace Color
 {
 
-HockeyTableMasking::HockeyTableMasking() :mTwoImageSynthesis()
+HockeyTableMasking::HockeyTableMasking() : mTwoImageSynthesis()
 {
-	mHockeyTableImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
+	mHockeyTableImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 4);
 }
-
-//HockeyTableMasking::~HockeyTableMasking()
-//{
-//	cvReleaseImage(&mHockeyTableImage);
-//}
 
 IplImage* HockeyTableMasking::mask()
 {
-	IplImage* src_img = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 3);
+	IplImage* src_img;
 	src_img = mTwoImageSynthesis.synthesizeNonDistortion();
 	int width = Hardware::Camera::getWidth();
 	int height = Hardware::Camera::getHeight();
@@ -32,14 +27,15 @@ IplImage* HockeyTableMasking::mask()
 	pts[0][1] = cvPoint(width,0);
 	pts[0][2] = cvPoint(width, height*2);
 	pts[0][3] = cvPoint(0, height*2);
-	pts[1][0] = cvPoint(13,25);
-	pts[1][1] = cvPoint(13,224);
-	pts[1][2] = cvPoint(30,236);
-	pts[1][3] = cvPoint(128,236);
-	pts[1][4] = cvPoint(146,224);
-	pts[1][5] = cvPoint(146,25);
-	pts[1][6] = cvPoint(128,13);
-	pts[1][7] = cvPoint(30,13);
+
+	pts[1][0] = cvPoint(31, 66);
+	pts[1][1] = cvPoint(33, 398);
+	pts[1][2] = cvPoint(83, 441);
+	pts[1][3] = cvPoint(233, 448);
+	pts[1][4] = cvPoint(290, 410);
+	pts[1][5] = cvPoint(297, 73);
+	pts[1][6] = cvPoint(247, 25);
+	pts[1][7] = cvPoint(76, 28);
 
 //    cvLine(src_img, center_frame_left, center_frame_right, CV_RGB( 0, 255, 255 ));
 //    mHockeyTableImage = src_img;
@@ -48,4 +44,11 @@ IplImage* HockeyTableMasking::mask()
 
 	return mHockeyTableImage;
 }
+
+//更新なしで取得。更新＆取得は、mask()を呼び出し。
+IplImage* HockeyTableMasking::getMaskingImage()
+{
+	return mHockeyTableImage;
+}
+
 }  // namespace Color

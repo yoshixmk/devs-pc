@@ -3,6 +3,7 @@
 
 #include "Masking.h"
 #include "../CLEye/opencv.hpp"
+#include "NonFlipTwoImageSynthesis.h"
 
 namespace Color
 {
@@ -10,12 +11,13 @@ class HockeyTableMasking : public Masking
 {
 private:
 	IplImage* mHockeyTableImage;
-	TwoImageSynthesis mTwoImageSynthesis;
+	//TwoImageSynthesis -> NonFlipTwoImageSynthesis へ変更
+	NonFlipTwoImageSynthesis mTwoImageSynthesis;
 
 public:
 	HockeyTableMasking();
-//	~HockeyTableMasking();
 	IplImage* mask();
+	IplImage* getMaskingImage();
 };
 
 }  // namespace Color

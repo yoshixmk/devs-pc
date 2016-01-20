@@ -1,4 +1,4 @@
-#ifndef STRATEGY_FRAME_COORDINATE_H
+Ôªø#ifndef STRATEGY_FRAME_COORDINATE_H
 #define STRATEGY_FRAME_COORDINATE_H
 
 #include "../Strategy/Coordinate.h"
@@ -7,50 +7,30 @@
 namespace Strategy {
 	class FrameCoordinate : public Coordinate {
 	private:
-		//ç¿ïWÇÕÇ∑Ç◊ÇƒògÇÃì‡ë§
+		//Â∫ßÊ®ô„ÅØ„Åô„Åπ„Å¶Êû†„ÅÆÂÜÖÂÅ¥
 		static CvPoint mUpperLeftF;
-
 		static CvPoint mLowerLeftF;
-
 		static CvPoint mUpperRightF;
-
 		static CvPoint mLowerRightF;
-
 		static CvPoint mUpperLeftG;
-
 		static CvPoint mLowerLeftG;
-
 		static CvPoint mUpperRightG;
-
 		static CvPoint mLowerRightG;
-
 		static CvPoint mRobotGoalLeft;
-
 		static CvPoint mRobotGoalRight;
 
 	public:
 		FrameCoordinate();
-
 		static CvPoint getUpperLeftF();
-
 		static CvPoint getLowerLeftF();
-
 		static CvPoint getUpperRightF();
-
 		static CvPoint getLowerRightF();
-
 		static CvPoint getUpperLeftG();
-
 		static CvPoint getLowerLeftG();
-
 		static CvPoint getUpperRightG();
-
 		static CvPoint getLowerRightG();
-
 		static CvPoint getRobotGoalLeft();
-
 		static CvPoint getRobotGoalRight();
-
 	};
 
 }  // namespace Strategy

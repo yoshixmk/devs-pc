@@ -1,4 +1,4 @@
-#ifndef HARDWARE_CAMERA_H
+﻿#ifndef HARDWARE_CAMERA_H
 #define HARDWARE_CAMERA_H
 
 //#include <pigpio.h>
@@ -17,17 +17,18 @@ private:
 	static CvCapture* mCvCapture1;
 	static int mWidth;
 	static int mHeight;
-	int mNumCamera;
+	static int mNumCamera;
 	static CLEyeCameraCapture *cam[2];
 
 public:
-	Camera(int aWidth=160, int aHeight=120);
-	static void setSize(int aWidth, int aHeight);
+	//Camera(int aWidth=320, int aHeight=240);
+	static void initialize(int aWidth=320, int aHeight=240);
+	static void setSize(int aWidth=320, int aHeight=240);
 	static int getWidth();
 	static int getHeight();
 	static void renew();
-	IplImage* getRobotSideImage();
-	IplImage* getHumanSideImage();
+	static IplImage* getRobotSideImage();
+	static IplImage* getHumanSideImage();
 };
 
 }  // namespace Hardware
