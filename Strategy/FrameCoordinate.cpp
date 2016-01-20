@@ -12,9 +12,8 @@ namespace Strategy
 	CvPoint FrameCoordinate::mLowerRightG = cvPoint(233, 448);
 	CvPoint FrameCoordinate::mRobotGoalLeft = cvPoint(116, 447);
 	CvPoint FrameCoordinate::mRobotGoalRight = cvPoint(202, 450);
-	FrameCoordinate::FrameCoordinate()
-	{
-	}
+	CvPoint FrameCoordinate::mCenterLine = cvPoint((FrameCoordinate::mUpperLeftF.x + FrameCoordinate::mLowerLeftF.x + FrameCoordinate::mUpperRightF.x + FrameCoordinate::mLowerRightF.x) / 4,
+													(FrameCoordinate::mUpperLeftF.y + FrameCoordinate::mLowerLeftF.y + FrameCoordinate::mUpperRightF.y + FrameCoordinate::mLowerRightF.y) / 4);
 
 	CvPoint FrameCoordinate::getUpperLeftF()
 	{
@@ -64,5 +63,10 @@ namespace Strategy
 	CvPoint FrameCoordinate::getRobotGoalRight()
 	{
 		return mRobotGoalRight;
+	}
+
+	CvPoint FrameCoordinate::getCenterLine()
+	{
+		return mCenterLine;
 	}
 }  // namespace Strategy

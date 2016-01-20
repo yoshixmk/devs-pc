@@ -5,6 +5,7 @@
 #include "PackCoordinate.h"
 #include "MalletCoordinate.h"
 #include "Locus.h"
+#include "RobotAction.h"
 
 namespace Strategy {
 class OffenseDefenseStrategy: public Strategy {
@@ -12,6 +13,7 @@ private:
 	PackCoordinate mPackCoordinate;
 	MalletCoordinate mMalletCoordinate;
 	Locus mLocus;
+	RobotAction mRobotAction;
 
 public:
 	//void initialize();

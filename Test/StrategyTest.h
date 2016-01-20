@@ -1,4 +1,4 @@
-#ifndef TEST_STRATEGYTEST_H
+﻿#ifndef TEST_STRATEGYTEST_H
 #define TEST_STRATEGYTEST_H
 
 #include "../Strategy/PackCoordinate.h"
