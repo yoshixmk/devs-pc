@@ -15,7 +15,6 @@ public:
 	void output();
 	void stop();
 	int getCurrentFrequency();
-	void sankakuProcess(char aDistination, int aMoveDistance);
 };
 
 } /* namespace Strategy */

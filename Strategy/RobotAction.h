@@ -1,8 +1,8 @@
 #ifndef STRATEGY_ROBOT_ACTION_H
 #define STRATEGY_ROBOT_ACTION_H
 
-//#include "../Strategy/FrequencySwitching.h"
-#include "../Strategy/FrequencySwitchingX.h"
+#include "../Strategy/FrequencySwitching.h"
+//#include "../Strategy/FrequencySwitchingX.h"
 //#include "../Strategy/FrequencySwitchingY.h"
 #include "../Strategy/FrameCoordinate.h"
 #include "../Strategy/FrequencyManualX.h"
@@ -11,8 +11,7 @@
 namespace Strategy {
 class RobotAction {
 private:
-	FrequencySwitchingX mFrequencySwitchingX;
-	//FrequencySwitchingY mFrequencySwitchingY;
+	FrequencySwitching mFrequencySwitching;
 	FrequencyManualX mFrequencyManualX;
 	FrequencyManualY mFrequencyManualY;
 
@@ -23,7 +22,7 @@ private:
 public:
 	void moveToCenter(CvPoint aMalletCoordinate);
 
-	void moveToHitBack(CvPoint aPredictedCoordinate, CvPoint aMalletCoordinate);
+	void moveToHitBack(CvPoint aMalletCoordinate, int aMoveDistance);
 };
 
 }  // namespace Strategy
