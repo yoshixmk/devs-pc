@@ -22,7 +22,7 @@ private:
 public:
 	void moveToCenter(CvPoint aMalletCoordinate);
 
-	void moveToHitBack(CvPoint aMalletCoordinate, int aMoveDistance);
+	void moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 };
 
 }  // namespace Strategy

@@ -36,7 +36,7 @@ public:
 	int getCurrentFrequency();
 	void setFrequencyX(int aFrequency);
 	void setFrequencyY(int aFrequency);
-	void sankakuProcess(char aDistination, int aMoveDistance);
+	void sankakuProcess(int aMoveDistance);
 };
 
 }  // namespace Strategy

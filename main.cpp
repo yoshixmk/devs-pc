@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 int main() {
-	//Hardware::Camera::initialize();
+	Hardware::Camera::initialize();
 
 	Test::HardwareTest hardwareTest;
 	//hardwareTest.timerTest();

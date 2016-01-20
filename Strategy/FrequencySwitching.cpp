@@ -54,7 +54,7 @@ void FrequencySwitching::setFrequencyY(int aFrequency){
 	mBuf[1] = aFrequency;
 }
 
-void FrequencySwitching::sankakuProcess(char aDirection, int aMoveDistance)
+void FrequencySwitching::sankakuProcess(int aMoveDistance)
 {
 	int closest_frequency;
 	float ossum = 0;
@@ -75,7 +75,12 @@ void FrequencySwitching::sankakuProcess(char aDirection, int aMoveDistance)
 
 	mBuf[0] = nowFrequency / 20;
 	mBuf[1] = 500 / 20;
-	mBuf[2] = aDirection;
+	if(aMoveDistance > 0){
+		mBuf[2] = 'B';
+	}
+	else{
+		mBuf[2] = 'A';
+	}
 	while(max_freq > nowFrequency){
 		mBuf[0] = nowFrequency / 20;
 		mBuf[1] = 500 / 20;
