@@ -113,8 +113,14 @@ void ColorTest::colorExtractionTest()
 
 	Color::HockeyTableMasking hockeyTableMasking;
 	//cvNamedWindow("HockeyTableMacking", CV_WINDOW_AUTOSIZE);
+	//Hardware::Timer timer;
+	//double passedTime;
 	while(1)
 	{
+		//passedTime = 0;
+		//for(int i=0; i<100; i++){
+		//timer.resetStartOperatingTime();
+		
 		Hardware::Camera::renew();
 		//colorExtractionPack.setHSV(iSliderValuePack1, iSliderValuePack2, iSliderValuePack3, iSliderValuePack4, iSliderValuePack5, iSliderValuePack6);
 		//colorExtractionMallet.setHSV(iSliderValuemallet1, iSliderValuemallet2, iSliderValuemallet3, iSliderValuemallet4, iSliderValuemallet5, iSliderValuemallet6);
@@ -124,6 +130,10 @@ void ColorTest::colorExtractionTest()
 		if(cv::waitKey(1) >= 0) {
 			break;
 		}
+
+			//passedTime += timer.getOperatingTime();
+		//}
+		//std::cout << passedTime/100 << std::endl;
 	}
 }
 

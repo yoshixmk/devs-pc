@@ -41,6 +41,7 @@ int main() {
 	//strategyTest.frequencyManualTest();
 	//strategyTest.frequencyManualXTest();
 	//strategyTest.frequencyManualYTest();
+	strategyTest.speedOfPackTest();
 
 //	Test::UITest uiTest;
 //	uiTest.intelligentTest();

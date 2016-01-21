@@ -11,13 +11,27 @@ namespace Test {
 
 		Hardware::Camera::renew();
 		Strategy::PackCoordinate packCoordinate;
+		
+		//Hardware::Timer timer;
+		//double passedTime;
 		while (1){
+			//passedTime = 0;
+			//for(int i=0; i<100; i++){
+			//timer.resetStartOperatingTime();
+
 			Hardware::Camera::renew();
 			std::cout << "X: " << packCoordinate.getCoordinate().x;
 			std::cout << "  Y: " << packCoordinate.getCoordinate().y << std::endl;
+			//packCoordinate.getCoordinate();
+
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
+
+			//passedTime += timer.getOperatingTime();
+			//}
+			//std::cout << passedTime/100 << std::endl;
+
 		}
 		//	packCoordinate.getPreviousCoordinate();
 	}
@@ -190,6 +204,9 @@ namespace Test {
 	void StrategyTest::frequencyManualTest()
 	{
 		std::cout << "!!!FrequencyManual Test!!!" << std::endl;
+
+		Hardware::Camera::renew();
+
 		Strategy::FrequencyManual frequencyManual;
 		frequencyManual.setOutputInformation('A', 1000, 500);
 	}
@@ -197,6 +214,9 @@ namespace Test {
 	void StrategyTest::frequencyManualXTest()
 	{
 		std::cout << "!!!FrequencyManualX Test!!!" << std::endl;
+
+		Hardware::Camera::renew();
+
 		Strategy::FrequencyManual frequencyManual;
 		frequencyManual.setOutputInformation('B', 900, 400);
 
@@ -205,6 +225,9 @@ namespace Test {
 	void StrategyTest::frequencyManualYTest()
 	{
 		std::cout << "!!!FrequencyManualY Test!!!" << std::endl;
+
+		Hardware::Camera::renew();
+
 		Strategy::FrequencyManual frequencyManual;
 		frequencyManual.setOutputInformation('C', 800, 300);
 	}
@@ -212,6 +235,9 @@ namespace Test {
 	void StrategyTest::robotActionTest()
 	{
 		std::cout << "!!!Robot Action Test!!!" << std::endl;
+
+		Hardware::Camera::renew();
+
 		Strategy::RobotAction robotAction;
 		Strategy::MalletCoordinate malletCoordinate;
 		Strategy::Locus locus;
@@ -227,8 +253,24 @@ namespace Test {
 	{
 		std::cout << "!!!OffenseDeffenseStrategy Test!!!" << std::endl;
 
+		Hardware::Camera::renew();
+
 		Strategy::OffenseDefenseStrategy offenseDefenseStrategy;
 
 		offenseDefenseStrategy.execute();
+	}
+	
+	void StrategyTest::speedOfPackTest()
+	{
+		std::cout << "!!!SpeedOfPackTest Test!!!" << std::endl;
+
+		Strategy::SpeedOfPack speedOfPack;
+
+		while(1){
+			Hardware::Camera::renew();
+			double speed = speedOfPack.getSpeed();
+
+			std::cout << speed << std::endl;
+		}
 	}
 }  // namespace Test

@@ -14,7 +14,7 @@ void OffenseDefenseStrategy::execute()
 
 	//ほぼ動きが変わらない場合は、無視する。
 	if( abs(packNowC.x - packPreC.x) > 1 || abs(packNowC.y - packPreC.y) > 1){
-		//ロボットからプレイヤーにパックを打ち返したとき。パックの静止はabs()で無視
+		//ロボットからプレイヤーにパックを打ち返したとき。パックの静止はabs()ですでに無視してある
 		if(packNowC.y - packPreC.y < -2){
 			//中央復帰
 			mRobotAction.moveToCenter(malletNowC);

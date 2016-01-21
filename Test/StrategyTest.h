@@ -15,8 +15,11 @@
 #include "../Strategy/RobotAction.h"
 #include "../Strategy/Strategy.h"
 #include "../Strategy/OffenseDefenseStrategy.h"
+#include "../Strategy/SpeedOfPack.h"
 
 #include "../Hardware/Camera.h"
+#include "../Hardware/Timer.h"
+
 #include <iostream>
 #include <windows.h>
 
@@ -41,6 +44,7 @@ namespace Test {
 		void frequencyManualYTest();
 		void robotActionTest();
 		void offenseDeffenseStrategyTest();
+		void StrategyTest::speedOfPackTest();
 	};
 
 }  // namespace Test
