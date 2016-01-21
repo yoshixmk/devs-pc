@@ -226,5 +226,9 @@ namespace Test {
 	void StrategyTest::offenseDeffenseStrategyTest()
 	{
 		std::cout << "!!!OffenseDeffenseStrategy Test!!!" << std::endl;
+
+		Strategy::OffenseDefenseStrategy offenseDefenseStrategy;
+
+		offenseDefenseStrategy.execute();
 	}
 }  // namespace Test

@@ -18,11 +18,8 @@ private:
 
 public:
 	//void initialize();
-
 	void execute();
-
 	//void terminate();
-
 };
 
 }  // namespace Strategy

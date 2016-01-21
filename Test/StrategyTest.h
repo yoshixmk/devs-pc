@@ -13,6 +13,7 @@
 #include "../Strategy/FrequencyManualX.h"
 #include "../Strategy/FrequencyManualY.h"
 #include "../Strategy/RobotAction.h"
+#include "../Strategy/Strategy.h"
 #include "../Strategy/OffenseDefenseStrategy.h"
 
 #include "../Hardware/Camera.h"
