@@ -270,7 +270,10 @@ namespace Test {
 			Hardware::Camera::renew();
 			double speed = speedOfPack.getSpeed();
 
-			std::cout << speed << std::endl;
+			if(speed < 100){
+				std::cout << speed << std::endl;
+			}
+
 		}
 	}
 }  // namespace Test

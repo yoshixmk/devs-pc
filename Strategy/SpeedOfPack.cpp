@@ -30,7 +30,7 @@ double SpeedOfPack::getSpeed()
 	}
 
 	//ウィンドウ無し
-	mSpeed[0] = M_PER_PIX * distance / 0.34;
+	mSpeed[0] = M_PER_PIX * distance / 0.33; //デフォ0.34、合わせてみて0.33
 	//ウィンドウあり
 	//double mSpeed = distance / 0.07;
 
@@ -39,14 +39,14 @@ double SpeedOfPack::getSpeed()
 		sum += mSpeed[i];
 	}
 
-	double aveSpeed = sum / (sizeof(mSpeed)/sizeof(mSpeed[0]));
+	double aveSpeed = sum / (double)(sizeof(mSpeed)/sizeof(mSpeed[0]));
 	//m/s -> km/h
-	aveSpeed = aveSpeed * 3600 /1000;
+	//aveSpeed = aveSpeed * 3600 /1000;
 
-	//ブレがあり、止まっていても速度が出てしまうため
-	if(aveSpeed < 3){
+	//ブレがあり、止まっていても速度が出てしまう場合
+	/*if(aveSpeed < 3){
 		aveSpeed = 0;
-	}
+	}*/
 
 	return aveSpeed;
 }

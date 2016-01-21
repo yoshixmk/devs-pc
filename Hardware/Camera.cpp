@@ -27,6 +27,10 @@ void Camera::initialize(int aWidth, int aHeight)
 		printf("No PS3Eye cameras detected\n");
 		exit(1);
 	}
+	/*ese if(mNumCamera == 1){
+
+	}*/
+
 	printf("Found %d cameras\n", mNumCamera);
 
 	for(int i = 0; i < mNumCamera; i++)
