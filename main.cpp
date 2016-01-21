@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 int main() {
-	//Hardware::Camera::initialize();
+	Hardware::Camera::initialize();
 
 	Test::HardwareTest hardwareTest;
 	//hardwareTest.timerTest();
@@ -41,6 +41,7 @@ int main() {
 	//strategyTest.frequencyManualTest();
 	//strategyTest.frequencyManualXTest();
 	//strategyTest.frequencyManualYTest();
+	strategyTest.speedOfPackTest();
 
 //	Test::UITest uiTest;
 //	uiTest.intelligentTest();

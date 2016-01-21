@@ -18,9 +18,11 @@ namespace Strategy {
 		static CvPoint mLowerRightG;
 		static CvPoint mRobotGoalLeft;
 		static CvPoint mRobotGoalRight;
+		
+		//中央のX座標ラインと、Y座標ライン。
+		static CvPoint mCenterLine;
 
 	public:
-		FrameCoordinate();
 		static CvPoint getUpperLeftF();
 		static CvPoint getLowerLeftF();
 		static CvPoint getUpperRightF();
@@ -31,6 +33,7 @@ namespace Strategy {
 		static CvPoint getLowerRightG();
 		static CvPoint getRobotGoalLeft();
 		static CvPoint getRobotGoalRight();
+		static CvPoint getCenterLine();
 	};
 
 }  // namespace Strategy

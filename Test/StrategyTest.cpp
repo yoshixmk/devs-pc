@@ -11,13 +11,27 @@ namespace Test {
 
 		Hardware::Camera::renew();
 		Strategy::PackCoordinate packCoordinate;
+		
+		//Hardware::Timer timer;
+		//double passedTime;
 		while (1){
+			//passedTime = 0;
+			//for(int i=0; i<100; i++){
+			//timer.resetStartOperatingTime();
+
 			Hardware::Camera::renew();
 			std::cout << "X: " << packCoordinate.getCoordinate().x;
 			std::cout << "  Y: " << packCoordinate.getCoordinate().y << std::endl;
+			//packCoordinate.getCoordinate();
+
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
+
+			//passedTime += timer.getOperatingTime();
+			//}
+			//std::cout << passedTime/100 << std::endl;
+
 		}
 		//	packCoordinate.getPreviousCoordinate();
 	}
@@ -125,7 +139,7 @@ namespace Test {
 		while (1){
 			frequencySwitchingX.output();
 		}*/
-		frequencySwitchingX.sankakuProcess('A', 100);
+		frequencySwitchingX.sankakuProcess(100);
 	}
 
 	void StrategyTest::frequencySwitching_Y_Test()
@@ -187,56 +201,12 @@ namespace Test {
 		//}
 	}
 
-	void StrategyTest::robotActionTest()
-	{
-		std::cout << "!!!RobotAction Test!!!" << std::endl;
-		/*CLEyeCameraInstance camera = CLEyeCreateCamera(CLEyeGetCameraUUID(0),
-			CLEYE_COLOR_PROCESSED, CLEYE_VGA, 60);
-
-		int width, height;
-		CLEyeCameraGetFrameDimensions(camera, width, height);
-
-		CLEyeSetCameraParameter(camera, CLEYE_GAIN, 5);
-		CLEyeSetCameraParameter(camera, CLEYE_EXPOSURE, 511);
-		CLEyeCameraStart(camera);
-
-		IplImage* iplImage =
-			cvCreateImage(cv::Size(width, height), IPL_DEPTH_8U, 4);
-		cv::Mat iplMat = cv::Mat(iplImage);
-		CLEyeCameraGetFrame(camera, (PBYTE)iplImage->imageData);
-
-		cv::Mat image;
-		cv::cvtColor(iplMat, image, CV_BGRA2BGR);*/
-
-		/*CvCapture* mCvCapture0;
-		mCvCapture0 = cvCreateCameraCapture(-1);
-		if (mCvCapture0 == NULL){
-			std::cout << "Camera Capture FAILED" << std::endl;
-			exit(-1);
-		}*/
-
-		/*Hardware::Camera::renew();
-		Strategy::MalletCoordinate malletCoordinate;
-		Strategy::RobotAction robotAction;
-		Hardware::Timer timer;
-		double passed_time;
-		while (1){
-			Hardware::Camera::renew();
-			robotAction.moveToCenter(malletCoordinate.getCoordinate());
-			std::cout << malletCoordinate.getCoordinate().x << std::endl;
-
-			passed_time = timer.getOperatingTime();
-			std::cout << "time: " << passed_time << std::endl;
-
-			if (cv::waitKey(1) >= 0) {
-				break;
-			}
-		}*/
-	}
-
 	void StrategyTest::frequencyManualTest()
 	{
 		std::cout << "!!!FrequencyManual Test!!!" << std::endl;
+
+		Hardware::Camera::renew();
+
 		Strategy::FrequencyManual frequencyManual;
 		frequencyManual.setOutputInformation('A', 1000, 500);
 	}
@@ -244,6 +214,9 @@ namespace Test {
 	void StrategyTest::frequencyManualXTest()
 	{
 		std::cout << "!!!FrequencyManualX Test!!!" << std::endl;
+
+		Hardware::Camera::renew();
+
 		Strategy::FrequencyManual frequencyManual;
 		frequencyManual.setOutputInformation('B', 900, 400);
 
@@ -252,8 +225,55 @@ namespace Test {
 	void StrategyTest::frequencyManualYTest()
 	{
 		std::cout << "!!!FrequencyManualY Test!!!" << std::endl;
+
+		Hardware::Camera::renew();
+
 		Strategy::FrequencyManual frequencyManual;
 		frequencyManual.setOutputInformation('C', 800, 300);
 	}
 
+	void StrategyTest::robotActionTest()
+	{
+		std::cout << "!!!Robot Action Test!!!" << std::endl;
+
+		Hardware::Camera::renew();
+
+		Strategy::RobotAction robotAction;
+		Strategy::MalletCoordinate malletCoordinate;
+		Strategy::Locus locus;
+		Strategy::PackCoordinate packCoordinate;
+		robotAction.moveToCenter(malletCoordinate.getCoordinate());
+
+		/*if(locus.calculateLocus(packCoordinate.getCoordinate(), packCoordinate.getPreviousCoordinate(), 340) == true){
+			CvPoint forecastPoint = locus.getLocusCoordinate();
+			robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint);
+		}*/
+	}
+	void StrategyTest::offenseDeffenseStrategyTest()
+	{
+		std::cout << "!!!OffenseDeffenseStrategy Test!!!" << std::endl;
+
+		Hardware::Camera::renew();
+
+		Strategy::OffenseDefenseStrategy offenseDefenseStrategy;
+
+		offenseDefenseStrategy.execute();
+	}
+	
+	void StrategyTest::speedOfPackTest()
+	{
+		std::cout << "!!!SpeedOfPackTest Test!!!" << std::endl;
+
+		Strategy::SpeedOfPack speedOfPack;
+
+		while(1){
+			Hardware::Camera::renew();
+			double speed = speedOfPack.getSpeed();
+
+			if(speed < 100){
+				std::cout << speed << std::endl;
+			}
+
+		}
+	}
 }  // namespace Test

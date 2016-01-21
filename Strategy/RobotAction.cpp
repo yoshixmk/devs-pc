@@ -53,15 +53,12 @@ namespace Strategy {
 		mFrequencyManualY.output();
 	}
 
-	void RobotAction::moveToHitBack(CvPoint aMalletCoordinate, int aMoveDistance)
+	void RobotAction::moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
 	{
-		CvPoint waiting_position;
-		waiting_position.x = (FrameCoordinate::getRobotGoalLeft().x + FrameCoordinate::getRobotGoalRight().x) / 2;
-		waiting_position.y = 380;
-		if(aMalletCoordinate.x < waiting_position.x)
-			mFrequencySwitching.sankakuProcess('C',  aMoveDistance);
-		else{
-			mFrequencySwitching.sankakuProcess('D',  aMoveDistance);
-		}
+		int moveDistance = aForecastPackCoordinate.x - aMalletCoordinate.x;
+
+		//moveDistance‚ÍƒpƒbƒN‚ª
+		//‰E‚É”ò‚ñ‚Å‚­‚é—\‘z‚Ìê‡{A¶‚É”ò‚ñ‚Å‚­‚é—\‘z‚Ìê‡|
+		mFrequencySwitching.sankakuProcess(moveDistance);
 	}
 }  // namespace Strategy

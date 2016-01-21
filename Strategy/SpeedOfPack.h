@@ -3,19 +3,21 @@
 
 #include "PackCoordinate.h"
 
+#include <math.h>
+
 namespace Strategy
 {
 class SpeedOfPack
 {
 private:
-	PackCoordinate packCoordinate;
-	int mSpeed;
+	PackCoordinate mPackCoordinate;
+	
+	//移動平均を使用する
+	double mSpeed[10];
 
 public:
-	SpeedOfPack(void);
-	~SpeedOfPack(void);
-
-	int getSpeed();
+	SpeedOfPack();
+	double getSpeed();
 };
 
 }  // namespace Strategy
