@@ -188,8 +188,8 @@ void ColorExtraction::setPackHSV()
 	mHMin = 81;//61
 	mHMax = 88;//72
 	mSMin = 81;//31
-	mSMax = 105;//88
-	mVMin = 108;//39
+	mSMax = 125;//88
+	mVMin = 0;//39
 	mVMax = 130;//63
 }
 
