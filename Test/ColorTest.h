@@ -8,6 +8,10 @@
 #include "../Color/ColorExtraction.h"
 #include "../Color/NonFlipTwoImageSynthesis.h"
 
+#include "../Hardware/Timer.h"
+
+#include <iostream>
+
 namespace Test {
 
 class ColorTest {

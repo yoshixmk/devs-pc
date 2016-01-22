@@ -29,20 +29,14 @@ protected:
 public:
 	//FrequencySwitching();
 	FrequencySwitching();
-
 	~FrequencySwitching();
-
 	void setOutputInformation(char aDirection, double aTime);
-
 	void output();
-
 	void stop();
-
 	int getCurrentFrequency();
-
 	void setFrequencyX(int aFrequency);
-
 	void setFrequencyY(int aFrequency);
+	void sankakuProcess(int aMoveDistance);
 };
 
 }  // namespace Strategy

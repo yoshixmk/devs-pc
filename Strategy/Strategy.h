@@ -15,11 +15,11 @@ private:
 	Coordinate positionalCoordinate;
 
 public:
-	virtual void initialize()=0;
+	//virtual void initialize()=0;
 
-	virtual void execute(int strength)=0;
+	virtual void execute() = 0;
 
-	virtual void terminate()=0;
+	//virtual void terminate()=0;
 
 };
 

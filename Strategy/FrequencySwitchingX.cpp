@@ -1,10 +1,11 @@
 ﻿#include "FrequencySwitchingX.h"
 
-namespace Strategy {
+namespace Strategy 
+{
 
 FrequencySwitchingX::FrequencySwitchingX() :FrequencySwitching()
 {
-	mInitFrequency = 300;
+	mInitFrequency = 400;
 	mFrequencyUpCount = 32;
 	mAmountOfChange = 100;
 	mIntervaTime = 0.010;

@@ -55,7 +55,6 @@ CvPoint PackCoordinate::getCoordinate()
 
 	//現在の座標を格納
 	mXYCoordinate = cvPoint(gX_now_pack, gY_now_pack);
-
 	return mXYCoordinate;
 }
 

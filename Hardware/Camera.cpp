@@ -25,8 +25,12 @@ void Camera::initialize(int aWidth, int aHeight)
 	if(mNumCamera == 0)
 	{
 		printf("No PS3Eye cameras detected\n");
-		exit(-1);
+		exit(1);
 	}
+	/*ese if(mNumCamera == 1){
+
+	}*/
+
 	printf("Found %d cameras\n", mNumCamera);
 
 	for(int i = 0; i < mNumCamera; i++)
@@ -58,7 +62,7 @@ void Camera::initialize(int aWidth, int aHeight)
 		}
 		else{
 			printf("いつものPS3Eyeではありません。\nFrom Camera.cpp\n");
-			exit(-1);
+			exit(1);
 		}
 		printf("start ok.\n", i+1);
 	}
@@ -72,6 +76,11 @@ void Camera::initialize(int aWidth, int aHeight)
 	for(int i = 0; i < mNumCamera; i++)
 	{
 		cam[i]->StartCapture();
+	}
+
+	//カメラの起動のため、何度か撮っておく
+	for(int i=0; i<5; i++){
+		renew();
 	}
 }
 

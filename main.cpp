@@ -32,12 +32,16 @@ int main() {
 
 	Test::StrategyTest strategyTest;
 	//strategyTest.packCoordinateTest();
-	//strategyTest.malletCoordinateTest();
+	strategyTest.malletCoordinateTest();
 	//strategyTest.frameCoordinateTest();
-	strategyTest.locusTest();
+	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();
 	//strategyTest.frequencySwitching_Y_Test();
 	//strategyTest.robotActionTest();
+	//strategyTest.frequencyManualTest();
+	//strategyTest.frequencyManualXTest();
+	//strategyTest.frequencyManualYTest();
+	//strategyTest.speedOfPackTest();
 
 //	Test::UITest uiTest;
 //	uiTest.intelligentTest();
