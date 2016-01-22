@@ -9,46 +9,15 @@ namespace Test {
 	{
 		std::cout << "!!!packCoordinate Test!!!" << std::endl;
 
+		Hardware::Camera::renew();
 		Strategy::PackCoordinate packCoordinate;
-		
-		//Hardware::Timer timer;
-		//double passedTime;
-		Color::ColorExtraction colorExtractionPack;
-		colorExtractionPack.setPackHSV();
 		while (1){
-			//passedTime = 0;
-			//for(int i=0; i<100; i++){
-			//timer.resetStartOperatingTime();
-
 			Hardware::Camera::renew();
-			CvPoint packNowC = packCoordinate.getCoordinate();
-			//std::cout << "X: " << packNowC.x;
-			//std::cout << "  Y: " << packNowC.y << std::endl;
-			IplImage* extractPack = colorExtractionPack.extractHockeyTable();
-			std::ostringstream os;
-			os << "Pack X:" << packNowC.x;
-			std::string number = os.str();
-			int len = number.length();
-			char* fname = new char[len+1];
-			memcpy(fname, number.c_str(), len+1);
-			cvPutText(extractPack, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
-			std::ostringstream os2;
-			os2 << "Pack Y:" << packNowC.y;
-			number = os2.str();
-			len = number.length();
-			fname = new char[len+1];
-			memcpy(fname, number.c_str(), len+1);
-			cvPutText(extractPack, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
-
-			cvShowImage("ColorExtractionRS", extractPack);
+			std::cout << "X: " << packCoordinate.getCoordinate().x;
+			std::cout << "  Y: " << packCoordinate.getCoordinate().y << std::endl;
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
-
-			//passedTime += timer.getOperatingTime();
-			//}
-			//std::cout << passedTime/100 << std::endl;
-
 		}
 		//	packCoordinate.getPreviousCoordinate();
 	}
@@ -57,34 +26,31 @@ namespace Test {
 	{
 		std::cout << "!!!malletCoordinate Test!!!" << std::endl;
 
+		Hardware::Camera::renew();
 		Strategy::MalletCoordinate malletCoordinate;
-
-		Color::ColorExtraction colorExtractionMallet;
-		colorExtractionMallet.setMalletHSV();
+		char buf[8] = {0, 1, 'A', 3, 4, 5, 6,7};
+		char gX_now_mallet;
+		char gY_now_mallet;
+		Hardware::Serial serial;
 		while (1){
 			Hardware::Camera::renew();
-
-			CvPoint malletNowC = malletCoordinate.getCoordinate();
 			//std::cout << "X: " << malletCoordinate.getCoordinate().x;
 			//std::cout << "  Y: " << malletCoordinate.getCoordinate().y << std::endl;
 
-			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
-			std::ostringstream os;
-			os << "Pack X:" << malletNowC.x;
-			std::string number = os.str();
-			int len = number.length();
-			char* fname = new char[len+1];
-			memcpy(fname, number.c_str(), len+1);
-			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
-			std::ostringstream os2;
-			os2 << "Pack Y:" << malletNowC.y;
-			number = os2.str();
-			len = number.length();
-			fname = new char[len+1];
-			memcpy(fname, number.c_str(), len+1);
-			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
+			gX_now_mallet=(char)malletCoordinate.getCoordinate().x/2;
+			gY_now_mallet=(char)malletCoordinate.getCoordinate().y/2;
+			buf[6]=gX_now_mallet;
+			buf[7]=gY_now_mallet;
 
-			cvShowImage("ColorExtractionRS", extractMallet);
+			//serial.setWriteRange(buf, 6, 7);
+			serial.serialWrite((char*)buf, 8);
+/*			if (buf[0] == 0){
+				buf[0] = 1;
+			}
+			else if (buf[0] == 1){
+				buf[0] = 0;
+			}
+*/
 
 			if (cv::waitKey(1) >= 0) {
 				break;
@@ -140,16 +106,39 @@ namespace Test {
 			Hardware::Camera::renew();
 			CvPoint coordinate = packCoordinate.getCoordinate();
 			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
-			
+			locus.calculateLocus(coordinate, previousCoordinate);
+			double a_inclination = locus.getAInclination();
+			double b_intercept = locus.getBIntercept();
+			//std::cout << "a: " << a_inclination;
+			//std::cout << "  b: " << b_intercept << std::endl;
+
+			CvPoint framePoint = locus.getFrameOutPoint(yLine); //X座標がフレームではない場合が目標座標
+			locus.setNextAB();
+			CvPoint preFramePoint = coordinate;
 			locusMasking = hockeyTableMasking.mask();
-			if( abs(coordinate.x - previousCoordinate.x) > 1){
-				if(locus.calculateLocus(coordinate, previousCoordinate, yLine) == true){
-					CvPoint forecastPoint = locus.getLocusCoordinate();
-
-					cvCircle(locusMasking, forecastPoint, 10, cvScalar(0, 0, 255));
+			/*
+			cvLine(locusMasking, Strategy::FrameCoordinate::getLowerLeftF(), Strategy::FrameCoordinate::getUpperLeftF(), cvScalar(0, 255, 255));
+			cvLine(locusMasking, Strategy::FrameCoordinate::getLowerRightF(), Strategy::FrameCoordinate::getUpperRightF(), cvScalar(0, 255, 255));
+			while(1){
+				if(framePoint.x == 0 && framePoint.y == 0){
+					break;
 				}
-			}
-
+				else if(framePoint.y == yLine){
+					cvLine(locusMasking, preFramePoint, framePoint, cvScalar(0, 255, 0));
+					break;
+				}
+				else{
+					cvLine(locusMasking, preFramePoint, framePoint, cvScalar(0, 255, 0));
+					preFramePoint = framePoint;
+					framePoint = locus.getFrameOutPoint(yLine);
+					locus.setNextAB();
+					locus.calculateLocus(preFramePoint, framePoint);
+				}
+			}*/
+			locus.oldLocus(locusMasking);
+			
+			//cvLine(locusMasking, cvPoint(0, yLine), cvPoint(320, yLine), cvScalar(0, 0, 255));
+			//cvCircle(locusMasking, cvPoint((yLine - b_intercept)/a_inclination, yLine), 10, cvScalar(255, 0, 0));
 			cvShowImage("Locas", locusMasking);
 
 			if (cv::waitKey(1) >= 0) {
@@ -175,11 +164,10 @@ namespace Test {
 	{
 		std::cout << "!!!FrequencySwitching X Test!!!" << std::endl;
 		Strategy::FrequencySwitchingX frequencySwitchingX;
-		/*frequencySwitchingX.setOutputInformation('A', 3);
+		frequencySwitchingX.setOutputInformation('A', 3);
 		while (1){
 			frequencySwitchingX.output();
-		}*/
-		frequencySwitchingX.sankakuProcess(100);
+		}
 	}
 
 	void StrategyTest::frequencySwitching_Y_Test()
@@ -241,79 +229,51 @@ namespace Test {
 		//}
 	}
 
-	void StrategyTest::frequencyManualTest()
-	{
-		std::cout << "!!!FrequencyManual Test!!!" << std::endl;
-
-		Hardware::Camera::renew();
-
-		Strategy::FrequencyManual frequencyManual;
-		frequencyManual.setOutputInformation('A', 1000, 500);
-	}
-
-	void StrategyTest::frequencyManualXTest()
-	{
-		std::cout << "!!!FrequencyManualX Test!!!" << std::endl;
-
-		Hardware::Camera::renew();
-
-		Strategy::FrequencyManual frequencyManual;
-		frequencyManual.setOutputInformation('B', 900, 400);
-
-	}
-
-	void StrategyTest::frequencyManualYTest()
-	{
-		std::cout << "!!!FrequencyManualY Test!!!" << std::endl;
-
-		Hardware::Camera::renew();
-
-		Strategy::FrequencyManual frequencyManual;
-		frequencyManual.setOutputInformation('C', 800, 300);
-	}
-
 	void StrategyTest::robotActionTest()
 	{
-		std::cout << "!!!Robot Action Test!!!" << std::endl;
+		std::cout << "!!!RobotAction Test!!!" << std::endl;
+		/*CLEyeCameraInstance camera = CLEyeCreateCamera(CLEyeGetCameraUUID(0),
+			CLEYE_COLOR_PROCESSED, CLEYE_VGA, 60);
 
-		Hardware::Camera::renew();
+		int width, height;
+		CLEyeCameraGetFrameDimensions(camera, width, height);
 
-		Strategy::RobotAction robotAction;
+		CLEyeSetCameraParameter(camera, CLEYE_GAIN, 5);
+		CLEyeSetCameraParameter(camera, CLEYE_EXPOSURE, 511);
+		CLEyeCameraStart(camera);
+
+		IplImage* iplImage =
+			cvCreateImage(cv::Size(width, height), IPL_DEPTH_8U, 4);
+		cv::Mat iplMat = cv::Mat(iplImage);
+		CLEyeCameraGetFrame(camera, (PBYTE)iplImage->imageData);
+
+		cv::Mat image;
+		cv::cvtColor(iplMat, image, CV_BGRA2BGR);*/
+
+		/*CvCapture* mCvCapture0;
+		mCvCapture0 = cvCreateCameraCapture(-1);
+		if (mCvCapture0 == NULL){
+			std::cout << "Camera Capture FAILED" << std::endl;
+			exit(-1);
+		}*/
+
+		/*Hardware::Camera::renew();
 		Strategy::MalletCoordinate malletCoordinate;
-		Strategy::Locus locus;
-		Strategy::PackCoordinate packCoordinate;
-		robotAction.moveToCenter(malletCoordinate.getCoordinate());
+		Strategy::RobotAction robotAction;
+		Hardware::Timer timer;
+		double passed_time;
+		while (1){
+			Hardware::Camera::renew();
+			robotAction.moveToCenter(malletCoordinate.getCoordinate());
+			std::cout << malletCoordinate.getCoordinate().x << std::endl;
 
-		/*if(locus.calculateLocus(packCoordinate.getCoordinate(), packCoordinate.getPreviousCoordinate(), 340) == true){
-			CvPoint forecastPoint = locus.getLocusCoordinate();
-			robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint);
+			passed_time = timer.getOperatingTime();
+			std::cout << "time: " << passed_time << std::endl;
+
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
 		}*/
 	}
-	void StrategyTest::offenseDeffenseStrategyTest()
-	{
-		std::cout << "!!!OffenseDeffenseStrategy Test!!!" << std::endl;
 
-		Hardware::Camera::renew();
-
-		Strategy::OffenseDefenseStrategy offenseDefenseStrategy;
-
-		offenseDefenseStrategy.execute();
-	}
-	
-	void StrategyTest::speedOfPackTest()
-	{
-		std::cout << "!!!SpeedOfPackTest Test!!!" << std::endl;
-
-		Strategy::SpeedOfPack speedOfPack;
-
-		while(1){
-			Hardware::Camera::renew();
-			double speed = speedOfPack.getSpeed();
-
-			if(speed < 100){
-				std::cout << speed << std::endl;
-			}
-
-		}
-	}
 }  // namespace Test

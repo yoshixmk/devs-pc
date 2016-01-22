@@ -18,11 +18,13 @@ private:
 	DWORD mLengthOfSent;
 	void serialOpen();
 	void serialClose();
+	char mBuf[8];
 
 public:
 	Serial();
 	virtual ~Serial();
-	void serialWrite(char* buf, int bytes);
+	void serialWrite(char* aBuf, int aBytes);
+	void setWriteRange(char* aBuf, int aFrom, int aTo);
 };
 
 } /* namespace Hardware */
