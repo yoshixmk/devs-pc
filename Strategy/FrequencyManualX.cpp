@@ -24,7 +24,7 @@ void FrequencyManualX::setOutputInformation(char aDirection, int aFrequencyX)
 
 void FrequencyManualX::output()
 {
-	FrequencyManual::output();
+	outputX();
 }
 
 }  // namespace Strategy

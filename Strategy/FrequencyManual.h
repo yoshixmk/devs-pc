@@ -11,7 +11,6 @@ namespace Strategy
 class FrequencyManual
 {
 protected:
-	Hardware::Serial mSerial;
 	char mTargetDirection; //'A' 'B' 'C' 'D'
 	int mFrequencyX;
 	int mFrequencyY;
@@ -22,6 +21,8 @@ public:
 	~FrequencyManual();
 	void setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY);
 	void output();
+	void outputX();
+	void outputY();
 };
 
 }  // namespace Strategy

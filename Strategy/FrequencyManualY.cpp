@@ -23,6 +23,6 @@ void FrequencyManualY::setOutputInformation(char aDirection, int aFrequencyY)
 
 void FrequencyManualY::output()
 {
-	FrequencyManual::output();
+	outputY();
 }
 }  // namespace Strategy

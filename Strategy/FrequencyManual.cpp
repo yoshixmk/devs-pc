@@ -27,7 +27,20 @@ void FrequencyManual::setOutputInformation(char aDirection, int aFrequencyX, int
 
 void FrequencyManual::output()
 {
-	mSerial.serialWrite(mBuf);
+	Hardware::Serial::serialWrite();
+}
+
+void FrequencyManual::outputX()
+{
+	//0バイト目と2バイト目のみを変更して、1回の書き込み
+	Hardware::Serial::changeBuf(mBuf, 0);
+	Hardware::Serial::changeBuf(mBuf, 2);
+	Hardware::Serial::serialWrite();
+}
+void FrequencyManual::outputY()
+{
+	//範囲指定して、1回の書き込み
+	Hardware::Serial::serialWriteRange(mBuf, 1, 2);
 }
 
 }  // namespace Strategy

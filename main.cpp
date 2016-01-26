@@ -7,6 +7,7 @@
 
 int main() {
 	Hardware::Camera::initialize();
+	Hardware::Serial::initialize();
 
 	Test::HardwareTest hardwareTest;
 	//hardwareTest.timerTest();
@@ -32,12 +33,12 @@ int main() {
 
 	Test::StrategyTest strategyTest;
 	//strategyTest.packCoordinateTest();
-	strategyTest.malletCoordinateTest();
+	//strategyTest.malletCoordinateTest();  //これ
 	//strategyTest.frameCoordinateTest();
 	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();
 	//strategyTest.frequencySwitching_Y_Test();
-	//strategyTest.robotActionTest();
+	strategyTest.robotActionTest(); //これ
 	//strategyTest.frequencyManualTest();
 	//strategyTest.frequencyManualXTest();
 	//strategyTest.frequencyManualYTest();
@@ -51,5 +52,8 @@ int main() {
 	//showWindowTest.windowTest();
 	//showWindowTest.drawingTest();
 //	showWindowTest.manageTest();
+
+	Hardware::Serial::terminate();
+
 	return 0;
 }

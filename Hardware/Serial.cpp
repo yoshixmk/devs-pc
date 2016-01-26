@@ -1,11 +1,13 @@
 ﻿#include "Serial.h"
 
 namespace Hardware {
-
+HANDLE Serial::mComPort;
+DCB Serial::mDcb;
+DWORD Serial::mNumberOfPut;
 char Serial::mBuf[8];
 bool Serial::isOpened = false;
 
-Serial::Serial() {
+void Serial::initialize() {
 	if(isOpened == false){
 		serialOpen();
 
@@ -16,7 +18,7 @@ Serial::Serial() {
 	isOpened = true;
 }
 
-Serial::~Serial() {
+void Serial::terminate() {
 	if(isOpened == true){
 		serialClose();
 	}
@@ -60,6 +62,11 @@ void Serial::serialClose()
 	CloseHandle(mComPort);
 }
 
+void Serial::serialWrite()
+{
+	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+}
+
 void Serial::serialWrite(char* aBuf)
 {
 	for(int i=0; i<SEND_BYTE; i++){
@@ -69,7 +76,7 @@ void Serial::serialWrite(char* aBuf)
 	//cv::waitKey(10);
 }
 
-void Serial::setWriteRange(char* aBuf, int aFrom, int aTo)
+void Serial::serialWriteRange(char* aBuf, int aFrom, int aTo)
 {
 	if(SEND_BYTE < aTo){
 		exit(-1);
@@ -80,6 +87,11 @@ void Serial::setWriteRange(char* aBuf, int aFrom, int aTo)
 	}
 	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 	//cv::waitKey(10);
+}
+
+void Serial::changeBuf(char* aBuf, int index)
+{
+	mBuf[index] = aBuf[index];
 }
 
 } /* namespace Hardware */

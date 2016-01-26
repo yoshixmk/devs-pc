@@ -249,7 +249,19 @@ namespace Test {
 		Hardware::Camera::renew();
 
 		Strategy::FrequencyManual frequencyManual;
-		frequencyManual.setOutputInformation('A', 1000, 500);
+		//Strategy::FrequencyManualX frequencyManualX;
+		//Strategy::FrequencyManualY frequencyManualY;
+		while(1){
+			frequencyManual.setOutputInformation('A', 200, 100);
+			//frequencyManualX.setOutputInformation('B', 255);
+			//frequencyManualY.setOutputInformation('C', 50);
+			frequencyManual.output();
+			//frequencyManualX.output();
+			//frequencyManualY.output();
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 	}
 
 	void StrategyTest::frequencyManualXTest()
@@ -258,8 +270,14 @@ namespace Test {
 
 		Hardware::Camera::renew();
 
-		Strategy::FrequencyManual frequencyManual;
-		frequencyManual.setOutputInformation('B', 900, 400);
+		Strategy::FrequencyManualX frequencyManualX;
+		while(1){
+			frequencyManualX.setOutputInformation('B', 255);
+			frequencyManualX.output();
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 
 	}
 
@@ -269,21 +287,54 @@ namespace Test {
 
 		Hardware::Camera::renew();
 
-		Strategy::FrequencyManual frequencyManual;
-		frequencyManual.setOutputInformation('C', 800, 300);
+		Strategy::FrequencyManualY frequencyManualY;
+		while(1){
+			frequencyManualY.setOutputInformation('C', 50);
+			frequencyManualY.output();
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 	}
 
 	void StrategyTest::robotActionTest()
 	{
 		std::cout << "!!!Robot Action Test!!!" << std::endl;
 
-		Hardware::Camera::renew();
-
 		Strategy::RobotAction robotAction;
 		Strategy::MalletCoordinate malletCoordinate;
-		Strategy::Locus locus;
-		Strategy::PackCoordinate packCoordinate;
-		robotAction.moveToCenter(malletCoordinate.getCoordinate());
+		/*Strategy::Locus locus;
+		Strategy::PackCoordinate packCoordinate;*/
+
+		Color::ColorExtraction colorExtractionMallet;
+		colorExtractionMallet.setMalletHSV();
+
+		while(1){
+			Hardware::Camera::renew();
+			CvPoint malletNowC = malletCoordinate.getCoordinate();
+			robotAction.moveToCenter(malletNowC);
+
+			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
+			std::ostringstream os;
+			os << "Pack X:" << malletNowC.x;
+			std::string number = os.str();
+			int len = number.length();
+			char* fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
+			std::ostringstream os2;
+			os2 << "Pack Y:" << malletNowC.y;
+			number = os2.str();
+			len = number.length();
+			fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
+			cvShowImage("ColorExtractionRS", extractMallet);
+			
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
 
 		/*if(locus.calculateLocus(packCoordinate.getCoordinate(), packCoordinate.getPreviousCoordinate(), 340) == true){
 			CvPoint forecastPoint = locus.getLocusCoordinate();
