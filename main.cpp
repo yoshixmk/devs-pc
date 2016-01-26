@@ -31,8 +31,8 @@ int main() {
 	//colorTest.colorExtractionTest();
 
 	Test::StrategyTest strategyTest;
-	strategyTest.packCoordinateTest();
-	//strategyTest.malletCoordinateTest();
+	//strategyTest.packCoordinateTest();
+	strategyTest.malletCoordinateTest();
 	//strategyTest.frameCoordinateTest();
 	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();

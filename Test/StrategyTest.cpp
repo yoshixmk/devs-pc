@@ -62,14 +62,6 @@ namespace Test {
 		Color::ColorExtraction colorExtractionMallet;
 		colorExtractionMallet.setMalletHSV();
 		
-		//malletC for serial
-		/*
-		char buf[8] = {0, 1, 'A', 3, 4, 5, 6,7};
-		char gX_now_mallet;
-		char gY_now_mallet;
-		Hardware::Serial serial;
-		*/
-		
 		while (1){
 			Hardware::Camera::renew();
 
@@ -95,18 +87,6 @@ namespace Test {
 
 			cvShowImage("ColorExtractionRS", extractMallet);
 			
-			//malletC for serial
-			/*
-			Hardware::Camera::renew();
-
-			gX_now_mallet=(char)malletCoordinate.getCoordinate().x/2;
-			gY_now_mallet=(char)malletCoordinate.getCoordinate().y/2;
-			buf[6]=gX_now_mallet;
-			buf[7]=gY_now_mallet;
-
-			//serial.setWriteRange(buf, 6, 7);
-			serial.serialWrite((char*)buf, 8);
-			*/
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}

@@ -72,10 +72,10 @@ void HardwareTest::serialTest(){
 	Hardware::Serial serial;
 	
 	while(1){
-		unsigned char buf[] = { 50, 0, 'A', 100, 100, 100, 100, 100, 100 };
+		unsigned char buf[] = { 50, 60, 'A', 70, 80, 'A', 100, 100 };
 		int i = 0;
 		while (1){
-			serial.serialWrite((char*)buf, 4);
+			serial.serialWrite((char*)buf);
 			if (buf[0] == 255){
 				break;
 			}

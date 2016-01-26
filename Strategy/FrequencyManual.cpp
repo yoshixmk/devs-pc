@@ -2,14 +2,14 @@
 
 namespace Strategy
 {
-char FrequencyManual::mBuf[4];
+char FrequencyManual::mBuf[8];
 
 FrequencyManual::FrequencyManual()
 {
 	mTargetDirection = 'A';
 	mFrequencyX = 0;
 	int mFrequencyY = 0;
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < 8; i++){
 		mBuf[i] = 0;
 	}
 }
@@ -27,7 +27,7 @@ void FrequencyManual::setOutputInformation(char aDirection, int aFrequencyX, int
 
 void FrequencyManual::output()
 {
-	mSerial.serialWrite(mBuf, 4);
+	mSerial.serialWrite(mBuf);
 }
 
 }  // namespace Strategy

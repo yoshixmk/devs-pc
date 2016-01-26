@@ -37,7 +37,7 @@ void FrequencySwitching::setOutputInformation(char aTargetDirection, double aTar
 
 void FrequencySwitching::output()
 {
-	mSerial.serialWrite(mBuf, 4);
+	mSerial.serialWrite(mBuf);
 }
 
 void FrequencySwitching::stop()

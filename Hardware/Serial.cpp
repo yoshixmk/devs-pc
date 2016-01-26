@@ -2,19 +2,32 @@
 
 namespace Hardware {
 
+char Serial::mBuf[8];
+bool Serial::isOpened = false;
+
 Serial::Serial() {
-	serialOpen();
+	if(isOpened == false){
+		serialOpen();
+
+		//0だと表示されないバイトは0以外に初期化
+		mBuf[2] = 'A';
+		mBuf[5] = 'A';
+	}
+	isOpened = true;
 }
 
 Serial::~Serial() {
-	serialClose();
+	if(isOpened == true){
+		serialClose();
+	}
+	isOpened = false;
 }
 
 void Serial::serialOpen()
 {
 	static int first_time;
 	if (first_time == 0){
-		mComPort = CreateFile("COM8",                //port name
+		mComPort = CreateFile("COM6",                //port name
 			GENERIC_READ | GENERIC_WRITE, //Read/Write
 			0,                            // No Sharing
 			NULL,                         // No Security
@@ -47,27 +60,25 @@ void Serial::serialClose()
 	CloseHandle(mComPort);
 }
 
-void Serial::serialWrite(char* aBuf, int aBytes)
+void Serial::serialWrite(char* aBuf)
 {
-	/*if(aBytes == 8){
-		std::cout << "8Byteで指定してください。" << std::endl;
-		exit(-1);
-	}*/
-	for(int i=0; i<aBytes; i++){
+	for(int i=0; i<SEND_BYTE; i++){
 		mBuf[i] = aBuf[i];
 	}
-	mLengthOfSent = aBytes; // 送信する文字数
-	WriteFile(mComPort, mBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
+	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 	cv::waitKey(10);
 }
 
 void Serial::setWriteRange(char* aBuf, int aFrom, int aTo)
 {
-	for(int i=aFrom; i<=aTo; i++){
-		mBuf[i] = aBuf[i]; // 送信する文字数
+	if(SEND_BYTE < aTo){
+		exit(-1);
 	}
 
-	WriteFile(mComPort, mBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
+	for(int i=aFrom; i<=aTo; i++){
+		mBuf[i] = aBuf[i];
+	}
+	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 	cv::waitKey(10);
 }
 
