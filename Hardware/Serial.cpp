@@ -1,20 +1,35 @@
 ﻿#include "Serial.h"
 
 namespace Hardware {
+HANDLE Serial::mComPort;
+DCB Serial::mDcb;
+DWORD Serial::mNumberOfPut;
+char Serial::mBuf[8];
+bool Serial::isOpened = false;
 
-Serial::Serial() {
-	serialOpen();
+void Serial::initialize() {
+	if(isOpened == false){
+		serialOpen();
+
+		//0だと表示されないバイトは0以外に初期化
+		mBuf[2] = 'A';
+		mBuf[5] = 'A';
+	}
+	isOpened = true;
 }
 
-Serial::~Serial() {
-	serialClose();
+void Serial::terminate() {
+	if(isOpened == true){
+		serialClose();
+	}
+	isOpened = false;
 }
 
 void Serial::serialOpen()
 {
 	static int first_time;
 	if (first_time == 0){
-		mComPort = CreateFile("COM8",                //port name
+		mComPort = CreateFile("COM6",                //port name
 			GENERIC_READ | GENERIC_WRITE, //Read/Write
 			0,                            // No Sharing
 			NULL,                         // No Security
@@ -23,9 +38,9 @@ void Serial::serialOpen()
 			NULL);        // Null for Comm Devices
 
 		if (mComPort == INVALID_HANDLE_VALUE)
-			printf("Error in opening serial port");
+			std::cout << "Error in opening serial port" << std::endl;
 		else
-			printf("opening serial port successful");
+			std::cout << "opening serial port successful" << std::endl;
 		first_time++;
 	}
 
@@ -47,28 +62,36 @@ void Serial::serialClose()
 	CloseHandle(mComPort);
 }
 
-void Serial::serialWrite(char* aBuf, int aBytes)
+void Serial::serialWrite()
 {
-	/*if(aBytes == 8){
-		std::cout << "8Byteで指定してください。" << std::endl;
-		exit(-1);
-	}*/
-	for(int i=0; i<aBytes; i++){
-		mBuf[i] = aBuf[i];
-	}
-	mLengthOfSent = aBytes; // 送信する文字数
-	WriteFile(mComPort, mBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
-	cv::waitKey(10);
+	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 }
 
-void Serial::setWriteRange(char* aBuf, int aFrom, int aTo)
+void Serial::serialWrite(char* aBuf)
 {
-	for(int i=aFrom; i<=aTo; i++){
-		mBuf[i] = aBuf[i]; // 送信する文字数
+	for(int i=0; i<SEND_BYTE; i++){
+		mBuf[i] = aBuf[i];
+	}
+	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+	//cv::waitKey(10);
+}
+
+void Serial::serialWriteRange(char* aBuf, int aFrom, int aTo)
+{
+	if(SEND_BYTE < aTo){
+		exit(-1);
 	}
 
-	WriteFile(mComPort, mBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
-	cv::waitKey(10);
+	for(int i=aFrom; i<=aTo; i++){
+		mBuf[i] = aBuf[i];
+	}
+	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+	//cv::waitKey(10);
+}
+
+void Serial::changeBuf(char* aBuf, int index)
+{
+	mBuf[index] = aBuf[index];
 }
 
 } /* namespace Hardware */

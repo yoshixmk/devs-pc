@@ -22,16 +22,18 @@ void Camera::initialize(int aWidth, int aHeight)
 	srand(GetTickCount());
 	// Query for number of connected cameras
 	mNumCamera = CLEyeGetCameraCount();
-	if(mNumCamera == 0)
-	{
-		printf("No PS3Eye cameras detected\n");
-		exit(1);
-	}
-	/*ese if(mNumCamera == 1){
-
-	}*/
 
 	printf("Found %d cameras\n", mNumCamera);
+
+	if(mNumCamera == 0)
+	{
+		std::cout << "No PS3Eye camera detected." << std::endl;
+		exit(-1);
+	}
+	else if(mNumCamera == 1){
+		std::cout << "1 PS3Eye camera detected, need 2 cameras." << std::endl;
+		exit(-1);
+	}
 
 	for(int i = 0; i < mNumCamera; i++)
 	{

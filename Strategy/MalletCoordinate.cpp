@@ -42,18 +42,24 @@ CvPoint MalletCoordinate::getCoordinate()
 
 	double gX_now_mallet = m10_now_mallet / m00_now_mallet;
 	double gY_now_mallet = m01_now_mallet / m00_now_mallet;
-	Hardware::Serial serial;
-	//char buf[8] = {0, 1, 'A', 3, 4, 5,(int)gX_now_mallet/2,(int)gY_now_mallet/2};
-	////serial.setWriteRange(buf, 6, 7);
 
-	//serial.serialWrite((char*)buf, 8);
-	//if (buf[2] == 'A'){
-	//			buf[2] = 'B';
-	//}
-	//else if (buf[2] == 'B'){
-	//			buf[2] = 'A';
-	//}
-	CvPoint mXYCoordinate = cvPoint(gX_now_mallet, gY_now_mallet);
+	mNowMalletX = (int)gX_now_mallet;
+	mNowMalletY = (int)gY_now_mallet;
+	CvPoint mXYCoordinate = cvPoint(mNowMalletX, mNowMalletY);
+
+	//serialのバッファも更新する
+	renewSerialBuf();
+
 	return mXYCoordinate;
 }
+
+void MalletCoordinate::renewSerialBuf()
+{
+	//7, 8バイト目のみの更新用
+	unsigned char buf[8] = {0, 1, 'A', 3, 4, 'B', mNowMalletX/2, mNowMalletY/2};
+	
+	Hardware::Serial::serialWriteRange((char*)buf, 6, 7);
+	cv::waitKey(1);
+}
+
 }  // namespace Strategy

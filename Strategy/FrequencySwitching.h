@@ -20,9 +20,8 @@ protected:
 	int mAmountOfChange;			//周波数変化量(Hz)
 	double mIntervaTime;		//時間間隔(s)
 
-	static char mBuf[4]; //送信する内容
+	static char mBuf[8]; //送信する内容
 
-	Hardware::Serial mSerial;
 	Hardware::Timer mTimer;
 	Hardware::Timer mMovingStopTimer;
 

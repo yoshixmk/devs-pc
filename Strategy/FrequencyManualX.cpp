@@ -13,18 +13,18 @@ FrequencyManualX::~FrequencyManualX(void)
 
 void FrequencyManualX::setOutputInformation(int aFrequencyX)
 {
-	mBuf[1] = aFrequencyX;
+	mBuf[1] = aFrequencyX / 20;
 }
 
 void FrequencyManualX::setOutputInformation(char aDirection, int aFrequencyX)
 {
-	mBuf[0] = aFrequencyX;
+	mBuf[0] = aFrequencyX / 20;
 	mBuf[2] = aDirection;
 }
 
 void FrequencyManualX::output()
 {
-	FrequencyManual::output();
+	outputX();
 }
 
 }  // namespace Strategy
