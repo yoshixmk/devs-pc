@@ -85,17 +85,17 @@ void ColorTest::colorExtractionTest()
 	colorExtractionMallet.setMalletHSV();
 	colorExtractionPack.setPackHSV();
 
-	int iSliderValuePack1 = 61; 
+	int iSliderValuePack1 = 81; 
 	cvCreateTrackbar("minH", "ColorExtractionAll", &iSliderValuePack1, 255);
-	int iSliderValuePack2 = 72;
+	int iSliderValuePack2 = 88;
 	cvCreateTrackbar("maxH", "ColorExtractionAll", &iSliderValuePack2, 255);
-	int iSliderValuePack3 = 31;
+	int iSliderValuePack3 = 81;
 	cvCreateTrackbar("minS", "ColorExtractionAll", &iSliderValuePack3, 255);
-	int iSliderValuePack4 = 88;
+	int iSliderValuePack4 = 125;
 	cvCreateTrackbar("maxS", "ColorExtractionAll", &iSliderValuePack4, 255);
-	int iSliderValuePack5 = 39;
+	int iSliderValuePack5 = 0;
 	cvCreateTrackbar("minV", "ColorExtractionAll", &iSliderValuePack5, 255);
-	int iSliderValuePack6 = 63;
+	int iSliderValuePack6 = 130;
 	cvCreateTrackbar("maxV", "ColorExtractionAll", &iSliderValuePack6, 255);
 	//mallet threthold 0, 255, 100, 255, 140, 200
 	int iSliderValuemallet1 = 13;
@@ -122,8 +122,8 @@ void ColorTest::colorExtractionTest()
 		//timer.resetStartOperatingTime();
 		
 		Hardware::Camera::renew();
-		//colorExtractionPack.setHSV(iSliderValuePack1, iSliderValuePack2, iSliderValuePack3, iSliderValuePack4, iSliderValuePack5, iSliderValuePack6);
-		//colorExtractionMallet.setHSV(iSliderValuemallet1, iSliderValuemallet2, iSliderValuemallet3, iSliderValuemallet4, iSliderValuemallet5, iSliderValuemallet6);
+		colorExtractionPack.setHSV(iSliderValuePack1, iSliderValuePack2, iSliderValuePack3, iSliderValuePack4, iSliderValuePack5, iSliderValuePack6);
+		colorExtractionMallet.setHSV(iSliderValuemallet1, iSliderValuemallet2, iSliderValuemallet3, iSliderValuemallet4, iSliderValuemallet5, iSliderValuemallet6);
 		cvShowImage("ColorExtractionAll", colorExtractionPack.extractHockeyTable());
 		cvShowImage("ColorExtractionRS", colorExtractionMallet.extractRobotSideHockeyTable());
 		//cvShowImage("HockeyTableMacking", hockeyTableMasking.mask());

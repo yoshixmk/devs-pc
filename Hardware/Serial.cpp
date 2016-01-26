@@ -2,12 +2,25 @@
 
 namespace Hardware {
 
+char Serial::mBuf[8];
+bool Serial::isOpened = false;
+
 Serial::Serial() {
-	serialOpen();
+	if(isOpened == false){
+		serialOpen();
+
+		//0だと表示されないバイトは0以外に初期化
+		mBuf[2] = 'A';
+		mBuf[5] = 'A';
+	}
+	isOpened = true;
 }
 
 Serial::~Serial() {
-	serialClose();
+	if(isOpened == true){
+		serialClose();
+	}
+	isOpened = false;
 }
 
 void Serial::serialOpen()
@@ -23,9 +36,9 @@ void Serial::serialOpen()
 			NULL);        // Null for Comm Devices
 
 		if (mComPort == INVALID_HANDLE_VALUE)
-			printf("Error in opening serial port\n");
+			std::cout << "Error in opening serial port" << std::endl;
 		else
-			printf("opening serial port successful\n");
+			std::cout << "opening serial port successful" << std::endl;
 		first_time++;
 	}
 
@@ -47,11 +60,26 @@ void Serial::serialClose()
 	CloseHandle(mComPort);
 }
 
-void Serial::serialWrite(char* aBuf, int aBytes)
+void Serial::serialWrite(char* aBuf)
 {
-	mLengthOfSent = aBytes; // 送信する文字数
-	WriteFile(mComPort, aBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
-	cv::waitKey(10);
+	for(int i=0; i<SEND_BYTE; i++){
+		mBuf[i] = aBuf[i];
+	}
+	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+	//cv::waitKey(10);
+}
+
+void Serial::setWriteRange(char* aBuf, int aFrom, int aTo)
+{
+	if(SEND_BYTE < aTo){
+		exit(-1);
+	}
+
+	for(int i=aFrom; i<=aTo; i++){
+		mBuf[i] = aBuf[i];
+	}
+	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+	//cv::waitKey(10);
 }
 
 } /* namespace Hardware */

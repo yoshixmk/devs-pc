@@ -1,5 +1,5 @@
 ﻿#include "MalletCoordinate.h"
-
+#include "..\Hardware\Serial.h"
 namespace Strategy
 {
 
@@ -42,8 +42,24 @@ CvPoint MalletCoordinate::getCoordinate()
 
 	double gX_now_mallet = m10_now_mallet / m00_now_mallet;
 	double gY_now_mallet = m01_now_mallet / m00_now_mallet;
+	Hardware::Serial serial;
 
-	CvPoint mXYCoordinate = cvPoint(gX_now_mallet, gY_now_mallet);
+	mNowMalletX = (int)gX_now_mallet;
+	mNowMalletY = (int)gY_now_mallet;
+	CvPoint mXYCoordinate = cvPoint(mNowMalletX, mNowMalletY);
+
+	//serialのバッファも更新する
+	renewSerialBuf();
+
 	return mXYCoordinate;
 }
+
+void MalletCoordinate::renewSerialBuf()
+{
+	//7, 8バイト目のみの更新用
+	unsigned char buf[8] = {0, 1, 'A', 3, 4, 'B', mNowMalletX/2, mNowMalletY/2};
+	
+	mSerial.setWriteRange((char*)buf, 6, 7);
+}
+
 }  // namespace Strategy

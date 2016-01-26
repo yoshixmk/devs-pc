@@ -9,21 +9,38 @@ namespace Test {
 	{
 		std::cout << "!!!packCoordinate Test!!!" << std::endl;
 
-		Hardware::Camera::renew();
 		Strategy::PackCoordinate packCoordinate;
 		
 		//Hardware::Timer timer;
 		//double passedTime;
+		Color::ColorExtraction colorExtractionPack;
+		colorExtractionPack.setPackHSV();
 		while (1){
 			//passedTime = 0;
 			//for(int i=0; i<100; i++){
 			//timer.resetStartOperatingTime();
 
 			Hardware::Camera::renew();
-			std::cout << "X: " << packCoordinate.getCoordinate().x;
-			std::cout << "  Y: " << packCoordinate.getCoordinate().y << std::endl;
-			//packCoordinate.getCoordinate();
+			CvPoint packNowC = packCoordinate.getCoordinate();
+			//std::cout << "X: " << packNowC.x;
+			//std::cout << "  Y: " << packNowC.y << std::endl;
+			IplImage* extractPack = colorExtractionPack.extractHockeyTable();
+			std::ostringstream os;
+			os << "Pack X:" << packNowC.x;
+			std::string number = os.str();
+			int len = number.length();
+			char* fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractPack, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
+			std::ostringstream os2;
+			os2 << "Pack Y:" << packNowC.y;
+			number = os2.str();
+			len = number.length();
+			fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractPack, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
 
+			cvShowImage("ColorExtractionRS", extractPack);
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
@@ -40,12 +57,36 @@ namespace Test {
 	{
 		std::cout << "!!!malletCoordinate Test!!!" << std::endl;
 
-		Hardware::Camera::renew();
 		Strategy::MalletCoordinate malletCoordinate;
+
+		Color::ColorExtraction colorExtractionMallet;
+		colorExtractionMallet.setMalletHSV();
+		
 		while (1){
 			Hardware::Camera::renew();
-			std::cout << "X: " << malletCoordinate.getCoordinate().x;
-			std::cout << "  Y: " << malletCoordinate.getCoordinate().y << std::endl;
+
+			CvPoint malletNowC = malletCoordinate.getCoordinate();
+			//std::cout << "X: " << malletCoordinate.getCoordinate().x;
+			//std::cout << "  Y: " << malletCoordinate.getCoordinate().y << std::endl;
+
+			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
+			std::ostringstream os;
+			os << "Pack X:" << malletNowC.x;
+			std::string number = os.str();
+			int len = number.length();
+			char* fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
+			std::ostringstream os2;
+			os2 << "Pack Y:" << malletNowC.y;
+			number = os2.str();
+			len = number.length();
+			fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
+
+			cvShowImage("ColorExtractionRS", extractMallet);
+			
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}

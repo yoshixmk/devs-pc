@@ -15,14 +15,17 @@ private:
 	HANDLE mComPort;
 	DCB mDcb;
 	DWORD mNumberOfPut;
-	DWORD mLengthOfSent;
 	void serialOpen();
 	void serialClose();
+	static char mBuf[8];
+	static bool isOpened;
+	static const int SEND_BYTE=8; // 送信する文字数
 
 public:
 	Serial();
 	virtual ~Serial();
-	void serialWrite(char* buf, int bytes);
+	void serialWrite(char* aBuf);
+	void setWriteRange(char* aBuf, int aFrom, int aTo);
 };
 
 } /* namespace Hardware */
