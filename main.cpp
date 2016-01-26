@@ -19,7 +19,7 @@ int main() {
 	//hardwareTest.pushSwitchTest();
 	//hardwareTest.moterDriverTest();
 	//hardwareTest.speakerTest();
-//	hardwareTest.bgmSignalTest();
+	//hardwareTest.bgmSignalTest();
 	//hardwareTest.cameraTest();
 	//hardwareTest.serialTest();
 
@@ -33,12 +33,12 @@ int main() {
 
 	Test::StrategyTest strategyTest;
 	//strategyTest.packCoordinateTest();
-	//strategyTest.malletCoordinateTest();  //これ
+	//strategyTest.malletCoordinateTest();
 	//strategyTest.frameCoordinateTest();
 	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();
 	//strategyTest.frequencySwitching_Y_Test();
-	strategyTest.robotActionTest(); //これ
+	strategyTest.robotActionTest();
 	//strategyTest.frequencyManualTest();
 	//strategyTest.frequencyManualXTest();
 	//strategyTest.frequencyManualYTest();

@@ -10,7 +10,6 @@ namespace Strategy
 class MalletCoordinate : public Coordinate
 {
 private:
-	Hardware::Serial mSerial;
 	CvPoint mXYCoordinate;
 	int mNowMalletX;
 	int mNowMalletY;

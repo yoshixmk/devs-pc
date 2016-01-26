@@ -170,7 +170,7 @@ void ColorExtraction::setMalletHSV()
 	mHMax = 44;
 	mSMin = 92;
 	mSMax = 255;
-	mVMin = 136;
+	mVMin = 110;
 	mVMax = 174;
 
 //  青の場合

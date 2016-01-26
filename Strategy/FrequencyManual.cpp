@@ -20,8 +20,8 @@ FrequencyManual::~FrequencyManual()
 
 void FrequencyManual::setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY)
 {
-	mBuf[0] = aFrequencyX;
-	mBuf[1] = aFrequencyY;
+	mBuf[0] = aFrequencyX / 20;
+	mBuf[1] = aFrequencyY / 20;
 	mBuf[2] = aDirection;
 }
 
