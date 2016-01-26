@@ -42,9 +42,10 @@ namespace Test {
 		void frequencyManualTest();
 		void frequencyManualXTest();
 		void frequencyManualYTest();
-		void robotActionTest();
+		void robotActionCenterTest();
+		void robotActionHitBackTest();
 		void offenseDeffenseStrategyTest();
-		void StrategyTest::speedOfPackTest();
+		void speedOfPackTest();
 	};
 
 }  // namespace Test

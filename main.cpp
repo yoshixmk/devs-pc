@@ -38,11 +38,12 @@ int main() {
 	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();
 	//strategyTest.frequencySwitching_Y_Test();
-	strategyTest.robotActionTest();
+	strategyTest.robotActionCenterTest();
 	//strategyTest.frequencyManualTest();
 	//strategyTest.frequencyManualXTest();
 	//strategyTest.frequencyManualYTest();
 	//strategyTest.speedOfPackTest();
+	//strategyTest.robotActionHitBackTest(); //ここ
 
 //	Test::UITest uiTest;
 //	uiTest.intelligentTest();

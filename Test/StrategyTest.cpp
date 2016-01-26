@@ -50,7 +50,7 @@ namespace Test {
 			//std::cout << passedTime/100 << std::endl;
 
 		}
-		//	packCoordinate.getPreviousCoordinate();
+		//	packCoordinate.getPreviousCoordinate(); //引数ありで使える。
 	}
 
 	void StrategyTest::malletCoordinateTest()
@@ -140,7 +140,7 @@ namespace Test {
 		while (1){
 			Hardware::Camera::renew();
 			CvPoint coordinate = packCoordinate.getCoordinate();
-			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
+			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();//引数ありで使える。
 			
 			locusMasking = hockeyTableMasking.mask();
 			if( abs(coordinate.x - previousCoordinate.x) > 1){
@@ -297,9 +297,49 @@ namespace Test {
 		}
 	}
 
-	void StrategyTest::robotActionTest()
+	void StrategyTest::robotActionCenterTest()
 	{
-		std::cout << "!!!Robot Action Test!!!" << std::endl;
+		std::cout << "!!!Robot Action Test!!! Move to Center" << std::endl;
+
+		Strategy::RobotAction robotAction;
+		Strategy::MalletCoordinate malletCoordinate;
+		/*Strategy::Locus locus;
+		Strategy::PackCoordinate packCoordinate;*/
+
+		Color::ColorExtraction colorExtractionMallet;
+		colorExtractionMallet.setMalletHSV();
+
+		while(1){
+			Hardware::Camera::renew();
+			CvPoint malletNowC = malletCoordinate.getCoordinate();
+			robotAction.moveToCenter(malletNowC);
+
+			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
+			std::ostringstream os;
+			os << "Pack X:" << malletNowC.x;
+			std::string number = os.str();
+			int len = number.length();
+			char* fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
+			std::ostringstream os2;
+			os2 << "Pack Y:" << malletNowC.y;
+			number = os2.str();
+			len = number.length();
+			fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
+			cvShowImage("ColorExtractionRS", extractMallet);
+			
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
+	}
+
+	void StrategyTest::robotActionHitBackTest()
+	{
+		std::cout << "!!!Robot Action Test!!! Move to Hit Back" << std::endl;
 
 		Strategy::RobotAction robotAction;
 		Strategy::MalletCoordinate malletCoordinate;
@@ -341,6 +381,7 @@ namespace Test {
 			robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint);
 		}*/
 	}
+
 	void StrategyTest::offenseDeffenseStrategyTest()
 	{
 		std::cout << "!!!OffenseDeffenseStrategy Test!!!" << std::endl;
