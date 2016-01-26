@@ -66,7 +66,7 @@ void Serial::serialWrite(char* aBuf)
 		mBuf[i] = aBuf[i];
 	}
 	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
-	cv::waitKey(10);
+	//cv::waitKey(10);
 }
 
 void Serial::setWriteRange(char* aBuf, int aFrom, int aTo)
@@ -79,7 +79,7 @@ void Serial::setWriteRange(char* aBuf, int aFrom, int aTo)
 		mBuf[i] = aBuf[i];
 	}
 	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
-	cv::waitKey(10);
+	//cv::waitKey(10);
 }
 
 } /* namespace Hardware */
