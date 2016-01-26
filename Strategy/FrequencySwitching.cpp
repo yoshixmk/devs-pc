@@ -2,7 +2,7 @@
 
 namespace Strategy
 {
-char FrequencySwitching::mBuf[4];
+char FrequencySwitching::mBuf[8];
 
 FrequencySwitching::FrequencySwitching()
 {
@@ -37,7 +37,7 @@ void FrequencySwitching::setOutputInformation(char aTargetDirection, double aTar
 
 void FrequencySwitching::output()
 {
-	mSerial.serialWrite(mBuf);
+	Hardware::Serial::serialWrite(mBuf);
 }
 
 void FrequencySwitching::stop()

@@ -42,7 +42,6 @@ CvPoint MalletCoordinate::getCoordinate()
 
 	double gX_now_mallet = m10_now_mallet / m00_now_mallet;
 	double gY_now_mallet = m01_now_mallet / m00_now_mallet;
-	Hardware::Serial serial;
 
 	mNowMalletX = (int)gX_now_mallet;
 	mNowMalletY = (int)gY_now_mallet;
@@ -59,7 +58,8 @@ void MalletCoordinate::renewSerialBuf()
 	//7, 8バイト目のみの更新用
 	unsigned char buf[8] = {0, 1, 'A', 3, 4, 'B', mNowMalletX/2, mNowMalletY/2};
 	
-	mSerial.setWriteRange((char*)buf, 6, 7);
+	Hardware::Serial::serialWriteRange((char*)buf, 6, 7);
+	cv::waitKey(1);
 }
 
 }  // namespace Strategy

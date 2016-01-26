@@ -6,7 +6,7 @@ namespace Strategy {
 	{
 		CvPoint waiting_position;
 		waiting_position.x = (FrameCoordinate::getRobotGoalLeft().x + FrameCoordinate::getRobotGoalRight().x) / 2;
-		waiting_position.y = 380;
+		waiting_position.y = 405;
 
 		if (aMalletCoordinate.x < waiting_position.x - 40){
 			//ƒS[ƒ‹‚©‚ç‰“‚¢‚Æ‘¬‚­‚·‚é
