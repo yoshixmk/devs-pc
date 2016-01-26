@@ -14,7 +14,7 @@ void Serial::serialOpen()
 {
 	static int first_time;
 	if (first_time == 0){
-		mComPort = CreateFile("COM6",                //port name
+		mComPort = CreateFile("COM8",                //port name
 			GENERIC_READ | GENERIC_WRITE, //Read/Write
 			0,                            // No Sharing
 			NULL,                         // No Security
@@ -23,9 +23,9 @@ void Serial::serialOpen()
 			NULL);        // Null for Comm Devices
 
 		if (mComPort == INVALID_HANDLE_VALUE)
-			printf("Error in opening serial port\n");
+			printf("Error in opening serial port");
 		else
-			printf("opening serial port successful\n");
+			printf("opening serial port successful");
 		first_time++;
 	}
 
@@ -49,8 +49,25 @@ void Serial::serialClose()
 
 void Serial::serialWrite(char* aBuf, int aBytes)
 {
+	/*if(aBytes == 8){
+		std::cout << "8Byteで指定してください。" << std::endl;
+		exit(-1);
+	}*/
+	for(int i=0; i<aBytes; i++){
+		mBuf[i] = aBuf[i];
+	}
 	mLengthOfSent = aBytes; // 送信する文字数
-	WriteFile(mComPort, aBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
+	WriteFile(mComPort, mBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
+	cv::waitKey(10);
+}
+
+void Serial::setWriteRange(char* aBuf, int aFrom, int aTo)
+{
+	for(int i=aFrom; i<=aTo; i++){
+		mBuf[i] = aBuf[i]; // 送信する文字数
+	}
+
+	WriteFile(mComPort, mBuf, mLengthOfSent, &mNumberOfPut, NULL); // ポートへ送信
 	cv::waitKey(10);
 }
 
