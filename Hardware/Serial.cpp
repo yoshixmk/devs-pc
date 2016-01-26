@@ -36,9 +36,9 @@ void Serial::serialOpen()
 			NULL);        // Null for Comm Devices
 
 		if (mComPort == INVALID_HANDLE_VALUE)
-			printf("Error in opening serial port");
+			std::cout << "Error in opening serial port" << std::endl;
 		else
-			printf("opening serial port successful");
+			std::cout << "opening serial port successful" << std::endl;
 		first_time++;
 	}
 
