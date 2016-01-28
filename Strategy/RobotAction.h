@@ -14,15 +14,13 @@ private:
 	FrequencySwitching mFrequencySwitching;
 	FrequencyManualX mFrequencyManualX;
 	FrequencyManualY mFrequencyManualY;
-
 	void moveForLimit();
-
 	void limitCheck();
 
 public:
 	void moveToCenter(CvPoint aMalletCoordinate);
-
 	bool moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
+	bool sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 };
 
 }  // namespace Strategy

@@ -12,9 +12,13 @@ FrequencySwitching::FrequencySwitching()
 	mTargetTime = 0;
 	mTimer.resetStartOperatingTime();
 
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < 8; i++){
 		mBuf[i] = 0;
 	}
+	mBuf[2] = 'A';
+	mBuf[5] = 'A';
+
+	mInitFrequency = 400;
 }
 
 FrequencySwitching::~FrequencySwitching()
@@ -63,8 +67,12 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 	int max_freq = 100;
 	int freq =0;
 	int nowFrequency = mInitFrequency;
+	int moveDistanceAbs = abs(aMoveDistance);
+
+	//画像サイズが2倍のため。
+	moveDistanceAbs /= 2;
 	
-	while(aMoveDistance >= next_freq * 2){
+	while(moveDistanceAbs >= next_freq * 2){
 		next_freq = next_freq + sum +0.10*freq;
 		freq++;
 		max_freq = max_freq + 100;
@@ -81,11 +89,12 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 	else{
 		mBuf[2] = 'A';
 	}
+
 	while(max_freq > nowFrequency){
 		mBuf[0] = nowFrequency / 20;
 		mBuf[1] = 500 / 20;
 		//std::cout << "output: " << nowFrequency << std::endl;
-		nowFrequency = nowFrequency+100;
+		nowFrequency = nowFrequency + 100;
 		Sleep(10);	//10ms
 		FrequencySwitching::output();
 	}

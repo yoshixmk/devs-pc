@@ -11,12 +11,12 @@ namespace Strategy {
 		if (aMalletCoordinate.x < waiting_position.x - 40){
 			//ゴールから遠いと速くする
 			//mFrequencySwitchingX.setOutputInformation('C', 0.700);//640ms以上で3500Hz台形
-			mFrequencyManualX.setOutputInformation('C', 300);
+			mFrequencyManualX.setOutputInformation('C', 400);
 		}
 		else if (aMalletCoordinate.x < waiting_position.x - 10){
 			//ゴール近辺ならモータの速度を落とす
 			//mFrequencySwitchingX.setOutputInformation('C', 0.350);
-			mFrequencyManualX.setOutputInformation('C', 200);
+			mFrequencyManualX.setOutputInformation('C', 300);
 		}
 		else if (aMalletCoordinate.x <= waiting_position.x - 3){
 			//ゴールに少し近づいてきたら速度を落とす
@@ -35,11 +35,11 @@ namespace Strategy {
 		else if (aMalletCoordinate.x < waiting_position.x + 40){
 			//ゴール近辺ならモータの速度を落とす
 			//mFrequencySwitchingX.setOutputInformation('D', 0.350);
-			mFrequencyManualX.setOutputInformation('D', 200);
+			mFrequencyManualX.setOutputInformation('D', 300);
 		}
 		else{
 			//mFrequencySwitchingX.setOutputInformation('D', 0.700);//640ms以上で3500Hz台形
-			mFrequencyManualX.setOutputInformation('D', 300);
+			mFrequencyManualX.setOutputInformation('D', 400);
 		}
 
 		if(aMalletCoordinate.y < waiting_position.y){ //定位置より上側なら
@@ -53,7 +53,7 @@ namespace Strategy {
 		mFrequencyManualY.output();
 	}
 
-	bool RobotAction::moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
+		bool RobotAction::moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
 	{
 		//リミットスイッチに当たってしまわないように補正
 		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
@@ -89,6 +89,23 @@ namespace Strategy {
 			mFrequencyManualX.output();
 			//mFrequencyManualY.output();
 		}
+
+		return false;
+	}
+
+	bool RobotAction::sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
+	{
+		//リミットスイッチに当たってしまわないように補正
+		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
+		if(forecastPackCoordinate.x < 40){
+			forecastPackCoordinate.x = 40;
+		}
+		if(forecastPackCoordinate.x > 280){
+			forecastPackCoordinate.x = 280;
+		}
+		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
+
+		mFrequencySwitching.sankakuProcess(moveDistance);
 
 		return false;
 	}

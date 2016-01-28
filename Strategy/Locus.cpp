@@ -19,8 +19,9 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 {
 	CvPoint targetCoordinate;
 	targetCoordinate.y = aYLine;
-	int left_frame = FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x ;
-	int right_frame = FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x;
+	int left_frame = (FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x) / 2;
+	int right_frame = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x) / 2;
+	int centerLine = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getLowerLeftF().x) / 2;
 	if((aCoordinate2.x - aCoordinate1.x) != 0){
 		mAInclination = (aCoordinate2.y - aCoordinate1.y) / (aCoordinate2.x - aCoordinate1.x);
 		mBIntercept = aCoordinate2.y - mAInclination * aCoordinate2.x;
@@ -44,7 +45,7 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 			rebound_num++;
 			if(rebound_max < rebound_num){
 				//跳ね返りが多すぎる時は、中央を指定
-				targetCoordinate.x = (left_frame + right_frame) / 2;
+				targetCoordinate = cvPoint(centerLine, aYLine);
 				//break;
 				return false;
 			}
@@ -54,7 +55,6 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 		mAInclination = 0;
 		mBIntercept = 0;
 		//当たり障りのない位置（中央）を指定
-		int centerLine = FrameCoordinate::getLowerRightF().x + FrameCoordinate::getLowerLeftF().x;
 		targetCoordinate = cvPoint(centerLine, aYLine);
 		return false;
 	}
