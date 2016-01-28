@@ -29,6 +29,7 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 		
 		int rebound_max = 3; //3回以上跳ね返る軌跡の場合、当たり障りのない位置（中央）を指定
 		int rebound_num = 0;
+
 		while(targetCoordinate.x < left_frame || right_frame < targetCoordinate.x){
 			if(targetCoordinate.x < left_frame){
 				targetCoordinate.x = 2 * left_frame - targetCoordinate.x;

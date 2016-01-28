@@ -348,43 +348,58 @@ namespace Test {
 
 		Color::ColorExtraction colorExtractionMallet;
 		colorExtractionMallet.setMalletHSV();
+		bool hasArrived = true; //目的地まで移動中=false, 移動完了=true
 
+		cvNamedWindow("ColorExtractionRS");
+		CvPoint forecastPoint;
 		while(1){
 			Hardware::Camera::renew();
 			CvPoint malletNowC = malletCoordinate.getCoordinate();
 			CvPoint packNowC =packCoordinate.getCoordinate();
-
-			//robotAction.moveToCenter(malletNowC);					//中央に移動
+			CvPoint packPre0C = packCoordinate.getPreviousCoordinate();
+			CvPoint packPre9C = packCoordinate.getPreviousCoordinate(9);
 			
 			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
 			std::ostringstream os;
-			os << "Pack X:" << malletNowC.x;
+			os << "Mallet X:" << malletNowC.x;
 			std::string number = os.str();
 			int len = number.length();
 			char* fname = new char[len+1];
 			memcpy(fname, number.c_str(), len+1);
 			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
 			std::ostringstream os2;
-			os2 << "Pack Y:" << malletNowC.y;
+			os2 << "Mallet Y:" << malletNowC.y;
 			number = os2.str();
 			len = number.length();
 			fname = new char[len+1];
 			memcpy(fname, number.c_str(), len+1);
 			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
-			cvShowImage("ColorExtractionRS", extractMallet);
+
+			cvCircle(extractMallet, packPre0C, 5, cvScalar(0,255,0));
+			cvCircle(extractMallet, packNowC, 5, cvScalar(0,255,255));
 			
+			int yLineTrigger = 160;
+			if( (packPre9C.y < yLineTrigger && yLineTrigger+5 <= packNowC.y) || hasArrived == false){
+				if(locus.calculateLocus(packNowC, packPre9C, 380) == true){	//軌跡検出
+					forecastPoint = locus.getLocusCoordinate();
+					
+					hasArrived = robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint); //マレット移動
+					std::cout << hasArrived << std::endl;
+					if(hasArrived){
+						std::cout << "Arrive the Distination!!" << std::endl;
+					}
+				}
+				cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,0,255));
+			}
+			else{
+				hasArrived = true;
+				robotAction.moveToCenter(malletNowC);	//中央に移動
+				std::cout << hasArrived << std::endl;
+			}
+
+			cvShowImage("ColorExtractionRS", extractMallet);			
 			if (cv::waitKey(1) >= 0) {
 				break;
-			}
-		
-			if(packNowC.y > 300){
-
-				if(locus.calculateLocus(packCoordinate.getCoordinate(), packCoordinate.getPreviousCoordinate(), 340) == true){	//軌跡検出
-					CvPoint forecastPoint = locus.getLocusCoordinate();
-					//printf("locus:%d\n", forecastPoint);
-
-					robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint);									//マレット移動
-				}
 			}
 		}
 	}

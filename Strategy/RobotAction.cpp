@@ -53,33 +53,43 @@ namespace Strategy {
 		mFrequencyManualY.output();
 	}
 
-	void RobotAction::moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
+	bool RobotAction::moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
 	{
-		int moveDistance = aForecastPackCoordinate.x - aMalletCoordinate.x;
+		//リミットスイッチに当たってしまわないように補正
+		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
+		if(forecastPackCoordinate.x < 70){
+			forecastPackCoordinate.x = 70;
+		}
+		if(forecastPackCoordinate.x > 260){
+			forecastPackCoordinate.x = 260;
+		}
+		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 
 		printf("moveDistance:%d\n", moveDistance);
 		//moveDistanceはパックが
 		//右に飛んでくる予想の場合＋、左に飛んでくる予想の場合－
 		//mFrequencySwitching.sankakuProcess(moveDistance);
 		//FrequencyManual::FrequencyManual();
-		if(moveDistance > -5 && moveDistance < 5)
+		if(abs(moveDistance) < 5)
 		{
-			mFrequencyManualX.setOutputInformation('C', 0);
+			mFrequencyManualX.setOutputInformation('A', 0);
 			mFrequencyManualX.output();
-			mFrequencyManualY.output();
+			//mFrequencyManualY.output();
+			return true;
 		}
-		else if(moveDistance < 0)
+		else if(moveDistance >= 5)
 		{
 			mFrequencyManualX.setOutputInformation('C', 300);
 			mFrequencyManualX.output();
-			mFrequencyManualY.output();
+			//mFrequencyManualY.output();
 		}
-		else if(moveDistance > 0)
+		else if(moveDistance <= -5)
 		{
 			mFrequencyManualX.setOutputInformation('D', 300);
 			mFrequencyManualX.output();
-			mFrequencyManualY.output();
+			//mFrequencyManualY.output();
 		}
 
+		return false;
 	}
 }  // namespace Strategy
