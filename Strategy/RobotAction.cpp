@@ -57,8 +57,29 @@ namespace Strategy {
 	{
 		int moveDistance = aForecastPackCoordinate.x - aMalletCoordinate.x;
 
+		printf("moveDistance:%d\n", moveDistance);
 		//moveDistance‚ÍƒpƒbƒN‚ª
 		//‰E‚É”ò‚ñ‚Å‚­‚é—\‘z‚Ìê‡{A¶‚É”ò‚ñ‚Å‚­‚é—\‘z‚Ìê‡|
-		mFrequencySwitching.sankakuProcess(moveDistance);
+		//mFrequencySwitching.sankakuProcess(moveDistance);
+		//FrequencyManual::FrequencyManual();
+		if(moveDistance > -5 && moveDistance < 5)
+		{
+			mFrequencyManualX.setOutputInformation('C', 0);
+			mFrequencyManualX.output();
+			mFrequencyManualY.output();
+		}
+		else if(moveDistance < 0)
+		{
+			mFrequencyManualX.setOutputInformation('C', 300);
+			mFrequencyManualX.output();
+			mFrequencyManualY.output();
+		}
+		else if(moveDistance > 0)
+		{
+			mFrequencyManualX.setOutputInformation('D', 300);
+			mFrequencyManualX.output();
+			mFrequencyManualY.output();
+		}
+
 	}
 }  // namespace Strategy

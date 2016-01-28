@@ -7,7 +7,7 @@ char FrequencyManual::mBuf[8];
 FrequencyManual::FrequencyManual()
 {
 	mTargetDirection = 'A';
-	mFrequencyX = 0;
+	mFrequencyX = 100;
 	int mFrequencyY = 0;
 	for (int i = 0; i < 8; i++){
 		mBuf[i] = 0;

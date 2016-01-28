@@ -342,9 +342,9 @@ namespace Test {
 		std::cout << "!!!Robot Action Test!!! Move to Hit Back" << std::endl;
 
 		Strategy::RobotAction robotAction;
-		Strategy::MalletCoordinate malletCoordinate;
-		/*Strategy::Locus locus;
-		Strategy::PackCoordinate packCoordinate;*/
+		Strategy::MalletCoordinate malletCoordinate;	//マレットの位置
+		Strategy::Locus locus;							//軌跡
+		Strategy::PackCoordinate packCoordinate;		
 
 		Color::ColorExtraction colorExtractionMallet;
 		colorExtractionMallet.setMalletHSV();
@@ -352,8 +352,10 @@ namespace Test {
 		while(1){
 			Hardware::Camera::renew();
 			CvPoint malletNowC = malletCoordinate.getCoordinate();
-			robotAction.moveToCenter(malletNowC);
+			CvPoint packNowC =packCoordinate.getCoordinate();
 
+			//robotAction.moveToCenter(malletNowC);					//中央に移動
+			
 			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
 			std::ostringstream os;
 			os << "Pack X:" << malletNowC.x;
@@ -374,12 +376,17 @@ namespace Test {
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
-		}
+		
+			if(packNowC.y > 300){
 
-		/*if(locus.calculateLocus(packCoordinate.getCoordinate(), packCoordinate.getPreviousCoordinate(), 340) == true){
-			CvPoint forecastPoint = locus.getLocusCoordinate();
-			robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint);
-		}*/
+				if(locus.calculateLocus(packCoordinate.getCoordinate(), packCoordinate.getPreviousCoordinate(), 340) == true){	//軌跡検出
+					CvPoint forecastPoint = locus.getLocusCoordinate();
+					//printf("locus:%d\n", forecastPoint);
+
+					robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint);									//マレット移動
+				}
+			}
+		}
 	}
 
 	void StrategyTest::offenseDeffenseStrategyTest()
