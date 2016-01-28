@@ -93,20 +93,18 @@ namespace Strategy {
 		return false;
 	}
 
-	bool RobotAction::sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
+	void RobotAction::sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
 	{
 		//リミットスイッチに当たってしまわないように補正
 		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
-		if(forecastPackCoordinate.x < 40){
-			forecastPackCoordinate.x = 40;
+		if(forecastPackCoordinate.x < 30){
+			forecastPackCoordinate.x = 30;
 		}
-		if(forecastPackCoordinate.x > 280){
-			forecastPackCoordinate.x = 280;
+		if(forecastPackCoordinate.x > 290){
+			forecastPackCoordinate.x = 290;
 		}
 		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 
 		mFrequencySwitching.sankakuProcess(moveDistance);
-
-		return false;
 	}
 }  // namespace Strategy

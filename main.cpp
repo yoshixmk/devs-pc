@@ -35,7 +35,7 @@ int main() {
 	//strategyTest.packCoordinateTest();
 	//strategyTest.malletCoordinateTest();
 	//strategyTest.frameCoordinateTest();
-	strategyTest.locusTest();
+	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();
 	//strategyTest.frequencySwitching_Y_Test();
 //	strategyTest.robotActionCenterTest();
@@ -44,7 +44,7 @@ int main() {
 	//strategyTest.frequencyManualYTest();
 	//strategyTest.speedOfPackTest();
 	//strategyTest.robotActionHitBackTest();
-	//strategyTest.robotActionSankakuTest();
+	strategyTest.robotActionSankakuTest();
 
 //	Test::UITest uiTest;
 //	uiTest.intelligentTest();

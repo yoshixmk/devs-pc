@@ -28,7 +28,7 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 		targetCoordinate.x = (int)((aYLine - mBIntercept) / mAInclination);
 		
 		
-		int rebound_max = 3; //3回以上跳ね返る軌跡の場合、当たり障りのない位置（中央）を指定
+		int rebound_max = 5; //5回以上跳ね返る軌跡の場合、当たり障りのない位置（中央）を指定
 		int rebound_num = 0;
 
 		while(targetCoordinate.x < left_frame || right_frame < targetCoordinate.x){
@@ -46,6 +46,7 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 			if(rebound_max < rebound_num){
 				//跳ね返りが多すぎる時は、中央を指定
 				targetCoordinate = cvPoint(centerLine, aYLine);
+				mForecastPoint = targetCoordinate;
 				//break;
 				return false;
 			}
@@ -56,6 +57,7 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 		mBIntercept = 0;
 		//当たり障りのない位置（中央）を指定
 		targetCoordinate = cvPoint(centerLine, aYLine);
+		mForecastPoint = targetCoordinate;
 		return false;
 	}
 	mForecastPoint = targetCoordinate;

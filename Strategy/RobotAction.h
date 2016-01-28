@@ -20,7 +20,7 @@ private:
 public:
 	void moveToCenter(CvPoint aMalletCoordinate);
 	bool moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
-	bool sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
+	void sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 };
 
 }  // namespace Strategy

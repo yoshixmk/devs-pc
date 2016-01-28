@@ -143,7 +143,7 @@ namespace Test {
 			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();//引数ありで使える。
 			
 			locusMasking = hockeyTableMasking.mask();
-			//if( abs(coordinate.x - previousCoordinate.x) > 1){
+			if( abs(coordinate.x - previousCoordinate.x) > 1){
 				if(locus.calculateLocus(coordinate, previousCoordinate, yLine) == true){
 					CvPoint forecastPoint = locus.getLocusCoordinate();
 
@@ -152,7 +152,7 @@ namespace Test {
 					//std::cout << "previousCoordinate X:" << previousCoordinate.x << " Y:" << previousCoordinate.y << std::endl;
 					//std::cout << "====forecastPoint X:" << forecastPoint.x << " Y:" << forecastPoint.y << std::endl;
 				}
-			//}
+			}
 
 			cvShowImage("Locas", locusMasking);
 
@@ -459,7 +459,7 @@ namespace Test {
 		colorExtractionMallet.setMalletHSV(); //
 		bool hasArrived = true; //目的地まで移動中=false, 移動完了=true
 
-		cvNamedWindow("ColorExtractionRS"); //
+		cvNamedWindow("ColorExtractionRS");
 		CvPoint forecastPoint = cvPoint(0, 0);
 		int atackCount = 0;;
 		while(1){
@@ -467,8 +467,9 @@ namespace Test {
 			CvPoint malletNowC = malletCoordinate.getCoordinate();
 			CvPoint packNowC =packCoordinate.getCoordinate();
 			CvPoint packPre0C = packCoordinate.getPreviousCoordinate();
-			CvPoint packPre1C = packCoordinate.getPreviousCoordinate(1);
+			//CvPoint packPre1C = packCoordinate.getPreviousCoordinate(1);
 			CvPoint packPre3C = packCoordinate.getPreviousCoordinate(3);
+			//CvPoint packPre9C = packCoordinate.getPreviousCoordinate(9);
 			
 			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable(); //
 			std::ostringstream os;
@@ -486,12 +487,12 @@ namespace Test {
 			memcpy(fname, number.c_str(), len+1);
 			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
 
-			cvCircle(extractMallet, packPre3C, 5, cvScalar(0,255,0));
+			cvCircle(extractMallet, packPre0C, 5, cvScalar(0,255,0));
 			cvCircle(extractMallet, packNowC, 5, cvScalar(0,255,255));
 			
 			int yLineTrigger = 160;
-			if( (packPre0C.y < yLineTrigger && yLineTrigger + 5 <= packNowC.y) && atackCount < 1 ){
-				if(locus.calculateLocus(packNowC, packPre1C, 380) == true){	//軌跡検出
+			if( (packPre3C.y < yLineTrigger && yLineTrigger + 4 <= packNowC.y) && atackCount < 1 ){
+				if(locus.calculateLocus(packNowC, packPre3C, 380) == true){	//軌跡検出
 					forecastPoint = locus.getLocusCoordinate();
 					robotAction.sankakuHitBack(malletNowC, forecastPoint);
 					std::cout << "sankaku!!" << std::endl;

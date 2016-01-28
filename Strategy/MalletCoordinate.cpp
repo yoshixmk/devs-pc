@@ -59,7 +59,6 @@ void MalletCoordinate::renewSerialBuf()
 	unsigned char buf[8] = {0, 1, 'A', 3, 4, 'B', mNowMalletX/2, mNowMalletY/2};
 	
 	Hardware::Serial::serialWriteRange((char*)buf, 6, 7);
-	cv::waitKey(1);
 }
 
 }  // namespace Strategy

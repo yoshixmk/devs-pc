@@ -187,8 +187,8 @@ void ColorExtraction::setPackHSV()
 	//緑
 	mHMin = 81;//61
 	mHMax = 88;//72
-	mSMin = 81;//31
-	mSMax = 125;//88
+	mSMin = 99;//31
+	mSMax = 130;//88
 	mVMin = 0;//39
 	mVMax = 130;//63
 }

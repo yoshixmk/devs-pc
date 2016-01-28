@@ -68,9 +68,6 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 	int freq =0;
 	int nowFrequency = mInitFrequency;
 	int moveDistanceAbs = abs(aMoveDistance);
-
-	//画像サイズが2倍のため。
-	moveDistanceAbs /= 2;
 	
 	while(moveDistanceAbs >= next_freq * 2){
 		next_freq = next_freq + sum +0.10*freq;
