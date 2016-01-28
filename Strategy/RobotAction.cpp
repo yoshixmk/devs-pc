@@ -57,11 +57,11 @@ namespace Strategy {
 	{
 		//リミットスイッチに当たってしまわないように補正
 		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
-		if(forecastPackCoordinate.x < 70){
-			forecastPackCoordinate.x = 70;
+		if(forecastPackCoordinate.x < 60){
+			forecastPackCoordinate.x = 60;
 		}
-		if(forecastPackCoordinate.x > 260){
-			forecastPackCoordinate.x = 260;
+		if(forecastPackCoordinate.x > 270){
+			forecastPackCoordinate.x = 270;
 		}
 		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 
@@ -70,20 +70,20 @@ namespace Strategy {
 		//右に飛んでくる予想の場合＋、左に飛んでくる予想の場合－
 		//mFrequencySwitching.sankakuProcess(moveDistance);
 		//FrequencyManual::FrequencyManual();
-		if(abs(moveDistance) < 5)
+		if(abs(moveDistance) < 3)
 		{
 			mFrequencyManualX.setOutputInformation('A', 0);
 			mFrequencyManualX.output();
 			//mFrequencyManualY.output();
 			return true;
 		}
-		else if(moveDistance >= 5)
+		else if(moveDistance >= 3)
 		{
 			mFrequencyManualX.setOutputInformation('C', 300);
 			mFrequencyManualX.output();
 			//mFrequencyManualY.output();
 		}
-		else if(moveDistance <= -5)
+		else if(moveDistance <= -3)
 		{
 			mFrequencyManualX.setOutputInformation('D', 300);
 			mFrequencyManualX.output();

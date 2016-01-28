@@ -388,8 +388,8 @@ namespace Test {
 					if(hasArrived){
 						std::cout << "Arrive the Distination!!" << std::endl;
 					}
+					cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,0,255));
 				}
-				cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,0,255));
 			}
 			else{
 				hasArrived = true;
@@ -397,7 +397,7 @@ namespace Test {
 				std::cout << hasArrived << std::endl;
 			}
 
-			cvShowImage("ColorExtractionRS", extractMallet);			
+			cvShowImage("ColorExtractionRS", extractMallet);
 			if (cv::waitKey(1) >= 0) {
 				break;
 			}
