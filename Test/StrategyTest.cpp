@@ -352,6 +352,8 @@ namespace Test {
 
 		cvNamedWindow("ColorExtractionRS");
 		CvPoint forecastPoint;
+		Hardware::Timer timer;
+		timer.resetStartOperatingTime();
 		while(1){
 			Hardware::Camera::renew();
 			CvPoint malletNowC = malletCoordinate.getCoordinate();
@@ -379,9 +381,12 @@ namespace Test {
 			cvCircle(extractMallet, packNowC, 5, cvScalar(0,255,255));
 			
 			int yLineTrigger = 160;
-			if( (packPre9C.y < yLineTrigger && yLineTrigger+5 <= packNowC.y) || hasArrived == false){
+			if( (packPre9C.y < yLineTrigger && yLineTrigger <= packNowC.y) || hasArrived == false){
 				if(locus.calculateLocus(packNowC, packPre9C, 380) == true){	//軌跡検出
-					forecastPoint = locus.getLocusCoordinate();
+					if(hasArrived){
+						forecastPoint = locus.getLocusCoordinate();
+						timer.setTimer(5);
+					}
 					
 					hasArrived = robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint); //マレット移動
 					std::cout << hasArrived << std::endl;
@@ -395,6 +400,12 @@ namespace Test {
 				hasArrived = true;
 				robotAction.moveToCenter(malletNowC);	//中央に移動
 				std::cout << hasArrived << std::endl;
+			}
+
+			if(hasArrived ==false){
+				if(timer.getAlarm()){
+					hasArrived = true;
+				}
 			}
 
 			cvShowImage("ColorExtractionRS", extractMallet);
