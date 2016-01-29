@@ -24,13 +24,14 @@ void FrequencySwitchingX::setOutputInformation(char aDirection, double aTime)
 void FrequencySwitchingX::output()
 {	
 	double passed_time = mTimer.getOperatingTime();
-
+	char buf[8];
 	if (passed_time < mTargetTime - mIntervaTime * mFrequencyUpCount){ //upper and keeping time
 		for (int i = 0; i <= mFrequencyUpCount; i++){
 			if (passed_time < mIntervaTime * (i + 1)){
 				if (mCurrentFrequency != mInitFrequency + mAmountOfChange * i){
 					mCurrentFrequency = mInitFrequency + mAmountOfChange * i;
-					mBuf[0] = mCurrentFrequency / 10 / 2;
+					buf[0] = mCurrentFrequency / 10 / 2;
+					Hardware::Serial::changeBuf(buf, 0);
 				}
 				break;
 			}
@@ -42,7 +43,8 @@ void FrequencySwitchingX::output()
 				//現在の周波数 != 初期値 + 減らした周波数
 				if (mCurrentFrequency != mInitFrequency + mAmountOfChange * i){
 					mCurrentFrequency = mInitFrequency + mAmountOfChange * i;
-					mBuf[0] = mCurrentFrequency / 10 / 2;
+					buf[0] = mCurrentFrequency / 10 / 2;
+					Hardware::Serial::changeBuf(buf, 0);
 				}
 				break;
 			}
@@ -50,14 +52,17 @@ void FrequencySwitchingX::output()
 	}
 	else{
 		if (mCurrentFrequency != 0){
-			mBuf[0] = 0;
+			buf[0] = 0;
+			Hardware::Serial::changeBuf(buf, 0);
 		}
 	}
 	FrequencySwitching::output();
 }
 
 void FrequencySwitchingX::stop(){
-	mBuf[0] = 0;
+	char buf[8];
+	buf[0] = 0;
+	Hardware::Serial::changeBuf(buf, 0);
 	FrequencySwitching::output();
 }
 

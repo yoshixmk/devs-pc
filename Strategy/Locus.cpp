@@ -19,16 +19,18 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 {
 	CvPoint targetCoordinate;
 	targetCoordinate.y = aYLine;
-	int left_frame = FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x ;
-	int right_frame = FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x;
-	if((aCoordinate2.x - aCoordinate1.x) != 0){
+	int left_frame = (FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x) / 2;
+	int right_frame = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x) / 2;
+	int centerLine = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getLowerLeftF().x) / 2;
+	if(((aCoordinate2.x - aCoordinate1.x) != 0) && ((aCoordinate2.y - aCoordinate1.y) != 0)){
 		mAInclination = (aCoordinate2.y - aCoordinate1.y) / (aCoordinate2.x - aCoordinate1.x);
 		mBIntercept = aCoordinate2.y - mAInclination * aCoordinate2.x;
 		targetCoordinate.x = (int)((aYLine - mBIntercept) / mAInclination);
 		
 		
-		int rebound_max = 3; //3回以上跳ね返る軌跡の場合、当たり障りのない位置（中央）を指定
+		int rebound_max = 5; //5回以上跳ね返る軌跡の場合、当たり障りのない位置（中央）を指定
 		int rebound_num = 0;
+
 		while(targetCoordinate.x < left_frame || right_frame < targetCoordinate.x){
 			if(targetCoordinate.x < left_frame){
 				targetCoordinate.x = 2 * left_frame - targetCoordinate.x;
@@ -43,7 +45,8 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 			rebound_num++;
 			if(rebound_max < rebound_num){
 				//跳ね返りが多すぎる時は、中央を指定
-				targetCoordinate.x = (left_frame + right_frame) / 2;
+				targetCoordinate = cvPoint(centerLine, aYLine);
+				mForecastPoint = targetCoordinate;
 				//break;
 				return false;
 			}
@@ -53,8 +56,8 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 		mAInclination = 0;
 		mBIntercept = 0;
 		//当たり障りのない位置（中央）を指定
-		int centerLine = FrameCoordinate::getLowerRightF().x + FrameCoordinate::getLowerLeftF().x;
 		targetCoordinate = cvPoint(centerLine, aYLine);
+		mForecastPoint = targetCoordinate;
 		return false;
 	}
 	mForecastPoint = targetCoordinate;

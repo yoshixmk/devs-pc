@@ -13,18 +13,23 @@ FrequencyManualX::~FrequencyManualX(void)
 
 void FrequencyManualX::setOutputInformation(int aFrequencyX)
 {
-	mBuf[1] = aFrequencyX / 20;
+	char buf[8];
+	mFrequencyX = buf[0] = aFrequencyX / 20;
+	Hardware::Serial::changeBuf(buf, 0);
 }
 
 void FrequencyManualX::setOutputInformation(char aDirection, int aFrequencyX)
 {
-	mBuf[0] = aFrequencyX / 20;
-	mBuf[2] = aDirection;
+	char buf[8];
+	mFrequencyX = buf[0] = aFrequencyX / 20;
+	mTargetDirection = buf[2] = aDirection;
+	Hardware::Serial::changeBuf(buf, 0);
+	Hardware::Serial::changeBuf(buf, 2);
 }
 
 void FrequencyManualX::output()
 {
-	outputX();
+	FrequencyManual::output();
 }
 
 }  // namespace Strategy

@@ -14,9 +14,9 @@ protected:
 	char mTargetDirection; //'A' 'B' 'C' 'D'
 	int mFrequencyX;
 	int mFrequencyY;
-	static char mBuf[8]; //送信する内容
-	void outputX();
-	void outputY();
+	//static char mBuf[8]; //送信する内容
+	/*void outputX();
+	void outputY();*/
 
 public:
 	FrequencyManual();

@@ -23,13 +23,14 @@ void FrequencySwitchingWeakY::setOutputInformation(char aDirection, double aTime
 void FrequencySwitchingWeakY::output()
 {
 	double passed_time = mTimer.getOperatingTime();
-
+	char buf[8];
 	if (passed_time < mTargetTime - mIntervaTime * mFrequencyUpCount){ //upper and keeping time
 		for (int i = 0; i <= mFrequencyUpCount; i++){
 			if (passed_time < mIntervaTime * (i + 1)){
 				if (mCurrentFrequency != mInitFrequency + mAmountOfChange * i){
 					mCurrentFrequency = mInitFrequency + mAmountOfChange * i;
-					mBuf[1] = mCurrentFrequency / 10 / 2;
+					buf[4] = mCurrentFrequency / 10 / 2;
+					Hardware::Serial::changeBuf(buf, 4);
 				}
 				break;
 			}
@@ -41,7 +42,8 @@ void FrequencySwitchingWeakY::output()
 				//現在の周波数 != 初期値 + 減らした周波数
 				if (mCurrentFrequency != mInitFrequency + mAmountOfChange * i){
 					mCurrentFrequency = mInitFrequency + mAmountOfChange * i;
-					mBuf[1] = mCurrentFrequency / 10 / 2;
+					buf[4] = mCurrentFrequency / 10 / 2;
+					Hardware::Serial::changeBuf(buf, 4);
 				}
 				break;
 			}
@@ -49,7 +51,8 @@ void FrequencySwitchingWeakY::output()
 	}
 	else{
 		if (mCurrentFrequency != 0){
-			mBuf[1] = 0;
+			buf[4] = 0;
+			Hardware::Serial::changeBuf(buf, 4);
 		}
 	}
 	FrequencySwitching::output();
@@ -58,7 +61,9 @@ void FrequencySwitchingWeakY::output()
 //時間内にできるだけ周波数を上げて、最後に周波数を落とす
 void FrequencySwitchingWeakY::stop()
 {
-	mBuf[1] = 0;
+	char buf[8];
+	buf[4] = 0;
+	Hardware::Serial::changeBuf(buf, 4);
 	FrequencySwitching::output();
 }
 

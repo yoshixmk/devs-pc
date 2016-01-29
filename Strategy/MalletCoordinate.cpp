@@ -56,10 +56,11 @@ CvPoint MalletCoordinate::getCoordinate()
 void MalletCoordinate::renewSerialBuf()
 {
 	//7, 8バイト目のみの更新用
-	unsigned char buf[8] = {0, 1, 'A', 3, 4, 'B', mNowMalletX/2, mNowMalletY/2};
-	
-	Hardware::Serial::serialWriteRange((char*)buf, 6, 7);
-	cv::waitKey(1);
+	char buf[8] = {0, 1, 'A', 3, 4, 'B', mNowMalletX/2, mNowMalletY/2};
+	Hardware::Serial::changeBuf(buf, 6);
+	Hardware::Serial::changeBuf(buf, 7);
+	Hardware::Serial::serialWrite();
+	//Hardware::Serial::serialWriteRange((char*)buf, 6, 7);
 }
 
 }  // namespace Strategy

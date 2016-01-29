@@ -12,17 +12,16 @@ namespace Strategy {
 class RobotAction {
 private:
 	FrequencySwitching mFrequencySwitching;
+	FrequencyManual mFrequencyManual;
 	FrequencyManualX mFrequencyManualX;
 	FrequencyManualY mFrequencyManualY;
-
 	void moveForLimit();
-
 	void limitCheck();
 
 public:
 	void moveToCenter(CvPoint aMalletCoordinate);
-
-	void moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
+	bool moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
+	void sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 };
 
 }  // namespace Strategy
