@@ -12,6 +12,7 @@ namespace Strategy {
 class RobotAction {
 private:
 	FrequencySwitching mFrequencySwitching;
+	FrequencyManual mFrequencyManual;
 	FrequencyManualX mFrequencyManualX;
 	FrequencyManualY mFrequencyManualY;
 	void moveForLimit();

@@ -22,7 +22,7 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 	int left_frame = (FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x) / 2;
 	int right_frame = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x) / 2;
 	int centerLine = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getLowerLeftF().x) / 2;
-	if((aCoordinate2.x - aCoordinate1.x) != 0){
+	if(((aCoordinate2.x - aCoordinate1.x) != 0) && ((aCoordinate2.y - aCoordinate1.y) != 0)){
 		mAInclination = (aCoordinate2.y - aCoordinate1.y) / (aCoordinate2.x - aCoordinate1.x);
 		mBIntercept = aCoordinate2.y - mAInclination * aCoordinate2.x;
 		targetCoordinate.x = (int)((aYLine - mBIntercept) / mAInclination);

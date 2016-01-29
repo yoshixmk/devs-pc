@@ -347,14 +347,14 @@ namespace Test {
 
 			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
 			std::ostringstream os;
-			os << "Pack X:" << malletNowC.x;
+			os << "Mallet X:" << malletNowC.x;
 			std::string number = os.str();
 			int len = number.length();
 			char* fname = new char[len+1];
 			memcpy(fname, number.c_str(), len+1);
 			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
 			std::ostringstream os2;
-			os2 << "Pack Y:" << malletNowC.y;
+			os2 << "Mallet Y:" << malletNowC.y;
 			number = os2.str();
 			len = number.length();
 			fname = new char[len+1];
@@ -461,15 +461,13 @@ namespace Test {
 
 		cvNamedWindow("ColorExtractionRS");
 		CvPoint forecastPoint = cvPoint(0, 0);
-		int atackCount = 0;;
+		int atackCount = 0;
 		while(1){
 			Hardware::Camera::renew();
 			CvPoint malletNowC = malletCoordinate.getCoordinate();
 			CvPoint packNowC =packCoordinate.getCoordinate();
 			CvPoint packPre0C = packCoordinate.getPreviousCoordinate();
-			//CvPoint packPre1C = packCoordinate.getPreviousCoordinate(1);
-			CvPoint packPre3C = packCoordinate.getPreviousCoordinate(3);
-			//CvPoint packPre9C = packCoordinate.getPreviousCoordinate(9);
+			CvPoint packPre1C = packCoordinate.getPreviousCoordinate(1);
 			
 			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable(); //
 			std::ostringstream os;
@@ -487,17 +485,17 @@ namespace Test {
 			memcpy(fname, number.c_str(), len+1);
 			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
 
-			cvCircle(extractMallet, packPre0C, 5, cvScalar(0,255,0));
+			cvCircle(extractMallet, packPre1C, 5, cvScalar(0,255,0));
 			cvCircle(extractMallet, packNowC, 5, cvScalar(0,255,255));
 			
 			int yLineTrigger = 160;
-			if( (packPre3C.y < yLineTrigger && yLineTrigger + 4 <= packNowC.y) && atackCount < 1 ){
-				if(locus.calculateLocus(packNowC, packPre3C, 380) == true){	//軌跡検出
+			if( (packPre1C.y < yLineTrigger && yLineTrigger + 3 <= packNowC.y) && atackCount < 1 ){
+				if(locus.calculateLocus(packNowC, packPre1C, 360) == true){	//軌跡検出
 					forecastPoint = locus.getLocusCoordinate();
 					robotAction.sankakuHitBack(malletNowC, forecastPoint);
 					std::cout << "sankaku!!" << std::endl;
+					atackCount++;
 				}
-				atackCount++;
 			}
 			else{
 				atackCount = 0;

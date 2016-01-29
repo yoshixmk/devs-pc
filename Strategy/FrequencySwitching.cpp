@@ -2,7 +2,6 @@
 
 namespace Strategy
 {
-char FrequencySwitching::mBuf[8];
 
 FrequencySwitching::FrequencySwitching()
 {
@@ -10,13 +9,16 @@ FrequencySwitching::FrequencySwitching()
 	mTargetTime = 0;
 	mTargetDirection = 'A';
 	mTargetTime = 0;
-	mTimer.resetStartOperatingTime();
 
+	char buf[8];
 	for (int i = 0; i < 8; i++){
-		mBuf[i] = 0;
+		buf[i] = 0;
 	}
-	mBuf[2] = 'A';
-	mBuf[5] = 'A';
+	buf[2] = 'A';
+	buf[5] = 'A';
+	for (int i = 0; i < 8; i++){
+		Hardware::Serial::changeBuf(buf, i);
+	}
 
 	mInitFrequency = 400;
 }
@@ -36,26 +38,37 @@ void FrequencySwitching::setOutputInformation(char aTargetDirection, double aTar
 		mTargetTime = aTargetTime;
 		mTimer.resetStartOperatingTime();
 	}
-	mBuf[2] = mTargetDirection;
+	char buf[8];
+	buf[2] = mTargetDirection;
+	Hardware::Serial::changeBuf(buf, 2);
 }
 
 void FrequencySwitching::output()
 {
-	Hardware::Serial::serialWrite(mBuf);
+	Hardware::Serial::serialWrite();
 }
 
 void FrequencySwitching::stop()
 {
-	mBuf[0] = 0;
-	mBuf[1] = 0;
+	char buf[8];
+	buf[0] = 0;
+	buf[1] = 0;
+	Hardware::Serial::changeBuf(buf, 0);
+	Hardware::Serial::changeBuf(buf, 1);
+	Hardware::Serial::serialWrite();
 }
 
 void FrequencySwitching::setFrequencyX(int aFrequency){
-	mBuf[0] = aFrequency;
+	char buf[8];
+	buf[0] = aFrequency;
+	Hardware::Serial::changeBuf(buf, 0);
+	//Hardware::Serial::serialWrite();
 }
 
 void FrequencySwitching::setFrequencyY(int aFrequency){
-	mBuf[1] = aFrequency;
+	char buf[8];
+	buf[1] = aFrequency;
+	Hardware::Serial::changeBuf(buf, 1);
 }
 
 void FrequencySwitching::sankakuProcess(int aMoveDistance)
@@ -78,34 +91,45 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 	//printf("move_dist: %c\n", aDirection);
 	//printf("max_freq: %d\n",max_freq);
 
-	mBuf[0] = nowFrequency / 20;
-	mBuf[1] = 500 / 20;
+	char buf[8];
+	buf[0] = nowFrequency / 20;
+	Hardware::Serial::changeBuf(buf, 0);
+	buf[1] = 500 / 20;
+	Hardware::Serial::changeBuf(buf, 1);
+
 	if(aMoveDistance > 0){
-		mBuf[2] = 'B';
+		buf[2] = 'B';
 	}
 	else{
-		mBuf[2] = 'A';
+		buf[2] = 'A';
 	}
+	Hardware::Serial::changeBuf(buf, 2);
+	FrequencySwitching::output();
 
 	while(max_freq > nowFrequency){
-		mBuf[0] = nowFrequency / 20;
-		mBuf[1] = 500 / 20;
+		buf[0] = nowFrequency / 20;
+		buf[1] = 500 / 20;
+		Hardware::Serial::changeBuf(buf, 0);
+		Hardware::Serial::changeBuf(buf, 1);
 		//std::cout << "output: " << nowFrequency << std::endl;
 		nowFrequency = nowFrequency + 100;
 		Sleep(10);	//10ms
 		FrequencySwitching::output();
 	}
 	while(mInitFrequency <= nowFrequency){
-		mBuf[0] = nowFrequency / 20;
-		mBuf[1] = 500 / 20;
+		buf[0] = nowFrequency / 20;
+		buf[1] = 500 / 20;
+		Hardware::Serial::changeBuf(buf, 0);
+		Hardware::Serial::changeBuf(buf, 1);
 		//std::cout << "output: " << nowFrequency << std::endl;
 		nowFrequency = nowFrequency - 100;
 		Sleep(10);	//10ms
 		FrequencySwitching::output();
 	}
-	mBuf[0] = 0;
-	mBuf[1] = 0;
-
+	buf[0] = 0;
+	buf[1] = 0;
+	Hardware::Serial::changeBuf(buf, 0);
+	Hardware::Serial::changeBuf(buf, 1);
 	FrequencySwitching::output();
 }
 

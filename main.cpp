@@ -38,16 +38,15 @@ int main() {
 	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();
 	//strategyTest.frequencySwitching_Y_Test();
-//	strategyTest.robotActionCenterTest();
 	//strategyTest.frequencyManualTest();
 	//strategyTest.frequencyManualXTest();
 	//strategyTest.frequencyManualYTest();
 	//strategyTest.speedOfPackTest();
+	//strategyTest.robotActionCenterTest();
 	//strategyTest.robotActionHitBackTest();
 	strategyTest.robotActionSankakuTest();
 
 //	Test::UITest uiTest;
-//	uiTest.intelligentTest();
 //	uiTest.soundTest();
 
 	//Test::ShowWindowTest showWindowTest;

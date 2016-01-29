@@ -64,6 +64,16 @@ void Serial::serialClose()
 
 void Serial::serialWrite()
 {
+	for(int i=0; i<SEND_BYTE; i++){
+		if(i == 2 || i == 5){
+			std::cout << i << ":" << mBuf[i] << " ";
+		}
+		else{
+			std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
+		}
+	}
+	std::cout << std::endl;
+
 	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 }
 
@@ -71,7 +81,16 @@ void Serial::serialWrite(char* aBuf)
 {
 	for(int i=0; i<SEND_BYTE; i++){
 		mBuf[i] = aBuf[i];
+		if(i == 2 || i == 5){
+			std::cout << i << ":" << mBuf[i] << " ";
+		}
+		else{
+			std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
+		}
 	}
+
+	std::cout << std::endl;
+
 	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 	//cv::waitKey(10);
 }
@@ -81,6 +100,21 @@ void Serial::serialWriteRange(char* aBuf, int aFrom, int aTo)
 	if(SEND_BYTE < aTo){
 		exit(-1);
 	}
+	for(int i=0; i<SEND_BYTE; i++){
+		mBuf[i] = aBuf[i];
+		if(i == 3 || i == 4){
+			mBuf[i] = 100;
+		}
+		mBuf[5] = 'B';
+		if(i == 2 || i == 5){
+			std::cout << i << ":" << mBuf[i] << " ";
+		}
+		else{
+			std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
+		}
+	}
+
+	std::cout << std::endl;
 
 	for(int i=aFrom; i<=aTo; i++){
 		mBuf[i] = aBuf[i];
