@@ -1,7 +1,8 @@
 #ifndef TEST_UITEST_H_
 #define TEST_UITEST_H_
 
-#include "../Hardware/Camera.h"
+#include "../UI/UI.h"
+
 #include <iostream>
 
 namespace Test {
@@ -9,6 +10,7 @@ namespace Test {
 class UITest {
 public:
 	UITest();
+	void uiStrategyTest();
 };
 
 } /* namespace Color */

@@ -1,7 +1,7 @@
 ﻿#include "Test/HardwareTest.h"
 #include "Test/ColorTest.h"
 #include "Test/StrategyTest.h"
-//#include "Test/UITest.h"
+#include "Test/UITest.h"
 //#include "Test/ShowWindowTest.h"
 #include <stdio.h>
 
@@ -38,15 +38,16 @@ int main() {
 	//strategyTest.locusTest();
 	//strategyTest.frequencySwitching_X_Test();
 	//strategyTest.frequencySwitching_Y_Test();
-	strategyTest.robotActionTest();
 	//strategyTest.frequencyManualTest();
 	//strategyTest.frequencyManualXTest();
 	//strategyTest.frequencyManualYTest();
 	//strategyTest.speedOfPackTest();
+	//strategyTest.robotActionCenterTest();
+	//strategyTest.robotActionHitBackTest();
+	//strategyTest.robotActionSankakuTest();
 
-//	Test::UITest uiTest;
-//	uiTest.intelligentTest();
-//	uiTest.soundTest();
+	Test::UITest uiTest;
+	uiTest.uiStrategyTest();
 
 	//Test::ShowWindowTest showWindowTest;
 	//showWindowTest.windowTest();

@@ -50,7 +50,7 @@ namespace Test {
 			//std::cout << passedTime/100 << std::endl;
 
 		}
-		//	packCoordinate.getPreviousCoordinate();
+		//	packCoordinate.getPreviousCoordinate(); //引数ありで使える。
 	}
 
 	void StrategyTest::malletCoordinateTest()
@@ -140,7 +140,7 @@ namespace Test {
 		while (1){
 			Hardware::Camera::renew();
 			CvPoint coordinate = packCoordinate.getCoordinate();
-			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();
+			CvPoint previousCoordinate = packCoordinate.getPreviousCoordinate();//引数ありで使える。
 			
 			locusMasking = hockeyTableMasking.mask();
 			if( abs(coordinate.x - previousCoordinate.x) > 1){
@@ -148,6 +148,9 @@ namespace Test {
 					CvPoint forecastPoint = locus.getLocusCoordinate();
 
 					cvCircle(locusMasking, forecastPoint, 10, cvScalar(0, 0, 255));
+					//std::cout << "coordinate X:" << coordinate.x << " Y:" << coordinate.y << std::endl;
+					//std::cout << "previousCoordinate X:" << previousCoordinate.x << " Y:" << previousCoordinate.y << std::endl;
+					//std::cout << "====forecastPoint X:" << forecastPoint.x << " Y:" << forecastPoint.y << std::endl;
 				}
 			}
 
@@ -297,50 +300,6 @@ namespace Test {
 		}
 	}
 
-	void StrategyTest::robotActionTest()
-	{
-		std::cout << "!!!Robot Action Test!!!" << std::endl;
-
-		Strategy::RobotAction robotAction;
-		Strategy::MalletCoordinate malletCoordinate;
-		/*Strategy::Locus locus;
-		Strategy::PackCoordinate packCoordinate;*/
-
-		Color::ColorExtraction colorExtractionMallet;
-		colorExtractionMallet.setMalletHSV();
-
-		while(1){
-			Hardware::Camera::renew();
-			CvPoint malletNowC = malletCoordinate.getCoordinate();
-			robotAction.moveToCenter(malletNowC);
-
-			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
-			std::ostringstream os;
-			os << "Pack X:" << malletNowC.x;
-			std::string number = os.str();
-			int len = number.length();
-			char* fname = new char[len+1];
-			memcpy(fname, number.c_str(), len+1);
-			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
-			std::ostringstream os2;
-			os2 << "Pack Y:" << malletNowC.y;
-			number = os2.str();
-			len = number.length();
-			fname = new char[len+1];
-			memcpy(fname, number.c_str(), len+1);
-			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
-			cvShowImage("ColorExtractionRS", extractMallet);
-			
-			if (cv::waitKey(1) >= 0) {
-				break;
-			}
-		}
-
-		/*if(locus.calculateLocus(packCoordinate.getCoordinate(), packCoordinate.getPreviousCoordinate(), 340) == true){
-			CvPoint forecastPoint = locus.getLocusCoordinate();
-			robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint);
-		}*/
-	}
 	void StrategyTest::offenseDeffenseStrategyTest()
 	{
 		std::cout << "!!!OffenseDeffenseStrategy Test!!!" << std::endl;
@@ -366,6 +325,203 @@ namespace Test {
 				std::cout << speed << std::endl;
 			}
 
+		}
+	}
+
+	void StrategyTest::robotActionCenterTest()
+	{
+		std::cout << "!!!Robot Action Test!!! Move to Center" << std::endl;
+
+		Strategy::RobotAction robotAction;
+		Strategy::MalletCoordinate malletCoordinate;
+		/*Strategy::Locus locus;
+		Strategy::PackCoordinate packCoordinate;*/
+
+		Color::ColorExtraction colorExtractionMallet;
+		colorExtractionMallet.setMalletHSV();
+
+		while(1){
+			Hardware::Camera::renew();
+			CvPoint malletNowC = malletCoordinate.getCoordinate();
+			robotAction.moveToCenter(malletNowC);
+
+			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
+			std::ostringstream os;
+			os << "Mallet X:" << malletNowC.x;
+			std::string number = os.str();
+			int len = number.length();
+			char* fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
+			std::ostringstream os2;
+			os2 << "Mallet Y:" << malletNowC.y;
+			number = os2.str();
+			len = number.length();
+			fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
+			cvShowImage("ColorExtractionRS", extractMallet);
+			
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
+	}
+
+	void StrategyTest::robotActionHitBackTest()
+	{
+		std::cout << "!!!Robot Action Test!!! Move to Hit Back" << std::endl;
+
+		Strategy::RobotAction robotAction;
+		Strategy::MalletCoordinate malletCoordinate;	//マレットの位置
+		Strategy::Locus locus;							//軌跡
+		Strategy::PackCoordinate packCoordinate;		
+
+		Color::ColorExtraction colorExtractionMallet;
+		colorExtractionMallet.setMalletHSV();
+		bool hasArrived = true; //目的地まで移動中=false, 移動完了=true
+
+		cvNamedWindow("ColorExtractionRS");
+		CvPoint forecastPoint;
+		Hardware::Timer timer;
+		timer.resetStartOperatingTime();
+		while(1){
+			Hardware::Camera::renew();
+			CvPoint malletNowC = malletCoordinate.getCoordinate();
+			CvPoint packNowC =packCoordinate.getCoordinate();
+			CvPoint packPre0C = packCoordinate.getPreviousCoordinate();
+			CvPoint packPre9C = packCoordinate.getPreviousCoordinate(9);
+			
+			IplImage* extractMallet = colorExtractionMallet.extractRobotSideHockeyTable();
+			std::ostringstream os;
+			os << "Mallet X:" << malletNowC.x;
+			std::string number = os.str();
+			int len = number.length();
+			char* fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
+			std::ostringstream os2;
+			os2 << "Mallet Y:" << malletNowC.y;
+			number = os2.str();
+			len = number.length();
+			fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
+
+			cvCircle(extractMallet, packPre0C, 5, cvScalar(0,255,0));
+			cvCircle(extractMallet, packNowC, 5, cvScalar(0,255,255));
+			
+			int yLineTrigger = 160;
+			if( (packPre9C.y < yLineTrigger && yLineTrigger <= packNowC.y) || hasArrived == false){
+				if(locus.calculateLocus(packNowC, packPre9C, 380) == true){	//軌跡検出
+					if(hasArrived){
+						forecastPoint = locus.getLocusCoordinate();
+						timer.setTimer(5);
+					}
+					
+					hasArrived = robotAction.moveToHitBack(malletCoordinate.getCoordinate(), forecastPoint); //マレット移動
+					std::cout << hasArrived << std::endl;
+					if(hasArrived){
+						std::cout << "Arrive the Distination!!" << std::endl;
+					}
+					cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,0,255));
+				}
+			}
+			else{
+				hasArrived = true;
+				robotAction.moveToCenter(malletNowC);	//中央に移動
+				std::cout << hasArrived << std::endl;
+			}
+
+			if(hasArrived ==false){
+				if(timer.getAlarm()){
+					hasArrived = true;
+				}
+			}
+
+			cvShowImage("ColorExtractionRS", extractMallet);
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
+		}
+	}
+
+	void StrategyTest::robotActionSankakuTest()
+	{
+		std::cout << "!!!Robot Action Test!!! Sankaku Hit Back" << std::endl;
+
+		Strategy::RobotAction robotAction;
+		Strategy::MalletCoordinate malletCoordinate;	//マレットの位置
+		Strategy::Locus locus;							//軌跡
+		Strategy::PackCoordinate packCoordinate;		
+
+		//Color::ColorExtraction colorExtractionMallet;
+		//Color::HockeyTableMasking hockeyTableMasking;
+
+		//colorExtractionMallet.setMalletHSV(); //
+		bool hasArrived = true; //目的地まで移動中=false, 移動完了=true
+
+		//cvNamedWindow("ColorExtractionRS");
+		CvPoint forecastPoint = cvPoint(0, 0);
+		int atackCount = 0;
+		while(1){
+			Hardware::Camera::renew();
+			CvPoint malletNowC = malletCoordinate.getCoordinate();
+			CvPoint packNowC =packCoordinate.getCoordinate();
+			CvPoint packPre0C = packCoordinate.getPreviousCoordinate();
+			CvPoint packPre1C = packCoordinate.getPreviousCoordinate(1);
+			CvPoint packPre2C = packCoordinate.getPreviousCoordinate(2);
+			CvPoint packPre3C = packCoordinate.getPreviousCoordinate(3);
+			
+			//IplImage* extractMallet = hockeyTableMasking.mask();
+				//colorExtractionMallet.extractRobotSideHockeyTable();
+			/*std::ostringstream os;
+			os << "Mallet X:" << malletNowC.x;
+			std::string number = os.str();
+			int len = number.length();
+			char* fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,40), &cvFont(2.0), cvScalar(0,255,0));
+			std::ostringstream os2;
+			os2 << "Mallet Y:" << malletNowC.y;
+			number = os2.str();
+			len = number.length();
+			fname = new char[len+1];
+			memcpy(fname, number.c_str(), len+1);
+			cvPutText(extractMallet, fname, cvPoint(10,80), &cvFont(2.0), cvScalar(0,255,0));
+
+			cvCircle(extractMallet, packPre1C, 5, cvScalar(0,255,0));
+			cvCircle(extractMallet, packNowC, 5, cvScalar(0,255,255));*/
+			
+			//int yLineTrigger = 160;
+			//if( (packPre1C.y < yLineTrigger && yLineTrigger + 1 <= packNowC.y) && atackCount < 1 ){
+			if( (packPre1C.y + 4 < packNowC.y) && atackCount < 2 ){
+				if(locus.calculateLocus(packNowC, packPre1C, 360) == true){	//軌跡検出
+					forecastPoint = locus.getLocusCoordinate();
+					robotAction.sankakuHitBack(malletNowC, forecastPoint);
+					std::cout << "sankaku!! 0" << std::endl;
+					atackCount++;
+				}
+				else if(locus.calculateLocus(packNowC, packPre1C, 360) == true){
+					robotAction.sankakuHitBack(malletNowC, forecastPoint);
+					forecastPoint = locus.getLocusCoordinate();
+					std::cout << "sankaku!! 1" << std::endl;
+				}
+				else if(locus.calculateLocus(packNowC, packPre1C, 360) == true){
+					robotAction.sankakuHitBack(malletNowC, forecastPoint);
+					forecastPoint = locus.getLocusCoordinate();
+					std::cout << "sankaku!! 2" << std::endl;
+				}
+			}
+			else{
+				atackCount = 0;
+				robotAction.moveToCenter(malletNowC);	//中央に移動
+			}
+			//cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,255,0));
+			//cvShowImage("ColorExtractionRS", extractMallet);
+			if (cv::waitKey(1) >= 0) {
+				break;
+			}
 		}
 	}
 }  // namespace Test

@@ -20,13 +20,10 @@ protected:
 	int mAmountOfChange;			//周波数変化量(Hz)
 	double mIntervaTime;		//時間間隔(s)
 
-	static char mBuf[8]; //送信する内容
-
 	Hardware::Timer mTimer;
 	Hardware::Timer mMovingStopTimer;
 
 public:
-	//FrequencySwitching();
 	FrequencySwitching();
 	~FrequencySwitching();
 	void setOutputInformation(char aDirection, double aTime);

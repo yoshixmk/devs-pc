@@ -3,6 +3,7 @@
 namespace UI {
 
 void UI::main() {
-	std::cout << "!!!!Hello World!!!" << std::endl; // prints !!!Hello World!!!
+	Strategy::OffenseDefenseStrategy mOffenseDefenseStrategy;
+	mOffenseDefenseStrategy.execute();
 }
 }  // namespace UI

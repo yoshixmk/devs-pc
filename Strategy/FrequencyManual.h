@@ -14,15 +14,15 @@ protected:
 	char mTargetDirection; //'A' 'B' 'C' 'D'
 	int mFrequencyX;
 	int mFrequencyY;
-	static char mBuf[8]; //送信する内容
+	//static char mBuf[8]; //送信する内容
+	/*void outputX();
+	void outputY();*/
 
 public:
 	FrequencyManual();
 	~FrequencyManual();
 	void setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY);
 	void output();
-	void outputX();
-	void outputY();
 };
 
 }  // namespace Strategy

@@ -3,8 +3,13 @@
 namespace Test {
 
 UITest::UITest() {
-	// TODO Auto-generated constructor stub
 
+}
+
+void UITest::uiStrategyTest()
+{
+	UI::UI ui;
+	ui.main();
 }
 
 } /* namespace Color */
