@@ -19,28 +19,33 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 {
 	CvPoint targetCoordinate;
 	targetCoordinate.y = aYLine;
-	int left_frame = (FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x) / 2;
-	int right_frame = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x) / 2;
+	//マレットの中心までの座標を考慮
+	int left_frame = (FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x) / 2 + 10;
+	int right_frame = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x) / 2 - 10;
+
 	int centerLine = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getLowerLeftF().x) / 2;
 	if(((aCoordinate2.x - aCoordinate1.x) != 0) && ((aCoordinate2.y - aCoordinate1.y) != 0)){
-		mAInclination = (aCoordinate2.y - aCoordinate1.y) / (aCoordinate2.x - aCoordinate1.x);
+		mAInclination = (double)(aCoordinate2.y - aCoordinate1.y) / (double)(aCoordinate2.x - aCoordinate1.x);
 		mBIntercept = aCoordinate2.y - mAInclination * aCoordinate2.x;
 		targetCoordinate.x = (int)((aYLine - mBIntercept) / mAInclination);
-		
 		
 		int rebound_max = 5; //5回以上跳ね返る軌跡の場合、当たり障りのない位置（中央）を指定
 		int rebound_num = 0;
 
 		while(targetCoordinate.x < left_frame || right_frame < targetCoordinate.x){
 			if(targetCoordinate.x < left_frame){
-				targetCoordinate.x = 2 * left_frame - targetCoordinate.x;
+				//targetCoordinate.x = 2 * left_frame - targetCoordinate.x;
 				mBIntercept -= 2 * ((-mAInclination) * left_frame);
-				mAInclination = -mAInclination;
+				//mAInclination = -mAInclination; //補正なし
+				mAInclination = -mAInclination + 0.2; //補正あり
+				targetCoordinate.x = (int)((aYLine - mBIntercept) / mAInclination);
 			}
 			else if(right_frame < targetCoordinate.x){
-				targetCoordinate.x = 2 * right_frame - targetCoordinate.x;
+				//targetCoordinate.x = 2 * right_frame - targetCoordinate.x;
 				mBIntercept += 2 * (mAInclination * right_frame);
-				mAInclination = -mAInclination;
+				//mAInclination = -mAInclination; //補正なし
+				mAInclination = -mAInclination - 0.2; //補正あり
+				targetCoordinate.x = (int)((aYLine - mBIntercept) / mAInclination);
 			}
 			rebound_num++;
 			if(rebound_max < rebound_num){

@@ -4,6 +4,7 @@
 #include "Coordinate.h"
 #include "RandomPositionCoordinate.h"
 #include "FrameCoordinate.h"
+#include "../Hardware/Camera.h"
 #include "../CLEye/opencv.hpp"
 
 namespace Strategy {

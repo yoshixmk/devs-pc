@@ -44,10 +44,10 @@ int main() {
 	//strategyTest.speedOfPackTest();
 	//strategyTest.robotActionCenterTest();
 	//strategyTest.robotActionHitBackTest();
-	//strategyTest.robotActionSankakuTest();
+	strategyTest.robotActionSankakuTest();
 
 	Test::UITest uiTest;
-	uiTest.uiStrategyTest();
+	//uiTest.uiStrategyTest();
 
 	//Test::ShowWindowTest showWindowTest;
 	//showWindowTest.windowTest();
