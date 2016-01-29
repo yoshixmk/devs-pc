@@ -77,13 +77,13 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 	float ossum = 0;
 	float sum = 0.176;
 	float next_freq = 0;
-	int max_freq = 100;
+	int max_freq = 50; //100
 	int freq =0;
 	int nowFrequency = mInitFrequency;
 	int moveDistanceAbs = abs(aMoveDistance);
 	
 	while(moveDistanceAbs >= next_freq * 2){
-		next_freq = next_freq + sum +0.10*freq;
+		next_freq = next_freq + sum +0.22*freq;
 		freq++;
 		max_freq = max_freq + 100;
 	}

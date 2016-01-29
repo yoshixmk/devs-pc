@@ -2,12 +2,12 @@
 
 namespace Strategy {
 
-void DefenseStrategy::initialize() {
+//void DefenseStrategy::initialize() {
+//}
+
+void DefenseStrategy::execute() {
 }
 
-void DefenseStrategy::execute(int strength) {
-}
-
-void DefenseStrategy::terminate() {
-}
+//void DefenseStrategy::terminate() {
+//}
 }  // namespace Strategy

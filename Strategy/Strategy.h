@@ -4,15 +4,17 @@
 #include "OriginRetrun.h"
 #include "RobotAction.h"
 #include "Locus.h"
-#include "Coordinate.h"
+#include "MalletCoordinate.h"
+#include "PackCoordinate.h"
 
 namespace Strategy {
 class Strategy {
-private:
-	OriginRetrun originRetrun;
-	RobotAction robotAction;
-	Locus locus;
-	Coordinate positionalCoordinate;
+protected:
+	OriginRetrun mOriginRetrun;
+	RobotAction mRobotAction;
+	Locus mLocus;
+	MalletCoordinate mMalletCoordinate;
+	PackCoordinate mPackCoordinate;
 
 public:
 	//virtual void initialize()=0;

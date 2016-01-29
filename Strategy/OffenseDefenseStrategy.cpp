@@ -7,29 +7,52 @@ namespace Strategy {
 
 void OffenseDefenseStrategy::execute()
 {
-	CvPoint packNowC = mPackCoordinate.getCoordinate();
-	CvPoint packPreC = mPackCoordinate.getPreviousCoordinate();
-	CvPoint malletNowC = mMalletCoordinate.getCoordinate();
-	CvPoint centerLine = FrameCoordinate::getCenterLine();
+	bool hasArrived = true; //目的地まで移動中=false, 移動完了=true
 
-	//ほぼ動きが変わらない場合は、無視する。
-	if( abs(packNowC.x - packPreC.x) > 1 || abs(packNowC.y - packPreC.y) > 1){
-		//ロボットからプレイヤーにパックを打ち返したとき。パックの静止はabs()ですでに無視してある
-		if(packNowC.y - packPreC.y < -2){
-			//中央復帰
-			mRobotAction.moveToCenter(malletNowC);
-			//}
-		}
-		else if(centerLine.y - 100 < packNowC.y && centerLine.y - 100 > packPreC.y){
-			//yLineを340で予測
-			if(mLocus.calculateLocus(packNowC, packPreC, 340) == true){
-				CvPoint forecastPoint = mLocus.getLocusCoordinate();
-				mRobotAction.moveToHitBack(malletNowC, forecastPoint);
+	CvPoint forecastPoint = cvPoint(0, 0);
+	int atackCount = 0;
+	while(1){
+		Hardware::Camera::renew();
+		CvPoint malletNowC = mMalletCoordinate.getCoordinate();
+		CvPoint packNowC = mPackCoordinate.getCoordinate();
+		CvPoint packPre0C = mPackCoordinate.getPreviousCoordinate();
+		CvPoint packPre1C = mPackCoordinate.getPreviousCoordinate(1);
+		CvPoint packPre2C = mPackCoordinate.getPreviousCoordinate(2);
+		CvPoint packPre3C = mPackCoordinate.getPreviousCoordinate(3);
+			
+		//IplImage* extractMallet = hockeyTableMasking.mask();
+			//colorExtractionMallet.extractRobotSideHockeyTable();
+			
+		//int yLineTrigger = 160;
+		//if( (packPre1C.y < yLineTrigger && yLineTrigger + 1 <= packNowC.y) && atackCount < 1 ){
+		if( (packPre1C.y + 4 < packNowC.y) && atackCount < 2 ){
+			if(mLocus.calculateLocus(packNowC, packPre1C, 360) == true){	//軌跡検出
+				forecastPoint = mLocus.getLocusCoordinate();
+				mRobotAction.sankakuHitBack(malletNowC, forecastPoint);
+				std::cout << "sankaku!! 0" << std::endl;
+				atackCount++;
+			}
+			else if(mLocus.calculateLocus(packNowC, packPre1C, 360) == true){
+				mRobotAction.sankakuHitBack(malletNowC, forecastPoint);
+				forecastPoint = mLocus.getLocusCoordinate();
+				std::cout << "sankaku!! 1" << std::endl;
+			}
+			else if(mLocus.calculateLocus(packNowC, packPre1C, 360) == true){
+				mRobotAction.sankakuHitBack(malletNowC, forecastPoint);
+				forecastPoint = mLocus.getLocusCoordinate();
+				std::cout << "sankaku!! 2" << std::endl;
 			}
 		}
+		else{
+			atackCount = 0;
+			mRobotAction.moveToCenter(malletNowC);	//中央に移動
+		}
+		//cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,255,0));
+		//cvShowImage("ColorExtractionRS", extractMallet);
+		if (cv::waitKey(1) >= 0) {
+			break;
+		}
 	}
-
-
 }
 
 //void OffenseDefenseStrategy::terminate() {

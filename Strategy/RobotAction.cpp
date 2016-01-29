@@ -6,7 +6,7 @@ namespace Strategy {
 	{
 		CvPoint waiting_position;
 		waiting_position.x = (FrameCoordinate::getRobotGoalLeft().x + FrameCoordinate::getRobotGoalRight().x) / 2;
-		waiting_position.y = 400;
+		waiting_position.y = 425;
 
 		//X
 		if(waiting_position.x - 3 < aMalletCoordinate.x && aMalletCoordinate.x < waiting_position.x + 3){//定位置付近
@@ -124,11 +124,11 @@ namespace Strategy {
 	{
 		//リミットスイッチに当たってしまわないように補正
 		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
-		if(forecastPackCoordinate.x < 45){
-			forecastPackCoordinate.x = 45;
+		if(forecastPackCoordinate.x < 33){//45
+			forecastPackCoordinate.x = 33;
 		}
-		if(forecastPackCoordinate.x > 280){
-			forecastPackCoordinate.x = 280;
+		if(forecastPackCoordinate.x > 290){//280
+			forecastPackCoordinate.x = 290;
 		}
 		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 

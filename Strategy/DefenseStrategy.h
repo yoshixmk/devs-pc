@@ -6,11 +6,11 @@
 namespace Strategy {
 class DefenseStrategy: public Strategy {
 public:
-	void initialize();
+	//void initialize();
 
-	void execute(int strength);
+	void execute();
 
-	void terminate();
+	//void terminate();
 
 };
 

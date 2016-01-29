@@ -1,7 +1,7 @@
 ﻿#include "Test/HardwareTest.h"
 #include "Test/ColorTest.h"
 #include "Test/StrategyTest.h"
-//#include "Test/UITest.h"
+#include "Test/UITest.h"
 //#include "Test/ShowWindowTest.h"
 #include <stdio.h>
 
@@ -44,10 +44,10 @@ int main() {
 	//strategyTest.speedOfPackTest();
 	//strategyTest.robotActionCenterTest();
 	//strategyTest.robotActionHitBackTest();
-	strategyTest.robotActionSankakuTest();
+	//strategyTest.robotActionSankakuTest();
 
-//	Test::UITest uiTest;
-//	uiTest.soundTest();
+	Test::UITest uiTest;
+	uiTest.uiStrategyTest();
 
 	//Test::ShowWindowTest showWindowTest;
 	//showWindowTest.windowTest();
