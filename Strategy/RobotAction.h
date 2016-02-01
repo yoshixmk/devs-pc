@@ -31,6 +31,7 @@ public:
 	void sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 	void sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 	void alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
+	void moveRightAngle(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 };
 }  // namespace Strategy
 #endif

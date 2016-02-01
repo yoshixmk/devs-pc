@@ -22,6 +22,8 @@ protected:
 	int mMoveDistanceX;
 	int mMoveDistanceY;
 
+	int mTimeAjustMentY;
+
 	Hardware::Timer mTimer;
 	Hardware::Timer mMovingStopTimer;
 
@@ -38,6 +40,8 @@ public:
 	void sankakuReturnProcess();
 	void sankakuUntilHit(int aMoveDistanceX, int aMoveDistanceY);
 	void sankakuReturnUntilHit();
+	void sankakuRightAngle(int aMoveDistanceX, int aMoveDistanceY);
+	//void sankakuReturnRightAngle();
 };
 
 }  // namespace Strategy

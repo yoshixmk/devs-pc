@@ -27,39 +27,29 @@ FrequencyManual::~FrequencyManual()
 void FrequencyManual::setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY)
 {
 	char buf[8];
-	mFrequencyX = buf[0] = aFrequencyX / 20;
-	mFrequencyY = buf[1] = aFrequencyY / 20;
+	mFrequencyX = aFrequencyX;
+	buf[0] = aFrequencyX / 20;
+	mFrequencyY = aFrequencyY;
+	buf[1] = aFrequencyY / 20;
 	mTargetDirection = buf[2] = aDirection;
 	Hardware::Serial::changeBuf(buf, 0);
 	Hardware::Serial::changeBuf(buf, 1);
 	Hardware::Serial::changeBuf(buf, 2);
 }
 
+int FrequencyManual::getFrequencyX()
+{
+	return mFrequencyX;
+}
+
+int FrequencyManual::getFrequencyY()
+{
+	return mFrequencyY;
+}
+
 void FrequencyManual::output()
 {
 	Hardware::Serial::serialWrite();
 }
-
-/*void FrequencyManual::outputX()
-{
-	//0バイト目と2バイト目のみを変更して、1回の書き込み
-	char buf[8];
-	buf[0] = mFrequencyX / 20;
-	buf[2] = mTargetDirection;
-
-	Hardware::Serial::changeBuf(buf, 0);
-	Hardware::Serial::changeBuf(buf, 2);
-	Hardware::Serial::serialWrite();
-}
-void FrequencyManual::outputY()
-{
-	//範囲指定して、1回の書き込み
-	char buf[8];
-	buf[1] = mFrequencyY / 20;
-	buf[2] = mTargetDirection;
-	Hardware::Serial::changeBuf(buf, 1);
-	Hardware::Serial::changeBuf(buf, 2);
-	Hardware::Serial::serialWrite();
-}*/
 
 }  // namespace Strategy

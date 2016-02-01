@@ -47,7 +47,8 @@ int main() {
 	//strategyTest.robotActionSankakuTest();
 	//strategyTest.robotActionSankakuCenterBackTest();
 	//strategyTest.robotActionSideGuardTest();
-	strategyTest.robotActionAlarmHitBackTest();
+	//strategyTest.robotActionAlarmHitBackTest();
+	strategyTest.robotActionMoveRightAngleTest();
 
 	Test::UITest uiTest;
 	//uiTest.uiStrategyTest();
