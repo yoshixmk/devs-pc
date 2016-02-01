@@ -203,22 +203,6 @@ namespace Strategy {
 		else if(400 <= aPackCoordinate.y){
 			if(mTimer.getOperatingTime() > 2){ //一定時間以上、自フィールドにパックがあるとき
 				moveRightAngle(aMalletCoordinate, aPackCoordinate);
-				//リミットスイッチに当たってしまわないように補正
-				/*CvPoint packCoordinate = aPackCoordinate;
-				if(packCoordinate.x < 33){//45
-					packCoordinate.x = 33;
-				}
-				if(packCoordinate.x > 290){//280
-					packCoordinate.x = 290;
-				}
-				int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
-				int moveDistanceY = aMalletCoordinate.y - packCoordinate.y;
-				if(moveDistanceY < 0){
-					moveDistanceY = 0;
-				}
-				mFrequencySwitching.sankakuRightAngle(moveDistanceX, moveDistanceY);
-				mFrequencySwitching.sankakuReturnProcess();
-				mTimer.resetStartOperatingTime();*/
 			}
 		}
 		else{
