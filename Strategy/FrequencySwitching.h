@@ -19,6 +19,7 @@ protected:
 	int mFrequencyUpCount;		//周波数を上げる回数
 	int mAmountOfChange;			//周波数変化量(Hz)
 	double mIntervaTime;		//時間間隔(s)
+	int mMoveDistance;
 
 	Hardware::Timer mTimer;
 	Hardware::Timer mMovingStopTimer;
@@ -33,6 +34,7 @@ public:
 	void setFrequencyX(int aFrequency);
 	void setFrequencyY(int aFrequency);
 	void sankakuProcess(int aMoveDistance);
+	void sankakuReturnProcess();
 };
 
 }  // namespace Strategy

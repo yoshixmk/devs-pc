@@ -20,9 +20,13 @@ private:
 
 public:
 	void moveToCenter(CvPoint aMalletCoordinate);
+	void moveToRightCenter(CvPoint aMalletCoordinate);
+	void moveToLeftCenter(CvPoint aMalletCoordinate);
+	void moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition);
 	bool moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
+	void sankakuCenterBack();
+	void sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 };
-
 }  // namespace Strategy
 #endif

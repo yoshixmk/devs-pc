@@ -47,6 +47,8 @@ namespace Test {
 		void robotActionCenterTest();
 		void robotActionHitBackTest();
 		void robotActionSankakuTest();
+		void robotActionSankakuCenterBackTest();
+		void robotActionSideGuardTest();
 	};
 
 }  // namespace Test

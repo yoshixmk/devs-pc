@@ -20,8 +20,9 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 	CvPoint targetCoordinate;
 	targetCoordinate.y = aYLine;
 	//マレットの中心までの座標を考慮
-	int left_frame = (FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x) / 2 + 10;
-	int right_frame = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x) / 2 - 10;
+	int left_frame = (FrameCoordinate::getLowerLeftF().x + FrameCoordinate::getUpperLeftF().x) / 2 + 10; //補正あり +10
+
+	int right_frame = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getUpperRightF().x) / 2 - 10; //補正あり -10
 
 	int centerLine = (FrameCoordinate::getLowerRightF().x + FrameCoordinate::getLowerLeftF().x) / 2;
 	if(((aCoordinate2.x - aCoordinate1.x) != 0) && ((aCoordinate2.y - aCoordinate1.y) != 0)){

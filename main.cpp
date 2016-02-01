@@ -44,7 +44,9 @@ int main() {
 	//strategyTest.speedOfPackTest();
 	//strategyTest.robotActionCenterTest();
 	//strategyTest.robotActionHitBackTest();
-	strategyTest.robotActionSankakuTest();
+	//strategyTest.robotActionSankakuTest();
+	//strategyTest.robotActionSankakuCenterBackTest();
+	strategyTest.robotActionSideGuardTest();
 
 	Test::UITest uiTest;
 	//uiTest.uiStrategyTest();
