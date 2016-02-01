@@ -7,6 +7,7 @@
 #include "../Strategy/FrameCoordinate.h"
 #include "../Strategy/FrequencyManualX.h"
 #include "../Strategy/FrequencyManualY.h"
+#include "../Hardware/Timer.h"
 
 namespace Strategy {
 class RobotAction {
@@ -15,6 +16,7 @@ private:
 	FrequencyManual mFrequencyManual;
 	FrequencyManualX mFrequencyManualX;
 	FrequencyManualY mFrequencyManualY;
+	Hardware::Timer mTimer;
 	void moveForLimit();
 	void limitCheck();
 
@@ -26,7 +28,9 @@ public:
 	bool moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuCenterBack();
+	void sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 	void sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
+	void alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 };
 }  // namespace Strategy
 #endif

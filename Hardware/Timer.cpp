@@ -3,6 +3,8 @@
 namespace Hardware {
 Timer::Timer(){
 	resetStartOperatingTime();
+	mStartTime = GetTickCount();
+	mNowTime = GetTickCount();
 }
 
 void Timer::setTimer(double aNotificationTime) {

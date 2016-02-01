@@ -160,6 +160,24 @@ namespace Strategy {
 		mFrequencySwitching.sankakuReturnProcess();
 	}
 
+	void RobotAction::sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
+	{
+		//リミットスイッチに当たってしまわないように補正
+		CvPoint packCoordinate = aPackCoordinate;
+		if(packCoordinate.x < 33){//45
+			packCoordinate.x = 33;
+		}
+		if(packCoordinate.x > 290){//280
+			packCoordinate.x = 290;
+		}
+		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
+		int moveDistanceY = packCoordinate.y - aMalletCoordinate.y;
+		if(moveDistanceY < 0){
+			moveDistanceY = 0;
+		}
+		mFrequencySwitching.sankakuUntilHit(moveDistanceX, moveDistanceY);
+	}
+
 	void RobotAction::sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
 	{
 		if(FrameCoordinate::getCenterLine().x+3 < aPackCoordinate.x){
@@ -171,5 +189,22 @@ namespace Strategy {
 		else{
 			moveToCenter(aMalletCoordinate);
 		}
+	}
+
+	void RobotAction::alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
+	{
+		if(aMalletCoordinate.y > FrameCoordinate::getCenterLine().y){
+			if(mTimer.getOperatingTime() > 3){ //2秒以上、自フィールドにパックがあるとき
+				sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
+				sankakuCenterBack();
+				mTimer.resetStartOperatingTime();
+			}
+		}
+		else{
+			mTimer.resetStartOperatingTime();
+		}
+		
+		
+			
 	}
 }  // namespace Strategy
