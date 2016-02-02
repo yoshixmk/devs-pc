@@ -7,6 +7,7 @@
 #include "../Strategy/FrameCoordinate.h"
 #include "../Strategy/FrequencyManualX.h"
 #include "../Strategy/FrequencyManualY.h"
+#include "../Strategy/SpeedOfPack.h"
 #include "../Hardware/Timer.h"
 
 namespace Strategy {
@@ -16,6 +17,7 @@ private:
 	FrequencyManual mFrequencyManual;
 	FrequencyManualX mFrequencyManualX;
 	FrequencyManualY mFrequencyManualY;
+	SpeedOfPack mSpeedOfPack;
 	Hardware::Timer mTimer;
 	void moveForLimit();
 	void limitCheck();
@@ -30,7 +32,7 @@ public:
 	void sankakuCenterBack();
 	void sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 	void sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
-	void alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
+	void alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint aForecastPackCoordinate);
 	void moveRightAngle(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 };
 }  // namespace Strategy

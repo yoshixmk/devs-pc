@@ -670,7 +670,8 @@ namespace Test {
 			CvPoint malletNowC = malletCoordinate.getCoordinate();
 			CvPoint packNowC =packCoordinate.getCoordinate();
 			CvPoint packPre0C = packCoordinate.getPreviousCoordinate();
-			
+			CvPoint packPre2C = packCoordinate.getPreviousCoordinate(2);
+
 			IplImage* extractMallet = hockeyTableMasking.mask();
 			std::ostringstream os;
 			os << "Mallet X:" << malletNowC.x;
@@ -705,7 +706,11 @@ namespace Test {
 			}
 			
 			//時間が来ている場合、打ちにいく。条件は必要ない
-			robotAction.alarmHitBack(malletNowC, packNowC);
+			if(locus.calculateLocus(packNowC, packPre2C, 320) == true){	//軌跡検出
+				forecastPoint = locus.getLocusCoordinate();
+				robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
+				std::cout << "Alarm!! " << std::endl;
+			}
 
 			cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,255,0));
 			cvShowImage("ColorExtractionRS", extractMallet);
@@ -736,6 +741,7 @@ namespace Test {
 			CvPoint malletNowC = malletCoordinate.getCoordinate();
 			CvPoint packNowC =packCoordinate.getCoordinate();
 			CvPoint packPre0C = packCoordinate.getPreviousCoordinate();
+			CvPoint packPre2C = packCoordinate.getPreviousCoordinate(2);
 			
 			IplImage* extractMallet = hockeyTableMasking.mask();
 			std::ostringstream os;
@@ -761,7 +767,7 @@ namespace Test {
 					forecastPoint = locus.getLocusCoordinate();
 					robotAction.sankakuHitBack(malletNowC, forecastPoint);
 					robotAction.sankakuCenterBack();
-					std::cout << "sankaku!! 0" << std::endl;
+					std::cout << "Sankaku!! " << std::endl;
 					atackCount++;
 				}
 			}
@@ -775,7 +781,10 @@ namespace Test {
 			}
 			
 			//時間が来ている場合、打ちにいく。条件は必要ない
-			robotAction.alarmHitBack(malletNowC, packNowC);
+			if(locus.calculateLocus(packNowC, packPre2C, 360) == true){	//軌跡検出
+				forecastPoint = locus.getLocusCoordinate();
+				robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
+			}
 
 			cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,255,0));
 			cvShowImage("ColorExtractionRS", extractMallet);

@@ -10,7 +10,7 @@ FrequencySwitching::FrequencySwitching()
 	mTargetDirection = 'A';
 	mTargetTime = 0;
 
-	mTimeAjustMentY = 5;
+	mTimeAjustMentY = 3;
 
 	char buf[8];
 	for (int i = 0; i < 8; i++){
