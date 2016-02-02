@@ -1,34 +1,26 @@
-﻿#include "FrequencyManualY.h"
+﻿#include "FrequencyManualWeakY.h"
 
 namespace Strategy
 {
-FrequencyManualY::FrequencyManualY() :FrequencyManual()
-{
-}
 
-FrequencyManualY::~FrequencyManualY()
-{
-}
-
-void FrequencyManualY::setOutputInformation(int aFrequencyY)
+void FrequencyManualWeakY::setOutputInformation(int aFrequencyY)
 {
 	char buf[8];
 	mFrequencyY = aFrequencyY;
-	buf[1] = aFrequencyY / 20;
-	Hardware::Serial::changeBuf(buf, 1);
+	buf[4] = aFrequencyY / 20;
+	Hardware::Serial::changeBuf(buf, 4);
 }
 
-void FrequencyManualY::setOutputInformation(char aDirection, int aFrequencyY)
+void FrequencyManualWeakY::setOutputInformation(char aDirection, int aFrequencyY)
 {
 	char buf[8];
 	mFrequencyY = aFrequencyY;
-	buf[1] = aFrequencyY / 20;
-	mTargetDirection = buf[2] = aDirection;
-	Hardware::Serial::changeBuf(buf, 1);
-	Hardware::Serial::changeBuf(buf, 2);
+	buf[4] = aFrequencyY / 20;
+	mTargetDirection = buf[5] = aDirection;
+	Hardware::Serial::changeBufRange(buf, 4, 5);
 }
 
-void FrequencyManualY::output()
+void FrequencyManualWeakY::output()
 {
 	FrequencyManual::output();
 }

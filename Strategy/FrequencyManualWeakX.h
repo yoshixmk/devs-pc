@@ -1,15 +1,13 @@
-﻿#ifndef FREQUENCY_MANUAL_X_H
-#define FREQUENCY_MANUAL_X_H
+﻿#ifndef FREQUENCY_MANUAL_WEAK_X_H
+#define FREQUENCY_MANUAL_WEAK_X_H
 
-#include "FrequencyManual.h"
+#include "FrequencyManualX.h"
 
 namespace Strategy
 {
-class FrequencyManualX : public FrequencyManual
+class FrequencyManualWeakX : public FrequencyManualX
 {
 public:
-	FrequencyManualX(void);
-	~FrequencyManualX(void);
 	void setOutputInformation(int aFrequencyX);
 	void setOutputInformation(char aDirection, int aFrequencyX);
 	void setDirection();
