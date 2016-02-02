@@ -83,11 +83,13 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 	int freq =0;
 	int nowFrequency = mInitFrequency;
 	int moveDistanceAbs = abs(aMoveDistance);
+	int yTargetCount = 30;
+	int yCount = 0;
 	mMoveDistanceX = aMoveDistance;
 	mMoveDistanceY = 0;
 
 	while(moveDistanceAbs >= next_freq * 2){
-		next_freq = next_freq + sum +0.22*freq;
+		next_freq = next_freq + sum +0.20*freq;
 		freq++;
 		max_freq = max_freq + 100;
 	}
@@ -116,6 +118,7 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 		nowFrequency = nowFrequency + 100;
 		Sleep(10);	//10ms
 		FrequencySwitching::output();
+		yCount++;
 	}
 	while(mInitFrequency <= nowFrequency){
 		buf[0] = nowFrequency / 20;
@@ -123,6 +126,15 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 		Hardware::Serial::changeBuf(buf, 0);
 		Hardware::Serial::changeBuf(buf, 1);
 		nowFrequency = nowFrequency - 100;
+		Sleep(10);	//10ms
+		FrequencySwitching::output();
+		yCount++;
+	}
+	buf[0] = 0;
+	Hardware::Serial::changeBuf(buf, 0);
+	for(;yCount < yTargetCount; yCount++){
+		buf[1] = 500 / 20;
+		Hardware::Serial::changeBuf(buf, 1);
 		Sleep(10);	//10ms
 		FrequencySwitching::output();
 	}
@@ -143,9 +155,10 @@ void FrequencySwitching::sankakuReturnProcess()
 	int freq =0;
 	int nowFrequency = mInitFrequency;
 	int moveDistanceAbs = abs(mMoveDistanceX);
+	int yTargetCount = 60;
 
 	while(moveDistanceAbs >= next_freq * 2){
-		next_freq = next_freq + sum +0.22*freq;
+		next_freq = next_freq + sum +0.20*freq;
 		freq++;
 		max_freq = max_freq + 100;
 	}
@@ -186,10 +199,6 @@ void FrequencySwitching::sankakuReturnProcess()
 	}
 	buf[0] = 0;
 	Hardware::Serial::changeBuf(buf, 0);
-	FrequencySwitching::output();
-	for(int i=0; i<mMoveDistanceY/mTimeAjustMentY; i++){ //Y‚Ì‹——£‚©‚çŽžŠÔ‚Ì•ÏŠ·
-		Sleep(10);
-	}
 	buf[1] = 0;
 	Hardware::Serial::changeBuf(buf, 1);
 	FrequencySwitching::output();
@@ -209,7 +218,7 @@ void FrequencySwitching::sankakuUntilHit(int aMoveDistanceX, int aMoveDistanceY)
 	mMoveDistanceY = aMoveDistanceY;
 
 	while(moveDistanceAbs >= next_freq * 2){
-		next_freq = next_freq + sum +0.22*freq;
+		next_freq = next_freq + sum +0.20*freq;
 		freq++;
 		max_freq = max_freq + 100;
 	}
@@ -276,7 +285,7 @@ void FrequencySwitching::sankakuRightAngle(int aMoveDistanceX, int aMoveDistance
 	mMoveDistanceY = 0;
 
 	while(moveDistanceAbs >= next_freq * 2){
-		next_freq = next_freq + sum +0.22*freq;
+		next_freq = next_freq + sum +0.20*freq;
 		freq++;
 		max_freq = max_freq + 100;
 	}

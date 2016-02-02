@@ -771,10 +771,10 @@ namespace Test {
 					atackCount++;
 				}
 			}
-			else if(malletNowC.y-10 <= packNowC.y && atackCount < 1){
+			/*else if(malletNowC.y-10 <= packNowC.y && atackCount < 1){
 				robotAction.moveRightAngle(malletNowC, packNowC);
 				atackCount++;
-			}
+			}*/
 			else{
 				atackCount = 0;
 				robotAction.moveToCenter(malletNowC);	//中央に移動

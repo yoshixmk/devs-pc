@@ -195,10 +195,10 @@ namespace Strategy {
 	{
 		//リミットスイッチに当たってしまわないように補正
 		CvPoint packCoordinate = aPackCoordinate;
-		if(packCoordinate.x < 33){//45
+		if(packCoordinate.x < 33){
 			packCoordinate.x = 33;
 		}
-		if(packCoordinate.x > 290){//280
+		if(packCoordinate.x > 290){
 			packCoordinate.x = 290;
 		}
 		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
