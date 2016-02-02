@@ -6,6 +6,7 @@ DCB Serial::mDcb;
 DWORD Serial::mNumberOfPut;
 char Serial::mBuf[8];
 bool Serial::isOpened = false;
+bool Serial::isDebug = false;
 
 void Serial::initialize() {
 	if(isOpened == false){
@@ -65,43 +66,51 @@ void Serial::serialClose()
 void Serial::serialWrite()
 {
 	for(int i=0; i<SEND_BYTE; i++){
-		if(i == 2 || i == 5){
-			std::cout << i << ":" << mBuf[i] << " ";
-		}
-		else{
-			std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
+		if(isDebug == true){
+			if(i == 2 || i == 5){
+				std::cout << i << ":" << mBuf[i] << " ";
+			}
+			else{
+				std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
+			}
 		}
 	}
-	std::cout << std::endl;
+	if(isDebug == true){
+		std::cout << std::endl;
+	}
 
 	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 }
 
+//すべて上書きした上で、送信
 void Serial::serialWrite(char* aBuf)
 {
 	for(int i=0; i<SEND_BYTE; i++){
 		mBuf[i] = aBuf[i];
-		if(i == 2 || i == 5){
-			std::cout << i << ":" << mBuf[i] << " ";
-		}
-		else{
-			std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
+		if(isDebug == true){
+			if(i == 2 || i == 5){
+				std::cout << i << ":" << mBuf[i] << " ";
+			}
+			else{
+				std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
+			}
 		}
 	}
-
-	std::cout << std::endl;
-
+	if(isDebug == true){
+		std::cout << std::endl;
+	}
 	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 	//cv::waitKey(10);
 }
 
-//changeBufRangeは aFrom=0, aTo=3 のとき、mBuf[0]から[3]まで代入する
+//changeBufRangeは aFrom=0, aTo=2 のとき、mBuf[0]から[2]まで代入する
 void Serial::changeBufRange(char* aBuf, int aFrom, int aTo)
 {
-	if(aFrom < aTo){
-		std::cout << "Serial error. aFrom < aTo" << std::endl;
+	if(aTo < aFrom){
+		std::cout << "Serial error. aTo < aFrom" << std::endl;
+		exit(-1);
 	}
-	if(!(aTo < SEND_BYTE)){
+	if(SEND_BYTE < aTo){
 		std::cout << "Serial error. aTo buf over." << std::endl;
 		exit(-1);
 	}
@@ -113,6 +122,11 @@ void Serial::changeBufRange(char* aBuf, int aFrom, int aTo)
 void Serial::changeBuf(char* aBuf, int index)
 {
 	mBuf[index] = aBuf[index];
+}
+
+void Serial::setPrintDebug(bool isDebug)
+{
+	Serial::isDebug = isDebug;
 }
 
 } /* namespace Hardware */

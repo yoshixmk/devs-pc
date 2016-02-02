@@ -8,6 +8,7 @@
 int main() {
 	Hardware::Camera::initialize();
 	Hardware::Serial::initialize();
+	//Hardware::Serial::setPrintDebug(true);
 
 	Test::HardwareTest hardwareTest;
 	//hardwareTest.timerTest();

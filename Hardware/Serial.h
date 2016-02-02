@@ -17,6 +17,7 @@ private:
 	static DWORD mNumberOfPut;
 	static char mBuf[8];
 	static bool isOpened;
+	static bool isDebug;
 	static const int SEND_BYTE=8; // 送信する文字数
 	static void serialOpen();
 	static void serialClose();
@@ -28,6 +29,7 @@ public:
 	static void serialWrite(char* aBuf);
 	static void changeBufRange(char* aBuf, int aFrom, int aTo);
 	static void changeBuf(char* aBuf, int index);
+	static void setPrintDebug(bool isDebug);
 };
 
 } /* namespace Hardware */
