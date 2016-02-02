@@ -17,8 +17,8 @@ protected:
 
 public:
 	FrequencyManual();
-	~FrequencyManual();
 	void setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY);
+	char getTargetDirection();
 	int getFrequencyX();
 	int getFrequencyY();
 	void output();

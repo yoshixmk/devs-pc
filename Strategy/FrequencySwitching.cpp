@@ -91,9 +91,7 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 		freq++;
 		max_freq = max_freq + 100;
 	}
-	max_freq = max_freq - 100;																	
-	//printf("move_dist: %c\n", aDirection);
-	//printf("max_freq: %d\n",max_freq);
+	max_freq = max_freq - 100;
 
 	char buf[8];
 	buf[0] = nowFrequency / 20;
@@ -115,7 +113,6 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 		buf[1] = 500 / 20;
 		Hardware::Serial::changeBuf(buf, 0);
 		Hardware::Serial::changeBuf(buf, 1);
-		//std::cout << "output: " << nowFrequency << std::endl;
 		nowFrequency = nowFrequency + 100;
 		Sleep(10);	//10ms
 		FrequencySwitching::output();
@@ -125,7 +122,6 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 		buf[1] = 500 / 20;
 		Hardware::Serial::changeBuf(buf, 0);
 		Hardware::Serial::changeBuf(buf, 1);
-		//std::cout << "output: " << nowFrequency << std::endl;
 		nowFrequency = nowFrequency - 100;
 		Sleep(10);	//10ms
 		FrequencySwitching::output();

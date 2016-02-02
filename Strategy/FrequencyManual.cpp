@@ -20,10 +20,6 @@ FrequencyManual::FrequencyManual()
 	}
 }
 
-FrequencyManual::~FrequencyManual()
-{
-}
-
 void FrequencyManual::setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY)
 {
 	char buf[8];
@@ -35,6 +31,11 @@ void FrequencyManual::setOutputInformation(char aDirection, int aFrequencyX, int
 	Hardware::Serial::changeBuf(buf, 0);
 	Hardware::Serial::changeBuf(buf, 1);
 	Hardware::Serial::changeBuf(buf, 2);
+}
+
+char FrequencyManual::getTargetDirection()
+{
+	return mTargetDirection;
 }
 
 int FrequencyManual::getFrequencyX()

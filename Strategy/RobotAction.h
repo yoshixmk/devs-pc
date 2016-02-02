@@ -18,7 +18,8 @@ private:
 	FrequencyManualX mFrequencyManualX;
 	FrequencyManualY mFrequencyManualY;
 	SpeedOfPack mSpeedOfPack;
-	Hardware::Timer mTimer;
+	Hardware::Timer mMoveingTimer;
+	Hardware::Timer mAlarmTimer;
 	void moveForLimit();
 	void limitCheck();
 
