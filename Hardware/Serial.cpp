@@ -95,32 +95,19 @@ void Serial::serialWrite(char* aBuf)
 	//cv::waitKey(10);
 }
 
-void Serial::serialWriteRange(char* aBuf, int aFrom, int aTo)
+//changeBufRangeは aFrom=0, aTo=3 のとき、mBuf[0]から[3]まで代入する
+void Serial::changeBufRange(char* aBuf, int aFrom, int aTo)
 {
-	if(SEND_BYTE < aTo){
+	if(aFrom < aTo){
+		std::cout << "Serial error. aFrom < aTo" << std::endl;
+	}
+	if(!(aTo < SEND_BYTE)){
+		std::cout << "Serial error. aTo buf over." << std::endl;
 		exit(-1);
 	}
-	for(int i=0; i<SEND_BYTE; i++){
-		mBuf[i] = aBuf[i];
-		if(i == 3 || i == 4){
-			mBuf[i] = 100;
-		}
-		mBuf[5] = 'B';
-		if(i == 2 || i == 5){
-			std::cout << i << ":" << mBuf[i] << " ";
-		}
-		else{
-			std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
-		}
-	}
-
-	std::cout << std::endl;
-
 	for(int i=aFrom; i<=aTo; i++){
 		mBuf[i] = aBuf[i];
 	}
-	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
-	//cv::waitKey(10);
 }
 
 void Serial::changeBuf(char* aBuf, int index)

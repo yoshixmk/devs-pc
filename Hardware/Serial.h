@@ -26,7 +26,7 @@ public:
 	static void terminate();
 	static void serialWrite();
 	static void serialWrite(char* aBuf);
-	static void serialWriteRange(char* aBuf, int aFrom, int aTo);
+	static void changeBufRange(char* aBuf, int aFrom, int aTo);
 	static void changeBuf(char* aBuf, int index);
 };
 
