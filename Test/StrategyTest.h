@@ -47,6 +47,10 @@ namespace Test {
 		void robotActionCenterTest();
 		void robotActionHitBackTest();
 		void robotActionSankakuTest();
+		void robotActionSankakuCenterBackTest();
+		void robotActionSideGuardTest();
+		void robotActionAlarmHitBackTest();
+		void robotActionMoveRightAngleTest();
 	};
 
 }  // namespace Test
