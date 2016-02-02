@@ -191,18 +191,32 @@ namespace Strategy {
 		}
 	}
 
-	void RobotAction::alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
+	void RobotAction::alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint aForecastPackCoordinate)
 	{
-		if(FrameCoordinate::getCenterLine().y + 30 < aPackCoordinate.y && aPackCoordinate.y < 400){
-			if(mTimer.getOperatingTime() > 2){ //一定時間以上、自フィールドにパックがあるとき
-				sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
-				sankakuCenterBack();
-				mTimer.resetStartOperatingTime();
+		double speed = mSpeedOfPack.getSpeed(); //0.1以下ならほとんど動いていない
+
+		if(FrameCoordinate::getCenterLine().y + 50 < aPackCoordinate.y){
+			if(aPackCoordinate.y < 400){
+				if(mTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.1){
+						sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
+					}
+					else{
+						sankakuUntilHit(aMalletCoordinate, aForecastPackCoordinate);
+					}
+					sankakuCenterBack();
+					mTimer.resetStartOperatingTime();
+				}
 			}
-		}
-		else if(400 <= aPackCoordinate.y){
-			if(mTimer.getOperatingTime() > 2){ //一定時間以上、自フィールドにパックがあるとき
-				moveRightAngle(aMalletCoordinate, aPackCoordinate);
+			else if(400 <= aPackCoordinate.y){
+				if(mTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.1){
+						moveRightAngle(aMalletCoordinate, aPackCoordinate);
+					}
+					else{
+						moveRightAngle(aMalletCoordinate, aForecastPackCoordinate);
+					}
+				}
 			}
 		}
 		else{
