@@ -113,7 +113,7 @@ void Serial::changeBufRange(char* aBuf, int aFrom, int aTo)
 		std::cout << "Serial error. aTo buf over." << std::endl;
 		exit(-1);
 	}
-	for(int i=aFrom; i<=aTo; i++){
+	for(int i=aFrom; i<aTo; i++){
 		mBuf[i] = aBuf[i];
 	}
 }
