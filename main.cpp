@@ -58,7 +58,7 @@ int main() {
 	//Test::ShowWindowTest showWindowTest;
 	//showWindowTest.windowTest();
 	//showWindowTest.drawingTest();
-//	showWindowTest.manageTest();
+	//showWindowTest.manageTest();
 
 	Hardware::Serial::terminate();
 

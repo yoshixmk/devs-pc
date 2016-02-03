@@ -9,6 +9,7 @@
 
 namespace Strategy {
 class FrequencySwitching {
+
 protected:
 	char mTargetDirection; //'A' 'B' 'C' 'D'
 

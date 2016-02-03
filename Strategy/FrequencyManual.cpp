@@ -15,7 +15,7 @@ FrequencyManual::FrequencyManual()
 	}
 	buf[2] = 'A';
 	buf[5] = 'A';
-	Hardware::Serial::changeBufRange(buf, 0, 8);
+	Hardware::Serial::changeBufRange(buf, 0, 7);
 }
 
 void FrequencyManual::setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY)

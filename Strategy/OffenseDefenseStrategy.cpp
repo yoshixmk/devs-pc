@@ -27,23 +27,26 @@ void OffenseDefenseStrategy::execute()
 		if( (packPre0C.y + 4 < packNowC.y) && atackCount < 1){
 			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//軌跡検出
 				forecastPoint = locus.getLocusCoordinate();
-				robotActionS.sankakuHitBack(malletNowC, forecastPoint);
+				//robotActionS.sankakuHitBack(malletNowC, forecastPoint);
 				robotActionW.sankakuHitBack(malletNowC, forecastPoint);
-				robotActionS.sankakuCenterBack();
+				//std::cout << "sankaku Hit Back" << std::endl;
+				//robotActionS.sankakuCenterBack();
 				robotActionW.sankakuCenterBack();
+				//std::cout << "sankaku Center Back" << std::endl;
 				atackCount++;
 			}
 		}
 		else{
 			atackCount = 0;
-			robotActionS.moveToCenter(malletNowC);	//中央に移動
+			//robotActionS.moveToCenter(malletNowC);	//中央に移動
 			robotActionW.moveToCenter(malletNowC);	//中央に移動
+			//std::cout << "Move To Center" << std::endl;
 		}
 			
 		//時間が来ている場合、打ちにいく。条件は必要ない
 		if(locus.calculateLocus(packNowC, packPre2C, 360) == true){	//軌跡検出
 			forecastPoint = locus.getLocusCoordinate();
-			robotActionS.alarmHitBack(malletNowC, packNowC, forecastPoint);
+			//robotActionS.alarmHitBack(malletNowC, packNowC, forecastPoint);
 			robotActionW.alarmHitBack(malletNowC, packNowC, forecastPoint);
 		}
 
