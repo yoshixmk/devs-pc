@@ -100,7 +100,6 @@ void Serial::serialWrite(char* aBuf)
 		std::cout << std::endl;
 	}
 	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
-	//cv::waitKey(10);
 }
 
 //changeBufRangeは aFrom=0, aTo=2 のとき、mBuf[0]から[2]まで代入する
