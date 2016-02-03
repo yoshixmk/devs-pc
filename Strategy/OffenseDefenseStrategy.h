@@ -9,13 +9,13 @@
 #include "RobotActionWeak.h"
 #include "FrameCoordinate.h"
 
+#include <stdio.h>
+#include <windows.h>
+#include <process.h>
+
 namespace Strategy {
 class OffenseDefenseStrategy: public Strategy {
 private:
-	PackCoordinate mPackCoordinate;
-	MalletCoordinate mMalletCoordinate;
-	Locus mLocus;
-	RobotAction mRobotAction;
 
 public:
 	//void initialize();

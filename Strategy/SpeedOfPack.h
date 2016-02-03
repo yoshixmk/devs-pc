@@ -10,7 +10,7 @@ namespace Strategy
 class SpeedOfPack
 {
 private:
-	PackCoordinate mPackCoordinate;
+	//PackCoordinate mPackCoordinate;
 	
 	//移動平均を使用する
 	double mSpeed[10];

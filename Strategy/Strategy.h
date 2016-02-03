@@ -10,11 +10,6 @@
 namespace Strategy {
 class Strategy {
 protected:
-	OriginRetrun mOriginRetrun;
-	RobotAction mRobotAction;
-	Locus mLocus;
-	MalletCoordinate mMalletCoordinate;
-	PackCoordinate mPackCoordinate;
 
 public:
 	//virtual void initialize()=0;

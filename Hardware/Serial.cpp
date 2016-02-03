@@ -30,7 +30,7 @@ void Serial::serialOpen()
 {
 	static int first_time;
 	if (first_time == 0){
-		mComPort = CreateFile("COM6",                //port name
+		mComPort = CreateFile("COM12",                //port name
 			GENERIC_READ | GENERIC_WRITE, //Read/Write
 			0,                            // No Sharing
 			NULL,                         // No Security
@@ -38,10 +38,13 @@ void Serial::serialOpen()
 			0,            // Non Overlapped I/O
 			NULL);        // Null for Comm Devices
 
-		if (mComPort == INVALID_HANDLE_VALUE)
+		if (mComPort == INVALID_HANDLE_VALUE){
 			std::cout << "Error in opening serial port" << std::endl;
-		else
+			//exit(-1);
+		}
+		else{
 			std::cout << "opening serial port successful" << std::endl;
+		}
 		first_time++;
 	}
 

@@ -6,7 +6,7 @@ namespace Strategy
 SpeedOfPack::SpeedOfPack()
 {
 	for(int i=0; i<9; i++){
-		mPackCoordinate.getCoordinate();
+		//mPackCoordinate.getCoordinate();
 	}
 
 	//移動平均のために、初期値を代入。
@@ -17,8 +17,8 @@ SpeedOfPack::SpeedOfPack()
 
 double SpeedOfPack::getSpeed()
 {
-	CvPoint packNowC = mPackCoordinate.getCoordinate();
-	CvPoint packPreC = mPackCoordinate.getPreviousCoordinate(9);
+	CvPoint packNowC = cvPoint(22,33);//mPackCoordinate.getCoordinate();
+	CvPoint packPreC = cvPoint(11,22);//mPackCoordinate.getPreviousCoordinate(9);
 
 	//座標距離1あたりの距離
 	const double M_PER_PIX = 699.0 / 243.0 / 1000.0;
