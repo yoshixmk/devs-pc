@@ -57,7 +57,8 @@ void OffenseDefenseStrategy::execute()
 	int atackCount = 0;
 
 	HANDLE	hThread[2];
-
+	hMutex = CreateMutex(NULL,FALSE,NULL);
+	Hardware::Serial::setMutex(&hMutex);
 	hThread[0] = (HANDLE)_beginthread(strongMode, 0, NULL);	//スレッド１作成
 	hThread[1] = (HANDLE)_beginthread(weakMode, 0, NULL);	//スレッド２作成
 
@@ -67,6 +68,8 @@ void OffenseDefenseStrategy::execute()
 	//ハンドルクローズ
 	CloseHandle(hThread[0]);
 	CloseHandle(hThread[1]);
+
+	CloseHandle(hMutex);
 	//MalletCoordinate malletCoordinate;	//マレットの位置
 	//Locus locus;							//軌跡
 	//PackCoordinate packCoordinate;

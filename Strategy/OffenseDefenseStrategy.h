@@ -8,6 +8,7 @@
 #include "RobotAction.h"
 #include "RobotActionWeak.h"
 #include "FrameCoordinate.h"
+#include "../Hardware/Serial.h"
 
 #include <stdio.h>
 #include <windows.h>
@@ -16,6 +17,7 @@
 namespace Strategy {
 class OffenseDefenseStrategy: public Strategy {
 private:
+	HANDLE hMutex; //ミューテックスのハンドル
 
 public:
 	//void initialize();
