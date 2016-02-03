@@ -793,4 +793,10 @@ namespace Test {
 			}
 		}
 	}
+
+	void StrategyTest::offenseDefenseStrategyTest()
+	{
+		Strategy::OffenseDefenseStrategy offenseDefenseStrategy;
+		offenseDefenseStrategy.execute();
+	}
 }  // namespace Test

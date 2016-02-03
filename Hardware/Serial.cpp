@@ -71,7 +71,7 @@ void Serial::serialWrite()
 				std::cout << i << ":" << mBuf[i] << " ";
 			}
 			else{
-				std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
+				printf("%d:%3d ", i,  (int)(unsigned char)mBuf[i]);
 			}
 		}
 	}
@@ -92,7 +92,7 @@ void Serial::serialWrite(char* aBuf)
 				std::cout << i << ":" << mBuf[i] << " ";
 			}
 			else{
-				std::cout << i << ":" << (int)(unsigned char)mBuf[i] << " ";
+				printf("%d:%3d ", i,  (int)(unsigned char)mBuf[i]);
 			}
 		}
 	}

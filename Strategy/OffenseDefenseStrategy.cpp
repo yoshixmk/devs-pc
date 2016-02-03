@@ -11,44 +11,42 @@ void OffenseDefenseStrategy::execute()
 
 	CvPoint forecastPoint = cvPoint(0, 0);
 	int atackCount = 0;
+	RobotAction robotActionS;
+	RobotActionWeak robotActionW;
+	MalletCoordinate malletCoordinate;	//マレットの位置
+	Locus locus;							//軌跡
+	PackCoordinate packCoordinate;
+
 	while(1){
 		Hardware::Camera::renew();
-		CvPoint malletNowC = mMalletCoordinate.getCoordinate();
-		CvPoint packNowC = mPackCoordinate.getCoordinate();
-		CvPoint packPre0C = mPackCoordinate.getPreviousCoordinate();
-		CvPoint packPre1C = mPackCoordinate.getPreviousCoordinate(1);
-		CvPoint packPre2C = mPackCoordinate.getPreviousCoordinate(2);
-		CvPoint packPre3C = mPackCoordinate.getPreviousCoordinate(3);
-			
-		//IplImage* extractMallet = hockeyTableMasking.mask();
-			//colorExtractionMallet.extractRobotSideHockeyTable();
-			
-		//int yLineTrigger = 160;
-		//if( (packPre1C.y < yLineTrigger && yLineTrigger + 1 <= packNowC.y) && atackCount < 1 ){
-		if( (packPre1C.y + 4 < packNowC.y) && atackCount < 2 ){
-			if(mLocus.calculateLocus(packNowC, packPre1C, 360) == true){	//軌跡検出
-				forecastPoint = mLocus.getLocusCoordinate();
-				mRobotAction.sankakuHitBack(malletNowC, forecastPoint);
-				std::cout << "sankaku!! 0" << std::endl;
+		CvPoint malletNowC = malletCoordinate.getCoordinate();
+		CvPoint packNowC =packCoordinate.getCoordinate();
+		CvPoint packPre0C = packCoordinate.getPreviousCoordinate();
+		CvPoint packPre2C = packCoordinate.getPreviousCoordinate(2);
+
+		if( (packPre0C.y + 4 < packNowC.y) && atackCount < 1){
+			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//軌跡検出
+				forecastPoint = locus.getLocusCoordinate();
+				robotActionS.sankakuHitBack(malletNowC, forecastPoint);
+				robotActionW.sankakuHitBack(malletNowC, forecastPoint);
+				robotActionS.sankakuCenterBack();
+				robotActionW.sankakuCenterBack();
 				atackCount++;
-			}
-			else if(mLocus.calculateLocus(packNowC, packPre1C, 360) == true){
-				mRobotAction.sankakuHitBack(malletNowC, forecastPoint);
-				forecastPoint = mLocus.getLocusCoordinate();
-				std::cout << "sankaku!! 1" << std::endl;
-			}
-			else if(mLocus.calculateLocus(packNowC, packPre1C, 360) == true){
-				mRobotAction.sankakuHitBack(malletNowC, forecastPoint);
-				forecastPoint = mLocus.getLocusCoordinate();
-				std::cout << "sankaku!! 2" << std::endl;
 			}
 		}
 		else{
 			atackCount = 0;
-			mRobotAction.moveToCenter(malletNowC);	//中央に移動
+			robotActionS.moveToCenter(malletNowC);	//中央に移動
+			robotActionW.moveToCenter(malletNowC);	//中央に移動
 		}
-		//cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,255,0));
-		//cvShowImage("ColorExtractionRS", extractMallet);
+			
+		//時間が来ている場合、打ちにいく。条件は必要ない
+		if(locus.calculateLocus(packNowC, packPre2C, 360) == true){	//軌跡検出
+			forecastPoint = locus.getLocusCoordinate();
+			robotActionS.alarmHitBack(malletNowC, packNowC, forecastPoint);
+			robotActionW.alarmHitBack(malletNowC, packNowC, forecastPoint);
+		}
+
 		if (cv::waitKey(1) >= 0) {
 			break;
 		}

@@ -1,27 +1,18 @@
-#ifndef STRATEGY_ROBOT_ACTION_H
-#define STRATEGY_ROBOT_ACTION_H
+#ifndef STRATEGY_ROBOT_ACTION_WEAK_H
+#define STRATEGY_ROBOT_ACTION_WEAK_H
 
-#include "../Strategy/FrequencySwitching.h"
-#include "../Strategy/FrameCoordinate.h"
-#include "../Strategy/FrequencyManualX.h"
-#include "../Strategy/FrequencyManualY.h"
-#include "../Strategy/SpeedOfPack.h"
-#include "../Hardware/Timer.h"
+#include "RobotAction.h"
+#include "../Strategy/FrequencySwitchingWeak.h"
+#include "../Strategy/FrequencyManualWeakX.h"
+#include "../Strategy/FrequencyManualWeakY.h"
 
 namespace Strategy {
-class RobotAction {
+class RobotActionWeak : public RobotAction
+{
 private:
-	FrequencySwitching mFrequencySwitching;
-	FrequencyManualX mFrequencyManualX;
-	FrequencyManualY mFrequencyManualY;
-
-protected:
-	FrequencyManual mFrequencyManual;
-	SpeedOfPack mSpeedOfPack;
-	Hardware::Timer mMoveingTimer;
-	Hardware::Timer mAlarmTimer;
-	void moveForLimit();
-	void limitCheck();
+	FrequencySwitchingWeak mFrequencySwitching;
+	FrequencyManualWeakX mFrequencyManualX;
+	FrequencyManualWeakY mFrequencyManualY;
 
 public:
 	void moveToCenter(CvPoint aMalletCoordinate);

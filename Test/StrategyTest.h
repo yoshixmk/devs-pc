@@ -19,6 +19,7 @@
 
 #include "../Hardware/Camera.h"
 #include "../Hardware/Timer.h"
+#include "../Strategy/OffenseDefenseStrategy.h"
 
 #include <iostream>
 #include <windows.h>
@@ -51,6 +52,7 @@ namespace Test {
 		void robotActionSideGuardTest();
 		void robotActionAlarmHitBackTest();
 		void robotActionMoveRightAngleTest();
+		void offenseDefenseStrategyTest();
 	};
 
 }  // namespace Test

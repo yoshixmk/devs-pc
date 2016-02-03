@@ -8,7 +8,7 @@
 int main() {
 	Hardware::Camera::initialize();
 	Hardware::Serial::initialize();
-	//Hardware::Serial::setPrintDebug(true);
+	Hardware::Serial::setPrintDebug(true);
 
 	Test::HardwareTest hardwareTest;
 	//hardwareTest.timerTest();
@@ -49,7 +49,8 @@ int main() {
 	//strategyTest.robotActionSankakuCenterBackTest();
 	//strategyTest.robotActionSideGuardTest();
 	//strategyTest.robotActionAlarmHitBackTest();
-	strategyTest.robotActionMoveRightAngleTest();
+	//strategyTest.robotActionMoveRightAngleTest();
+	strategyTest.offenseDefenseStrategyTest();
 
 	Test::UITest uiTest;
 	//uiTest.uiStrategyTest();
