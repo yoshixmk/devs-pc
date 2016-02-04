@@ -13,6 +13,7 @@ class RobotAction {
 private:
 	FrequencySwitching mFrequencySwitching;
 	FrequencyManualX mFrequencyManualX;
+	FrequencyManualX mCenterFrequencyManualX;
 	FrequencyManualY mFrequencyManualY;
 
 protected:

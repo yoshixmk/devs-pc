@@ -32,7 +32,7 @@ namespace Strategy {
 
 		//X
 		if(aWaitingPosition.x - xMargin < aMalletCoordinate.x && aMalletCoordinate.x < aWaitingPosition.x + xMargin){//定位置付近
-			mFrequencyManualX.setOutputInformation(0);
+			mCenterFrequencyManualX.setOutputInformation(0);
 			//Y
 			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
 				mFrequencyManualY.setOutputInformation('D', 500);
@@ -49,7 +49,7 @@ namespace Strategy {
 			if (aMalletCoordinate.x < aWaitingPosition.x - 40){
 				//ゴールから遠いと速くする。10ms以上時間が経過していればに+100加速
 				int nowMaxSpeed = 400 + (int)(mMoveingTimer.getOperatingTime() * 100) * 100;
-				int frequencyX = mFrequencyManualX.getFrequencyX();
+				int frequencyX = mCenterFrequencyManualX.getFrequencyX();
 				if(frequencyX + 100 < nowMaxSpeed){
 					frequencyX += 100;
 				}
@@ -60,22 +60,22 @@ namespace Strategy {
 				if(frequencyX > maxSpeedUp){
 					frequencyX = maxSpeedUp;
 				}
-				if(mFrequencyManualX.getTargetDirection() == 'C'){
-					mFrequencyManualX.setOutputInformation('C', frequencyX);
+				if(mCenterFrequencyManualX.getTargetDirection() == 'C'){
+					mCenterFrequencyManualX.setOutputInformation('C', frequencyX);
 				}
 				else{
-					mFrequencyManualX.setOutputInformation('C', 400);
+					mCenterFrequencyManualX.setOutputInformation('C', 400);
 					mMoveingTimer.resetStartOperatingTime();
 				}
 			}
 			else if (aMalletCoordinate.x < aWaitingPosition.x - 10){
 				//ゴール近辺ならモータの速度を落とす
-				mFrequencyManualX.setOutputInformation('C', 300);
+				mCenterFrequencyManualX.setOutputInformation('C', 300);
 				mMoveingTimer.resetStartOperatingTime();
 			}
 			else if (aMalletCoordinate.x <= aWaitingPosition.x){
 				//ゴールに少し近づいてきたら速度を落とす
-				mFrequencyManualX.setOutputInformation('C', 0.200);
+				mCenterFrequencyManualX.setOutputInformation('C', 0.200);
 				mMoveingTimer.resetStartOperatingTime();
 			}
 			//Y
@@ -92,18 +92,18 @@ namespace Strategy {
 		else if(aWaitingPosition.x + xMargin <= aMalletCoordinate.x){ //AまたはDの方向
 			if (aMalletCoordinate.x < aWaitingPosition.x + 10){
 				//ゴールに少し近づいてきたら速度を落とす
-				mFrequencyManualX.setOutputInformation('D', 100);
+				mCenterFrequencyManualX.setOutputInformation('D', 100);
 				mMoveingTimer.resetStartOperatingTime();
 			}
 			else if (aMalletCoordinate.x < aWaitingPosition.x + 40){
 				//ゴール近辺ならモータの速度を落とす
-				mFrequencyManualX.setOutputInformation('D', 300);
+				mCenterFrequencyManualX.setOutputInformation('D', 300);
 				mMoveingTimer.resetStartOperatingTime();
 			}
 			else{
 				//ゴールから遠いと速くする。10ms以上時間が経過していればに+100加速
 				int nowMaxSpeed = 400 + (int)(mMoveingTimer.getOperatingTime() * 100) * 100;
-				int frequencyX = mFrequencyManualX.getFrequencyX();
+				int frequencyX = mCenterFrequencyManualX.getFrequencyX();
 				if(frequencyX + 100 < nowMaxSpeed){
 					frequencyX += 100;
 				}
@@ -114,11 +114,11 @@ namespace Strategy {
 				if(frequencyX > maxSpeedUp){
 					frequencyX = maxSpeedUp;
 				}
-				if(mFrequencyManualX.getTargetDirection() == 'D'){
-					mFrequencyManualX.setOutputInformation('D', frequencyX);
+				if(mCenterFrequencyManualX.getTargetDirection() == 'D'){
+					mCenterFrequencyManualX.setOutputInformation('D', frequencyX);
 				}
 				else{
-					mFrequencyManualX.setOutputInformation('D', 400);
+					mCenterFrequencyManualX.setOutputInformation('D', 400);
 					mMoveingTimer.resetStartOperatingTime();
 				}
 			}
