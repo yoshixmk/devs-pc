@@ -5,17 +5,16 @@ namespace Strategy {
 //void OffenseDefenseStrategy::initialize() {
 //}
 
-CvPoint mMalletNowC;
-CvPoint mPackNowC;
-CvPoint mPackPre0C;
-CvPoint mPackPre2C;
-RobotAction mRobotActionS;
-RobotActionWeak mRobotActionW;
-Locus mLocus;
-
-void strongMode(LPVOID pParam)
+void strongModeOD(LPVOID pParam)
 {
+	CvPoint mMalletNowC;
+	CvPoint mPackNowC;
+	CvPoint mPackPre0C;
+	CvPoint mPackPre2C;
 	CvPoint forecastPoint = cvPoint(0, 0);
+	RobotAction mRobotActionS;
+	RobotActionWeak mRobotActionW;
+	Locus mLocus;
 	while(1){
 		mMalletNowC = cvPoint(11,22);//malletCoordinate.getCoordinate();
 		mPackNowC = cvPoint(22,33);//packCoordinate.getCoordinate();
@@ -31,9 +30,16 @@ void strongMode(LPVOID pParam)
 	}
 }
 
-void weakMode(LPVOID pParam)
+void weakModeOD(LPVOID pParam)
 {
+	CvPoint mMalletNowC;
+	CvPoint mPackNowC;
+	CvPoint mPackPre0C;
+	CvPoint mPackPre2C;
 	CvPoint forecastPoint = cvPoint(0, 0);
+	RobotAction mRobotActionS;
+	RobotActionWeak mRobotActionW;
+	Locus mLocus;
 	while(1){
 		mMalletNowC = cvPoint(110,220);//malletCoordinate.getCoordinate();
 		mPackNowC = cvPoint(220,330);//packCoordinate.getCoordinate();
@@ -59,8 +65,8 @@ void OffenseDefenseStrategy::execute()
 	HANDLE	hThread[2];
 	hMutex = CreateMutex(NULL,FALSE,NULL);
 	Hardware::Serial::setMutex(&hMutex);
-	hThread[0] = (HANDLE)_beginthread(strongMode, 0, NULL);	//スレッド１作成
-	hThread[1] = (HANDLE)_beginthread(weakMode, 0, NULL);	//スレッド２作成
+	hThread[0] = (HANDLE)_beginthread(strongModeOD, 0, NULL);	//スレッド１作成
+	hThread[1] = (HANDLE)_beginthread(weakModeOD, 0, NULL);	//スレッド２作成
 
 	//スレッド１、２終了待ち
 	WaitForMultipleObjects(2,hThread,TRUE,INFINITE);

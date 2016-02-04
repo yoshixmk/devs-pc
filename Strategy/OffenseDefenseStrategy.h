@@ -6,7 +6,6 @@
 #include "MalletCoordinate.h"
 #include "Locus.h"
 #include "RobotAction.h"
-#include "RobotActionWeak.h"
 #include "FrameCoordinate.h"
 #include "../Hardware/Serial.h"
 
@@ -16,8 +15,6 @@
 
 namespace Strategy {
 class OffenseDefenseStrategy: public Strategy {
-private:
-	HANDLE hMutex; //ミューテックスのハンドル
 
 public:
 	//void initialize();

@@ -3,13 +3,17 @@
 
 #include "OriginRetrun.h"
 #include "RobotAction.h"
+#include "RobotActionWeak.h"
 #include "Locus.h"
 #include "MalletCoordinate.h"
 #include "PackCoordinate.h"
 
 namespace Strategy {
 class Strategy {
+
 protected:
+
+	HANDLE hMutex; //ミューテックスのハンドル
 
 public:
 	//virtual void initialize()=0;

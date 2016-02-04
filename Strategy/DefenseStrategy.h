@@ -4,7 +4,8 @@
 #include "Strategy.h"
 
 namespace Strategy {
-class DefenseStrategy: public Strategy {
+class DefenseStrategy: public Strategy 
+{
 public:
 	//void initialize();
 
