@@ -115,6 +115,7 @@ void Serial::serialWrite(char* aBuf)
 //changeBufRangeは aFrom=0, aTo=2 のとき、mBuf[0]から[2]まで代入する
 void Serial::changeBufRange(char* aBuf, int aFrom, int aTo)
 {
+	WaitForSingleObject(hMutex, INFINITE); //mutex 間は他のスレッドから変数を変更できない
 	if(aTo < aFrom){
 		std::cout << "Serial error. aTo < aFrom" << std::endl;
 		exit(-1);
@@ -126,11 +127,14 @@ void Serial::changeBufRange(char* aBuf, int aFrom, int aTo)
 	for(int i=aFrom; i<=aTo; i++){
 		changeBuf(aBuf, i);
 	}
+	ReleaseMutex(hMutex);
 }
 
 void Serial::changeBuf(char* aBuf, int index)
 {
+	WaitForSingleObject(hMutex, INFINITE); //mutex 間は他のスレッドから変数を変更できない
 	mBuf[index] = aBuf[index];
+	ReleaseMutex(hMutex);
 }
 
 void Serial::setPrintDebug(bool isDebug)

@@ -52,7 +52,6 @@ void FrequencySwitching::setFrequencyX(int aFrequency){
 	char buf[8];
 	buf[0] = aFrequency;
 	Hardware::Serial::changeBuf(buf, 0);
-	//Hardware::Serial::serialWrite();
 }
 
 void FrequencySwitching::setFrequencyY(int aFrequency){
@@ -85,37 +84,32 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 
 	char buf[8];
 	buf[0] = nowFrequency / 20;
-	Hardware::Serial::changeBuf(buf, 0);
 	buf[1] = 500 / 20;
-	Hardware::Serial::changeBuf(buf, 1);
-
 	if(aMoveDistance > 0){
 		buf[2] = 'B';
 	}
 	else{
 		buf[2] = 'A';
 	}
-	Hardware::Serial::changeBuf(buf, 2);
-	FrequencySwitching::output();
+	Hardware::Serial::changeBufRange(buf, 0, 2);
 
 	while(max_freq > nowFrequency){
 		buf[0] = nowFrequency / 20;
 		buf[1] = 500 / 20;
-		Hardware::Serial::changeBuf(buf, 0);
-		Hardware::Serial::changeBuf(buf, 1);
+		//マルチタスクで更新タイミング考慮のため、全て更新
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		nowFrequency = nowFrequency + 100;
-		Sleep(10);	//10ms
 		FrequencySwitching::output();
+		Sleep(10);	//10ms
 		yCount++;
 	}
 	while(mInitFrequency <= nowFrequency){
 		buf[0] = nowFrequency / 20;
 		buf[1] = 500 / 20;
-		Hardware::Serial::changeBuf(buf, 0);
-		Hardware::Serial::changeBuf(buf, 1);
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		nowFrequency = nowFrequency - 100;
-		Sleep(10);	//10ms
 		FrequencySwitching::output();
+		Sleep(10);	//10ms
 		yCount++;
 	}
 	buf[0] = 0;
@@ -123,13 +117,12 @@ void FrequencySwitching::sankakuProcess(int aMoveDistance)
 	for(;yCount < yTargetCount; yCount++){
 		buf[1] = 500 / 20;
 		Hardware::Serial::changeBuf(buf, 1);
-		Sleep(10);	//10ms
 		FrequencySwitching::output();
+		Sleep(10);	//10ms
 	}
 	buf[0] = 0;
 	buf[1] = 0;
-	Hardware::Serial::changeBuf(buf, 0);
-	Hardware::Serial::changeBuf(buf, 1);
+	Hardware::Serial::changeBufRange(buf, 0, 2);
 	FrequencySwitching::output();
 }
 
@@ -154,41 +147,34 @@ void FrequencySwitching::sankakuReturnProcess()
 
 	char buf[8];
 	buf[0] = nowFrequency / 20;
-	Hardware::Serial::changeBuf(buf, 0);
 	buf[1] = 500 / 20;
-	Hardware::Serial::changeBuf(buf, 1);
-
 	if(mMoveDistanceX > 0){
 		buf[2] = 'D';
 	}
 	else{
 		buf[2] = 'C';
 	}
-	Hardware::Serial::changeBuf(buf, 2);
-	FrequencySwitching::output();
+	Hardware::Serial::changeBufRange(buf, 0, 2);
 
 	while(max_freq > nowFrequency){
 		buf[0] = nowFrequency / 20;
 		buf[1] = 500 / 20;
-		Hardware::Serial::changeBuf(buf, 0);
-		Hardware::Serial::changeBuf(buf, 1);
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		nowFrequency = nowFrequency + 100;
-		Sleep(10);	//10ms
 		FrequencySwitching::output();
+		Sleep(10);	//10ms
 	}
 	while(mInitFrequency <= nowFrequency){
 		buf[0] = nowFrequency / 20;
 		buf[1] = 500 / 20;
-		Hardware::Serial::changeBuf(buf, 0);
-		Hardware::Serial::changeBuf(buf, 1);
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		nowFrequency = nowFrequency - 100;
-		Sleep(10);	//10ms
 		FrequencySwitching::output();
+		Sleep(10);	//10ms
 	}
 	buf[0] = 0;
-	Hardware::Serial::changeBuf(buf, 0);
 	buf[1] = 0;
-	Hardware::Serial::changeBuf(buf, 1);
+	Hardware::Serial::changeBufRange(buf, 0, 2);
 	FrequencySwitching::output();
 }
 
@@ -224,33 +210,30 @@ void FrequencySwitching::sankakuUntilHit(int aMoveDistanceX, int aMoveDistanceY)
 	else{
 		buf[2] = 'A';
 	}
-	Hardware::Serial::changeBuf(buf, 2);
-	FrequencySwitching::output();
+	Hardware::Serial::changeBufRange(buf, 0, 2);
 
 	while(max_freq > nowFrequency){
 		buf[0] = nowFrequency / 20;
 		buf[1] = 500 / 20;
-		Hardware::Serial::changeBuf(buf, 0);
-		Hardware::Serial::changeBuf(buf, 1);
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		nowFrequency = nowFrequency + 100;
-		Sleep(10);	//10ms
 		FrequencySwitching::output();
+		Sleep(10);	//10ms
 	}
 	while(mInitFrequency <= nowFrequency){
 		buf[0] = nowFrequency / 20;
 		buf[1] = 500 / 20;
-		Hardware::Serial::changeBuf(buf, 0);
-		Hardware::Serial::changeBuf(buf, 1);
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		nowFrequency = nowFrequency - 100;
-		Sleep(10);	//10ms
 		FrequencySwitching::output();
+		Sleep(10);	//10ms
 	}
 	buf[0] = 0;
 	Hardware::Serial::changeBuf(buf, 0);
 	FrequencySwitching::output();
 	for(int i=0; i<aMoveDistanceY/mTimeAjustMentY; i++){ //Yの距離から時間の変換
 		buf[1] = (500 + i*100) / 20;
-		Hardware::Serial::changeBuf(buf, 1);
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		FrequencySwitching::output();
 		Sleep(10);
 	}
@@ -281,43 +264,39 @@ void FrequencySwitching::sankakuRightAngle(int aMoveDistanceX, int aMoveDistance
 
 	char buf[8];
 	buf[0] = nowFrequency / 20;
-	Hardware::Serial::changeBuf(buf, 0);
 	buf[1] = 0;
-	Hardware::Serial::changeBuf(buf, 1);
 	if(aMoveDistanceX > 0){
 		buf[2] = 'B';
 	}
 	else{
 		buf[2] = 'A';
 	}
-	Hardware::Serial::changeBuf(buf, 2);
-	FrequencySwitching::output();
+	Hardware::Serial::changeBufRange(buf, 0, 2);
 
 	while(max_freq > nowFrequency){
 		buf[0] = nowFrequency / 20;
-		Hardware::Serial::changeBuf(buf, 0);
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		nowFrequency = nowFrequency + 100;
 		FrequencySwitching::output();
 		Sleep(10);	//10ms
 	}
 	while(mInitFrequency <= nowFrequency){
 		buf[0] = nowFrequency / 20;
-		Hardware::Serial::changeBuf(buf, 0);
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		nowFrequency = nowFrequency - 100;
 		FrequencySwitching::output();
 		Sleep(10);	//10ms
 	}
 	buf[0] = 0;
-	Hardware::Serial::changeBuf(buf, 0);
 	for(int i=0; i<aMoveDistanceY/mTimeAjustMentY; i++){
 		buf[1] = (500 + i*100) / 20;
-		Hardware::Serial::changeBuf(buf, 1);
+		Hardware::Serial::changeBufRange(buf, 0, 2);
 		FrequencySwitching::output();
 		Sleep(10);
 	}
 
 	buf[1] = 0;
-	Hardware::Serial::changeBuf(buf, 1);
+	Hardware::Serial::changeBufRange(buf, 0, 2);
 	FrequencySwitching::output();
 }
 
