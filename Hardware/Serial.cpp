@@ -7,7 +7,6 @@ DWORD Serial::mNumberOfPut;
 char Serial::mBuf[8];
 bool Serial::isOpened = false;
 bool Serial::isDebug = false;
-
 HANDLE Serial::hMutex; //ミューテックスのハンドル
 
 void Serial::initialize() {
