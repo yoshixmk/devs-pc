@@ -12,11 +12,14 @@ HANDLE Serial::hMutex; //ミューテックスのハンドル
 void Serial::initialize() {
 	if(isOpened == false){
 		serialOpen();
-
-		//0だと表示されないバイトは0以外に初期化
-		mBuf[2] = 'A';
-		mBuf[5] = 'A';
 	}
+	
+	for(int i=0; i<8; i++){
+		mBuf[i] = 0;
+	}
+	//0だと表示されないバイトは0以外に初期化
+	mBuf[2] = 'A';
+	mBuf[5] = 'A';
 	isOpened = true;
 }
 

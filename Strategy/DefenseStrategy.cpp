@@ -11,7 +11,10 @@ void strongModeD(LPVOID pParam)
 	CvPoint packNowC;
 	RobotAction robotAction;
 	Locus locus;
-	while(1){
+	Hardware::Timer mTimer;
+	mTimer.setTimer(3);
+	//while(1){
+	while(!mTimer.getAlarm()){
 		malletNowC = cvPoint(11,22);//malletCoordinate.getCoordinate();
 		packNowC = cvPoint(22,33);//packCoordinate.getCoordinate();
 		robotAction.sideGuard(malletNowC, packNowC);
@@ -27,7 +30,10 @@ void weakModeD(LPVOID pParam)
 	CvPoint packNowC;
 	RobotActionWeak robotAction;
 	Locus locus;
-	while(1){
+	Hardware::Timer mTimer;
+	mTimer.setTimer(3);
+	//while(1){
+	while(!mTimer.getAlarm()){
 		malletNowC = cvPoint(110,220);//malletCoordinate.getCoordinate();
 		packNowC = cvPoint(220,330);//packCoordinate.getCoordinate();
 		robotAction.sideGuard(malletNowC, packNowC);
@@ -51,11 +57,8 @@ void DefenseStrategy::execute()
 	Hardware::Serial::setMutex(&hMutex);
 	hThread[0] = (HANDLE)_beginthread(strongModeD, 0, NULL);	//スレッド１作成
 	hThread[1] = (HANDLE)_beginthread(weakModeD, 0, NULL);	//スレッド２作成
-
-	while(!mTimer.getAlarm()){
-		//スレッド１、２終了待ち
-		//WaitForMultipleObjects(2,hThread,TRUE,INFINITE);
-	}
+	//スレッド１、２終了待ち
+	WaitForMultipleObjects(2,hThread,TRUE,INFINITE);
 
 	//ハンドルクローズ
 	CloseHandle(hThread[0]);

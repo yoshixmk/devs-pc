@@ -11,13 +11,6 @@ FrequencySwitchingWeak::FrequencySwitchingWeak()
 	mTargetTime = 0;
 
 	mTimeAjustMentY = 3;
-
-	char buf[8];
-	for (int i = 3; i < 6; i++){
-		buf[i] = 0;
-	}
-	buf[5] = 'A';
-	Hardware::Serial::changeBufRange(buf, 3, 5);
 	mInitFrequency = 400;
 }
 

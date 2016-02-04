@@ -11,13 +11,6 @@ FrequencySwitching::FrequencySwitching()
 	mTargetTime = 0;
 
 	mTimeAjustMentY = 3;
-
-	char buf[8];
-	for (int i = 0; i < 3; i++){
-		buf[i] = 0;
-	}
-	buf[2] = 'A';
-	Hardware::Serial::changeBufRange(buf, 0, 2);
 	mInitFrequency = 400;
 }
 
@@ -51,8 +44,7 @@ void FrequencySwitching::stop()
 	char buf[8];
 	buf[0] = 0;
 	buf[1] = 0;
-	Hardware::Serial::changeBuf(buf, 0);
-	Hardware::Serial::changeBuf(buf, 1);
+	Hardware::Serial::changeBufRange(buf, 0, 1);
 	Hardware::Serial::serialWrite();
 }
 
