@@ -7,22 +7,21 @@ namespace Strategy {
 
 void strongModeOD(LPVOID pParam)
 {
-	CvPoint mMalletNowC;
-	CvPoint mPackNowC;
-	CvPoint mPackPre0C;
-	CvPoint mPackPre2C;
+	CvPoint malletNowC;
+	CvPoint packNowC;
+	CvPoint packPre0C;
+	CvPoint packPre2C;
 	CvPoint forecastPoint = cvPoint(0, 0);
-	RobotAction mRobotActionS;
-	RobotActionWeak mRobotActionW;
-	Locus mLocus;
+	RobotAction robotAction;
+	Locus locus;
 	while(1){
-		mMalletNowC = cvPoint(11,22);//malletCoordinate.getCoordinate();
-		mPackNowC = cvPoint(22,33);//packCoordinate.getCoordinate();
-		mPackPre0C = cvPoint(33,44);//packCoordinate.getPreviousCoordinate();
-		mPackPre2C = cvPoint(44,55);//packCoordinate.getPreviousCoordinate(2);
-		if(mLocus.calculateLocus(mPackNowC, mPackPre0C, 360) == true){	//‹OÕŒŸo
-			forecastPoint = mLocus.getLocusCoordinate();
-			mRobotActionS.sankakuHitBack(mMalletNowC, forecastPoint);
+		malletNowC = cvPoint(110,220);//malletCoordinate.getCoordinate();
+		packNowC = cvPoint(220,330);//packCoordinate.getCoordinate();
+		packPre0C = cvPoint(303,404);//packCoordinate.getPreviousCoordinate();
+		packPre2C = cvPoint(404,404);//packCoordinate.getPreviousCoordinate(2);
+		if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//‹OÕŒŸo
+			forecastPoint = locus.getLocusCoordinate();
+			robotAction.sankakuHitBack(malletNowC, forecastPoint);
 		}
 		if (cv::waitKey(1) >= 0) {
 			break;
@@ -32,22 +31,21 @@ void strongModeOD(LPVOID pParam)
 
 void weakModeOD(LPVOID pParam)
 {
-	CvPoint mMalletNowC;
-	CvPoint mPackNowC;
-	CvPoint mPackPre0C;
-	CvPoint mPackPre2C;
+	CvPoint malletNowC;
+	CvPoint packNowC;
+	CvPoint packPre0C;
+	CvPoint packPre2C;
 	CvPoint forecastPoint = cvPoint(0, 0);
-	RobotAction mRobotActionS;
-	RobotActionWeak mRobotActionW;
-	Locus mLocus;
+	RobotAction robotAction;
+	Locus locus;
 	while(1){
-		mMalletNowC = cvPoint(110,220);//malletCoordinate.getCoordinate();
-		mPackNowC = cvPoint(220,330);//packCoordinate.getCoordinate();
-		mPackPre0C = cvPoint(303,404);//packCoordinate.getPreviousCoordinate();
-		mPackPre2C = cvPoint(404,404);//packCoordinate.getPreviousCoordinate(2);
-		if(mLocus.calculateLocus(mPackNowC, mPackPre0C, 360) == true){	//‹OÕŒŸo
-			forecastPoint = mLocus.getLocusCoordinate();
-			mRobotActionW.sankakuHitBack(mMalletNowC, forecastPoint);
+		malletNowC = cvPoint(110,220);//malletCoordinate.getCoordinate();
+		packNowC = cvPoint(220,330);//packCoordinate.getCoordinate();
+		packPre0C = cvPoint(303,404);//packCoordinate.getPreviousCoordinate();
+		packPre2C = cvPoint(404,404);//packCoordinate.getPreviousCoordinate(2);
+		if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//‹OÕŒŸo
+			forecastPoint = locus.getLocusCoordinate();
+			robotAction.sankakuHitBack(malletNowC, forecastPoint);
 		}
 		if (cv::waitKey(1) >= 0) {
 			break;
