@@ -53,10 +53,10 @@ int main() {
 	//strategyTest.robotActionSideGuardTest();
 	//strategyTest.robotActionAlarmHitBackTest();
 	//strategyTest.robotActionMoveRightAngleTest();
-	strategyTest.offenseDefenseStrategyTest();
+	//strategyTest.offenseDefenseStrategyTest();
 
 	Test::UITest uiTest;
-	//uiTest.uiStrategyTest();
+	uiTest.uiStrategyTest();
 
 	//Test::ShowWindowTest showWindowTest;
 	//showWindowTest.windowTest();

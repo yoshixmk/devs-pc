@@ -36,7 +36,7 @@ void weakModeOD(LPVOID pParam)
 	CvPoint packPre0C;
 	CvPoint packPre2C;
 	CvPoint forecastPoint = cvPoint(0, 0);
-	RobotAction robotAction;
+	RobotActionWeak robotAction;
 	Locus locus;
 	while(1){
 		malletNowC = cvPoint(110,220);//malletCoordinate.getCoordinate();
@@ -55,10 +55,12 @@ void weakModeOD(LPVOID pParam)
 
 void OffenseDefenseStrategy::execute()
 {
+	std::cout << "OffenseDeffense Strategy!!" << std::endl;
 	bool hasArrived = true; //目的地まで移動中=false, 移動完了=true
-
 	CvPoint forecastPoint = cvPoint(0, 0);
 	int atackCount = 0;
+
+	mTimer.setTimer(3);
 
 	HANDLE	hThread[2];
 	hMutex = CreateMutex(NULL,FALSE,NULL);
@@ -66,8 +68,10 @@ void OffenseDefenseStrategy::execute()
 	hThread[0] = (HANDLE)_beginthread(strongModeOD, 0, NULL);	//スレッド１作成
 	hThread[1] = (HANDLE)_beginthread(weakModeOD, 0, NULL);	//スレッド２作成
 
-	//スレッド１、２終了待ち
-	WaitForMultipleObjects(2,hThread,TRUE,INFINITE);
+	while(!mTimer.getAlarm()){
+		//スレッド１、２終了待ち
+		//WaitForMultipleObjects(2,hThread,TRUE,INFINITE);
+	}
 
 	//ハンドルクローズ
 	CloseHandle(hThread[0]);

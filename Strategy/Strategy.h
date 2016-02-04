@@ -7,12 +7,13 @@
 #include "Locus.h"
 #include "MalletCoordinate.h"
 #include "PackCoordinate.h"
+#include "../Hardware/Timer.h"
 
 namespace Strategy {
 class Strategy {
 
 protected:
-
+	Hardware::Timer mTimer;
 	HANDLE hMutex; //ミューテックスのハンドル
 
 public:
