@@ -112,7 +112,6 @@ void Serial::serialWrite(char* aBuf)
 			}
 		}
 	}
-
 	if(isDebug == true){
 		bool hasSuccessed = WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 		if(hasSuccessed){

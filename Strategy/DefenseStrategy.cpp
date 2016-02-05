@@ -14,8 +14,7 @@ void strongModeD(LPVOID pParam)
 	PackCoordinate packCoordinate;
 	Locus locus;
 	Hardware::Timer mTimer;
-	mTimer.setTimer(30);
-	//while(1){
+	mTimer.setTimer(20);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -36,8 +35,7 @@ void weakModeD(LPVOID pParam)
 	PackCoordinate packCoordinate;
 	Locus locus;
 	Hardware::Timer mTimer;
-	mTimer.setTimer(30);
-	//while(1){
+	mTimer.setTimer(20);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -53,7 +51,6 @@ void DefenseStrategy::execute()
 {
 	std::cout << "Defense Strategy!!" << std::endl;
 
-	bool hasArrived = true; //–Ú“I’n‚Ü‚ÅˆÚ“®’†=false, ˆÚ“®Š®—¹=true
 	CvPoint forecastPoint = cvPoint(0, 0);
 	int atackCount = 0;
 	mTimer.setTimer(3);

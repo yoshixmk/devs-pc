@@ -18,8 +18,7 @@ void strongModeOD(LPVOID pParam)
 	PackCoordinate packCoordinate;
 	Locus locus;
 	Hardware::Timer mTimer;
-	mTimer.setTimer(30);
-	//while(1){
+	mTimer.setTimer(20);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -29,26 +28,19 @@ void strongModeOD(LPVOID pParam)
 		if( (packPre0C.y + 4 < packNowC.y) && atackCount < 1){
 			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//軌跡検出
 				forecastPoint = locus.getLocusCoordinate();
-				//robotActionS.sankakuHitBack(malletNowC, forecastPoint);
 				robotAction.sankakuHitBack(malletNowC, forecastPoint);
-				//std::cout << "sankaku Hit Back" << std::endl;
-				//robotActionS.sankakuCenterBack();
 				robotAction.sankakuCenterBack();
-				//std::cout << "sankaku Center Back" << std::endl;
 				atackCount++;
 			}
 		}
 		else{
 			atackCount = 0;
-			//robotActionS.moveToCenter(malletNowC);	//中央に移動
 			robotAction.moveToCenter(malletNowC);	//中央に移動
-			//std::cout << "Move To Center" << std::endl;
 		}
 			
 		//時間が来ている場合、打ちにいく。条件は必要ない
 		if(locus.calculateLocus(packNowC, packPre2C, 360) == true){	//軌跡検出
 			forecastPoint = locus.getLocusCoordinate();
-			//robotActionS.alarmHitBack(malletNowC, packNowC, forecastPoint);
 			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
 		}
 		if (cv::waitKey(1) >= 0) {
@@ -68,10 +60,9 @@ void weakModeOD(LPVOID pParam)
 	RobotActionWeak robotAction;
 	Locus locus;
 	Hardware::Timer mTimer;
-	mTimer.setTimer(30);
+	mTimer.setTimer(20);
 	MalletCoordinate malletCoordinate;
 	PackCoordinate packCoordinate;
-	//while(1){
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -81,26 +72,19 @@ void weakModeOD(LPVOID pParam)
 		if( (packPre0C.y + 4 < packNowC.y) && atackCount < 1){
 			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//軌跡検出
 				forecastPoint = locus.getLocusCoordinate();
-				//robotActionS.sankakuHitBack(malletNowC, forecastPoint);
 				robotAction.sankakuHitBack(malletNowC, forecastPoint);
-				//std::cout << "sankaku Hit Back" << std::endl;
-				//robotActionS.sankakuCenterBack();
 				robotAction.sankakuCenterBack();
-				//std::cout << "sankaku Center Back" << std::endl;
 				atackCount++;
 			}
 		}
 		else{
 			atackCount = 0;
-			//robotActionS.moveToCenter(malletNowC);	//中央に移動
 			robotAction.moveToCenter(malletNowC);	//中央に移動
-			//std::cout << "Move To Center" << std::endl;
 		}
 			
 		//時間が来ている場合、打ちにいく。条件は必要ない
 		if(locus.calculateLocus(packNowC, packPre2C, 360) == true){	//軌跡検出
 			forecastPoint = locus.getLocusCoordinate();
-			//robotActionS.alarmHitBack(malletNowC, packNowC, forecastPoint);
 			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
 		}
 		if (cv::waitKey(1) >= 0) {
@@ -112,7 +96,6 @@ void weakModeOD(LPVOID pParam)
 void OffenseDefenseStrategy::execute()
 {
 	std::cout << "OffenseDeffense Strategy!!" << std::endl;
-	//bool hasArrived = true; //目的地まで移動中=false, 移動完了=true
 
 	HANDLE	hThread[2];
 	hMutex = CreateMutex(NULL,FALSE,NULL);

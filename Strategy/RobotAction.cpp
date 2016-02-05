@@ -228,8 +228,8 @@ namespace Strategy {
 
 		if(FrameCoordinate::getCenterLine().y + 50 < aPackCoordinate.y){
 			if(aPackCoordinate.y < 400){
-				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
-					if(speed < 0.1){
+				if(mAlarmTimer.getOperatingTime() > 1.0){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.03){
 						sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
 					}
 					else{
@@ -240,8 +240,8 @@ namespace Strategy {
 				}
 			}
 			else if(400 <= aPackCoordinate.y){
-				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
-					if(speed < 0.1){
+				if(mAlarmTimer.getOperatingTime() > 1.0){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.03){
 						moveRightAngle(aMalletCoordinate, aPackCoordinate);
 					}
 					else{

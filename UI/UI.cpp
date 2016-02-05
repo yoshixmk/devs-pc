@@ -8,7 +8,7 @@ void UI::main() {
 
 	while(1){
 		//0-9のランダムな数字を生成。
-		int randamNumber = rand() % 10;
+		int randamNumber = rand() % 3;
 
 		//3(OffenseDefense):7(Defense)の割合
 		if(randamNumber < 3){
