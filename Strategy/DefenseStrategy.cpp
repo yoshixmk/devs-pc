@@ -10,13 +10,16 @@ void strongModeD(LPVOID pParam)
 	CvPoint malletNowC;
 	CvPoint packNowC;
 	RobotAction robotAction;
+	MalletCoordinate malletCoordinate;
+	PackCoordinate packCoordinate;
 	Locus locus;
 	Hardware::Timer mTimer;
-	mTimer.setTimer(3);
+	mTimer.setTimer(30);
 	//while(1){
 	while(!mTimer.getAlarm()){
-		malletNowC = cvPoint(11,22);//malletCoordinate.getCoordinate();
-		packNowC = cvPoint(22,33);//packCoordinate.getCoordinate();
+		Hardware::Camera::renew();
+		malletNowC = malletCoordinate.getCoordinate();
+		packNowC = packCoordinate.getCoordinate();
 		robotAction.sideGuard(malletNowC, packNowC);
 		if (cv::waitKey(1) >= 0) {
 			break;
@@ -29,13 +32,16 @@ void weakModeD(LPVOID pParam)
 	CvPoint malletNowC;
 	CvPoint packNowC;
 	RobotActionWeak robotAction;
+	MalletCoordinate malletCoordinate;
+	PackCoordinate packCoordinate;
 	Locus locus;
 	Hardware::Timer mTimer;
-	mTimer.setTimer(3);
+	mTimer.setTimer(30);
 	//while(1){
 	while(!mTimer.getAlarm()){
-		malletNowC = cvPoint(110,220);//malletCoordinate.getCoordinate();
-		packNowC = cvPoint(220,330);//packCoordinate.getCoordinate();
+		Hardware::Camera::renew();
+		malletNowC = malletCoordinate.getCoordinate();
+		packNowC = packCoordinate.getCoordinate();
 		robotAction.sideGuard(malletNowC, packNowC);
 		if (cv::waitKey(1) >= 0) {
 			break;

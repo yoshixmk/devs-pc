@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 int main() {
-	//Hardware::Camera::initialize();
+	Hardware::Camera::initialize();
 	Hardware::Serial::initialize();
 	Hardware::Serial::setPrintDebug(true);
 

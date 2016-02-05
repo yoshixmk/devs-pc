@@ -34,7 +34,7 @@ void Serial::serialOpen()
 {
 	static int first_time;
 	if (first_time == 0){
-		mComPort = CreateFile("COM12",                //port name
+		mComPort = CreateFile("COM6",                //port name
 			GENERIC_READ | GENERIC_WRITE, //Read/Write
 			0,                            // No Sharing
 			NULL,                         // No Security
@@ -84,9 +84,16 @@ void Serial::serialWrite()
 		}
 	}
 	if(isDebug == true){
+		bool hasSuccessed = WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+		if(hasSuccessed){
+			std::cout << " Success!!";
+		}
+		else{
+			std::cout << " Failed!!";
+		}
+	
 		std::cout << std::endl;
 	}
-	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 	ReleaseMutex(hMutex);
 }
 
@@ -105,10 +112,18 @@ void Serial::serialWrite(char* aBuf)
 			}
 		}
 	}
+
 	if(isDebug == true){
+		bool hasSuccessed = WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+		if(hasSuccessed){
+			std::cout << " Success!!";
+		}
+		else{
+			std::cout << " Failed!!";
+		}
+	
 		std::cout << std::endl;
 	}
-	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 	ReleaseMutex(hMutex);
 }
 
