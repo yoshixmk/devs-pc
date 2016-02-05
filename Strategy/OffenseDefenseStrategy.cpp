@@ -19,7 +19,9 @@ void strongModeOD(LPVOID pParam)
 	Locus locus;
 	Hardware::Timer mTimer;
 	mTimer.setTimer(20);
+
 	bool hasSankakued = false;
+	Hardware::Timer backTimer;
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -27,11 +29,12 @@ void strongModeOD(LPVOID pParam)
 		if(hasSankakued == false){
 			packPre0C = packCoordinate.getPreviousCoordinate();
 			packPre2C = packCoordinate.getPreviousCoordinate(30);
-			if( (packPre0C.y + 4 < packNowC.y) && atackCount < 1){
+			if( (packPre0C.y + 5 < packNowC.y) && atackCount < 1){
 				if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//‹OÕŒŸo
 					forecastPoint = locus.getLocusCoordinate();
 					robotAction.sankakuHitBack(malletNowC, forecastPoint);
 					hasSankakued = true;
+					backTimer.setTimer(0.5);
 					atackCount++;
 				}
 			}
@@ -48,7 +51,7 @@ void strongModeOD(LPVOID pParam)
 		}
 		else{
 			int distance = sqrt(pow(malletNowC.x-packNowC.x, 2.0)+pow(malletNowC.y-packNowC.y, 2.0));
-			if(malletNowC.y < packNowC.y || distance < 5 ){
+			if(malletNowC.y < packNowC.y || distance < 5 || backTimer.getAlarm()){
 				robotAction.sankakuCenterBack();
 				hasSankakued = false;
 			}
