@@ -6,7 +6,7 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x;
-		waitingPosition.y = 421;
+		waitingPosition.y = 400;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 
@@ -14,14 +14,14 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x + 25;
-		waitingPosition.y = 421;
+		waitingPosition.y = 400;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotAction::moveToLeftCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x - 25;
-		waitingPosition.y = 421 + 1; //âÊëúÇ™è≠ÇµéŒÇﬂÇÃÇΩÇﬂ
+		waitingPosition.y = 400 + 1; //âÊëúÇ™è≠ÇµéŒÇﬂÇÃÇΩÇﬂ
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotAction::moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition)

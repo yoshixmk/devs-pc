@@ -25,7 +25,7 @@ PackCoordinate::PackCoordinate()
 	//初期化時は前回の座標と現在の座標は同じ。
 	mXYCoordinate = cvPoint(gX_now_pack, gY_now_pack);
 	for(int i=0; i<sizeof(mPreviousXYCoordinate)/sizeof(mPreviousXYCoordinate[0]); i++){
-		mPreviousXYCoordinate[i] = cvPoint(gX_now_pack, gY_now_pack);
+		getCoordinate();
 	}
 }
 

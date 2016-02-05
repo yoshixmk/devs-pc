@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include <process.h>
+#include <math.h>
 
 namespace Strategy {
 class OffenseDefenseStrategy: public Strategy {

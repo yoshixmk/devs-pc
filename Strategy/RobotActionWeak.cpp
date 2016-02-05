@@ -6,7 +6,7 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x;
-		waitingPosition.y = 421;
+		waitingPosition.y = 400;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 
@@ -14,14 +14,14 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x + 25;
-		waitingPosition.y = 421;
+		waitingPosition.y = 400;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotActionWeak::moveToLeftCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x - 25;
-		waitingPosition.y = 421 + 1; //画像が少し斜めのため
+		waitingPosition.y = 400 + 1; //画像が少し斜めのため
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotActionWeak::moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition)
@@ -227,7 +227,7 @@ namespace Strategy {
 		double speed = mSpeedOfPack.getSpeed(); //0.1以下ならほとんど動いていない
 
 		if(FrameCoordinate::getCenterLine().y + 50 < aPackCoordinate.y){
-			if(aPackCoordinate.y < 400){
+			if(aPackCoordinate.y < aMalletCoordinate.y){
 				if(mAlarmTimer.getOperatingTime() > 1.0){ //一定時間以上、自フィールドにパックがあるとき
 					//std::cout << "alarm Hit Back" << std::endl;
 					if(speed < 0.1){
@@ -240,7 +240,7 @@ namespace Strategy {
 					mAlarmTimer.resetStartOperatingTime();
 				}
 			}
-			else if(400 <= aPackCoordinate.y){
+			else if(aMalletCoordinate.y <= aPackCoordinate.y){
 				if(mAlarmTimer.getOperatingTime() > 1.0){ //一定時間以上、自フィールドにパックがあるとき
 					//std::cout << "alarm Hit Back" << std::endl;
 					if(speed < 0.1){
