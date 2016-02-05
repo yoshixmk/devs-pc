@@ -7,15 +7,19 @@ DWORD Serial::mNumberOfPut;
 char Serial::mBuf[8];
 bool Serial::isOpened = false;
 bool Serial::isDebug = false;
+HANDLE Serial::hMutex; //ミューテックスのハンドル
 
 void Serial::initialize() {
 	if(isOpened == false){
 		serialOpen();
-
-		//0だと表示されないバイトは0以外に初期化
-		mBuf[2] = 'A';
-		mBuf[5] = 'A';
 	}
+	
+	for(int i=0; i<8; i++){
+		mBuf[i] = 0;
+	}
+	//0だと表示されないバイトは0以外に初期化
+	mBuf[2] = 'A';
+	mBuf[5] = 'A';
 	isOpened = true;
 }
 
@@ -38,10 +42,13 @@ void Serial::serialOpen()
 			0,            // Non Overlapped I/O
 			NULL);        // Null for Comm Devices
 
-		if (mComPort == INVALID_HANDLE_VALUE)
+		if (mComPort == INVALID_HANDLE_VALUE){
 			std::cout << "Error in opening serial port" << std::endl;
-		else
+			//exit(-1);
+		}
+		else{
 			std::cout << "opening serial port successful" << std::endl;
+		}
 		first_time++;
 	}
 
@@ -65,6 +72,7 @@ void Serial::serialClose()
 
 void Serial::serialWrite()
 {
+	WaitForSingleObject(hMutex, INFINITE); //mutex 間は他のスレッドから変数を変更できない
 	for(int i=0; i<SEND_BYTE; i++){
 		if(isDebug == true){
 			if(i == 2 || i == 5){
@@ -76,15 +84,23 @@ void Serial::serialWrite()
 		}
 	}
 	if(isDebug == true){
+		bool hasSuccessed = WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+		if(hasSuccessed){
+			std::cout << " Success!!";
+		}
+		else{
+			std::cout << " Failed!!";
+		}
+	
 		std::cout << std::endl;
 	}
-
-	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+	ReleaseMutex(hMutex);
 }
 
 //すべて上書きした上で、送信
 void Serial::serialWrite(char* aBuf)
 {
+	WaitForSingleObject(hMutex, INFINITE); //mutex 間は他のスレッドから変数を変更できない
 	for(int i=0; i<SEND_BYTE; i++){
 		mBuf[i] = aBuf[i];
 		if(isDebug == true){
@@ -96,15 +112,25 @@ void Serial::serialWrite(char* aBuf)
 			}
 		}
 	}
+
 	if(isDebug == true){
+		bool hasSuccessed = WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+		if(hasSuccessed){
+			std::cout << " Success!!";
+		}
+		else{
+			std::cout << " Failed!!";
+		}
+	
 		std::cout << std::endl;
 	}
-	WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
+	ReleaseMutex(hMutex);
 }
 
 //changeBufRangeは aFrom=0, aTo=2 のとき、mBuf[0]から[2]まで代入する
 void Serial::changeBufRange(char* aBuf, int aFrom, int aTo)
 {
+	WaitForSingleObject(hMutex, INFINITE); //mutex 間は他のスレッドから変数を変更できない
 	if(aTo < aFrom){
 		std::cout << "Serial error. aTo < aFrom" << std::endl;
 		exit(-1);
@@ -116,16 +142,24 @@ void Serial::changeBufRange(char* aBuf, int aFrom, int aTo)
 	for(int i=aFrom; i<=aTo; i++){
 		changeBuf(aBuf, i);
 	}
+	ReleaseMutex(hMutex);
 }
 
 void Serial::changeBuf(char* aBuf, int index)
 {
+	WaitForSingleObject(hMutex, INFINITE); //mutex 間は他のスレッドから変数を変更できない
 	mBuf[index] = aBuf[index];
+	ReleaseMutex(hMutex);
 }
 
 void Serial::setPrintDebug(bool isDebug)
 {
 	Serial::isDebug = isDebug;
+}
+
+void Serial::setMutex(HANDLE* aMutex)
+{
+	hMutex = *aMutex;
 }
 
 } /* namespace Hardware */

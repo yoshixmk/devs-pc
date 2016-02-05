@@ -6,7 +6,7 @@ namespace Strategy
 SpeedOfPack::SpeedOfPack()
 {
 	for(int i=0; i<9; i++){
-		mPackCoordinate.getCoordinate();
+		//mPackCoordinate.getCoordinate();
 	}
 
 	//移動平均のために、初期値を代入。

@@ -2,6 +2,9 @@
 #include "Test/ColorTest.h"
 #include "Test/StrategyTest.h"
 #include "Test/UITest.h"
+#include "Strategy/RobotAction.h"
+#include "Strategy/RobotActionWeak.h"
+#include "Strategy/Locus.h"
 //#include "Test/ShowWindowTest.h"
 #include <stdio.h>
 
@@ -10,7 +13,7 @@ int main() {
 	Hardware::Serial::initialize();
 	Hardware::Serial::setPrintDebug(true);
 
-	Test::HardwareTest hardwareTest;
+	//Test::HardwareTest hardwareTest;
 	//hardwareTest.timerTest();
 	//hardware_test.raspberryPiSignalTest();
 	//hardware_test.photoelectricSensor();
@@ -24,7 +27,7 @@ int main() {
 	//hardwareTest.cameraTest();
 	//hardwareTest.serialTest();
 
-	Test::ColorTest colorTest;
+	//Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
 	//colorTest.hockeyTableMaskingTest();
 	//colorTest.robotSideHockeyTableMaskingTest();
@@ -50,10 +53,10 @@ int main() {
 	//strategyTest.robotActionSideGuardTest();
 	//strategyTest.robotActionAlarmHitBackTest();
 	//strategyTest.robotActionMoveRightAngleTest();
-	strategyTest.offenseDefenseStrategyTest();
+	//strategyTest.offenseDefenseStrategyTest();
 
 	Test::UITest uiTest;
-	//uiTest.uiStrategyTest();
+	uiTest.uiStrategyTest();
 
 	//Test::ShowWindowTest showWindowTest;
 	//showWindowTest.windowTest();
