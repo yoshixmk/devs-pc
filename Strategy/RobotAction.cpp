@@ -60,7 +60,7 @@ namespace Strategy {
 				if(frequencyX > maxSpeedUp){
 					frequencyX = maxSpeedUp;
 				}
-				if(mCenterFrequencyManualX.getTargetDirection() == 'C'){
+				if(mCenterFrequencyManualX.getTargetDirection() == 'B' || mCenterFrequencyManualX.getTargetDirection() == 'C'){
 					mCenterFrequencyManualX.setOutputInformation('C', frequencyX);
 				}
 				else{
@@ -114,7 +114,7 @@ namespace Strategy {
 				if(frequencyX > maxSpeedUp){
 					frequencyX = maxSpeedUp;
 				}
-				if(mCenterFrequencyManualX.getTargetDirection() == 'D'){
+				if(mCenterFrequencyManualX.getTargetDirection() == 'A' || mCenterFrequencyManualX.getTargetDirection() == 'D'){
 					mCenterFrequencyManualX.setOutputInformation('D', frequencyX);
 				}
 				else{

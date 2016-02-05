@@ -56,6 +56,9 @@ void strongModeOD(LPVOID pParam)
 				hasSankakued = false;
 			}
 		}
+		if(hasSankakued == true){
+			robotAction.sankakuCenterBack();
+		}
 
 		if (cv::waitKey(1) >= 0) {
 			break;
