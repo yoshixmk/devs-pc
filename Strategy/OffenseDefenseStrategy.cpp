@@ -42,22 +42,19 @@ void strongModeOD(LPVOID pParam)
 				atackCount = 0;
 				robotAction.moveToCenter(malletNowC);	//中央に移動
 			}
-			
-			//時間が来ている場合、打ちにいく。条件は必要ない
-			if(locus.calculateLocus(packNowC, packPre2C, 360) == true){	//軌跡検出
-				forecastPoint = locus.getLocusCoordinate();
-				robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
-			}
 		}
-		else{
+		else if(hasSankakued == true){
 			int distance = sqrt(pow(malletNowC.x-packNowC.x, 2.0)+pow(malletNowC.y-packNowC.y, 2.0));
 			if(malletNowC.y < packNowC.y || distance < 5 || backTimer.getAlarm()){
 				robotAction.sankakuCenterBack();
 				hasSankakued = false;
 			}
 		}
-		if(hasSankakued == true){
-			robotAction.sankakuCenterBack();
+
+		//時間が来ている場合、打ちにいく。条件は必要ない
+		if(locus.calculateLocus(packNowC, packPre2C, 360) == true){	//軌跡検出
+			forecastPoint = locus.getLocusCoordinate();
+			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
 		}
 
 		if (cv::waitKey(1) >= 0) {
