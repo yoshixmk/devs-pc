@@ -43,6 +43,10 @@ void strongModeOD(LPVOID pParam)
 			else if(packNowC.y > 400){ // && (120 < packNowC.x && packNowC.x < 200)
 				robotAction.guardCenter(malletNowC);
 			}
+			else if(packNowC.x < 45 && 350 < packNowC.y && packNowC.y < 390){
+				robotAction.sankakuUntilHit(packNowC, cvPoint(45, 350));
+				hasSankakued = true;
+			}
 			else{
 				atackCount = 0;
 				robotAction.moveToCenter(malletNowC);	//’†‰›‚ÉˆÚ“®

@@ -29,7 +29,7 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x - 25;
-		waitingPosition.y = 421; //画像が少し斜めのため
+		waitingPosition.y = 421 - 1; //画像が少し斜めのため
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotAction::moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition)
@@ -184,14 +184,7 @@ namespace Strategy {
 
 	void RobotAction::sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
 	{
-		//リミットスイッチに当たってしまわないように補正
 		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
-		if(forecastPackCoordinate.x < 33){//45
-			forecastPackCoordinate.x = 33;
-		}
-		if(forecastPackCoordinate.x > 290){//280
-			forecastPackCoordinate.x = 290;
-		}
 		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 
 		mFrequencySwitching.sankakuProcess(moveDistance);
@@ -204,14 +197,7 @@ namespace Strategy {
 
 	void RobotAction::sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
 	{
-		//リミットスイッチに当たってしまわないように補正
 		CvPoint packCoordinate = aPackCoordinate;
-		if(packCoordinate.x < 33){
-			packCoordinate.x = 33;
-		}
-		if(packCoordinate.x > 290){
-			packCoordinate.x = 290;
-		}
 		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
 		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
 		mFrequencySwitching.sankakuUntilHit(moveDistanceX, moveDistanceY);

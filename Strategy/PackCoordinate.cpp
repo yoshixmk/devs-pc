@@ -55,6 +55,11 @@ CvPoint PackCoordinate::getCoordinate()
 
 	//現在の座標を格納
 	mXYCoordinate = cvPoint(gX_now_pack, gY_now_pack);
+	if(mXYCoordinate.x < 0 || mXYCoordinate.y < 0){
+		mXYCoordinate.x = 160;
+		mXYCoordinate.y = 120;
+	}
+	//std::cout << mXYCoordinate.x << "  " << mXYCoordinate.y << std::endl;
 	return mXYCoordinate;
 }
 

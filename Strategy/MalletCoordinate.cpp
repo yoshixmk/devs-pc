@@ -50,6 +50,12 @@ CvPoint MalletCoordinate::getCoordinate()
 	//serialのバッファも更新する
 	renewSerialBuf();
 
+	if(mXYCoordinate.x < 0 || mXYCoordinate.y < 0){
+		mXYCoordinate.x = 160;
+		mXYCoordinate.y = 421;
+	}
+	//std::cout << mXYCoordinate.x << "  " << mXYCoordinate.y << std::endl;
+
 	return mXYCoordinate;
 }
 
