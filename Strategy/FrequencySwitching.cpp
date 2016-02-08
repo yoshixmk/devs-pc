@@ -230,6 +230,11 @@ void FrequencySwitching::sankakuUntilHit(int aMoveDistanceX, int aMoveDistanceY)
 	buf[0] = 0;
 	Hardware::Serial::changeBuf(buf, 0);
 	FrequencySwitching::output();
+	/*int yTargetCount = 5;
+	int loopNum = aMoveDistanceY/mTimeAjustMentY;
+	if(loopNum < yTargetCount){
+		loopNum = yTargetCount;
+	}*/
 	for(int i=0; i<aMoveDistanceY/mTimeAjustMentY; i++){ //Y‚Ì‹——£‚©‚çŽžŠÔ‚Ì•ÏŠ·
 		buf[1] = (500 + i*100) / 20;
 		Hardware::Serial::changeBufRange(buf, 0, 2);
@@ -287,7 +292,9 @@ void FrequencySwitching::sankakuRightAngle(int aMoveDistanceX, int aMoveDistance
 		Sleep(10);	//10ms
 	}
 	buf[0] = 0;
-	for(int i=0; i<aMoveDistanceY/mTimeAjustMentY; i++){
+	
+	int yTargetCount = 20;
+	for(int i=0; i<yTargetCount; i++){
 		buf[1] = (500 + i*100) / 20;
 		Hardware::Serial::changeBufRange(buf, 0, 2);
 		FrequencySwitching::output();
