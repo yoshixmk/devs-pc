@@ -6,7 +6,7 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x;
-		waitingPosition.y = 400;
+		waitingPosition.y = 421;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 
@@ -14,14 +14,14 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x + 25;
-		waitingPosition.y = 400;
+		waitingPosition.y = 421;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotAction::moveToLeftCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x - 25;
-		waitingPosition.y = 400 + 1; //画像が少し斜めのため
+		waitingPosition.y = 421 + 1; //画像が少し斜めのため
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotAction::moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition)
@@ -30,6 +30,9 @@ namespace Strategy {
 		int yMargin = 5;
 		int maxSpeedUp = 2000;
 
+		if(mMoveingTimer.getOperatingTime() > 1.0){
+			mMoveingTimer.resetStartOperatingTime();
+		}
 		//X
 		if(aWaitingPosition.x - xMargin < aMalletCoordinate.x && aMalletCoordinate.x < aWaitingPosition.x + xMargin){//定位置付近
 			mCenterFrequencyManualX.setOutputInformation(0);
@@ -48,13 +51,13 @@ namespace Strategy {
 		else if(aMalletCoordinate.x <= aWaitingPosition.x - xMargin){ //BまたはCの方向
 			if (aMalletCoordinate.x < aWaitingPosition.x - 40){
 				//ゴールから遠いと速くする。10ms以上時間が経過していればに+100加速
-				int nowMaxSpeed = 400 + (int)(mMoveingTimer.getOperatingTime() * 100) * 100;
+				int nowMaxSpeed = 300 + (int)(mMoveingTimer.getOperatingTime() * 100) * 100;
 				int frequencyX = mCenterFrequencyManualX.getFrequencyX();
 				if(frequencyX + 100 < nowMaxSpeed){
 					frequencyX += 100;
 				}
 				else{
-					frequencyX = 400;
+					frequencyX = 300;
 					mMoveingTimer.resetStartOperatingTime();
 				}
 				if(frequencyX > maxSpeedUp){
@@ -64,7 +67,7 @@ namespace Strategy {
 					mCenterFrequencyManualX.setOutputInformation('C', frequencyX);
 				}
 				else{
-					mCenterFrequencyManualX.setOutputInformation('C', 400);
+					mCenterFrequencyManualX.setOutputInformation('C', 300);
 					mMoveingTimer.resetStartOperatingTime();
 				}
 			}

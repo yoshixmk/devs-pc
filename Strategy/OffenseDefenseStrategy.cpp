@@ -28,14 +28,14 @@ void strongModeOD(LPVOID pParam)
 		packNowC = packCoordinate.getCoordinate();
 		if(hasSankakued == false){
 			packPre0C = packCoordinate.getPreviousCoordinate();
-			packPre2C = packCoordinate.getPreviousCoordinate(30);
+			packPre2C = packCoordinate.getPreviousCoordinate(2);
 			if( (packPre0C.y + 5 < packNowC.y) && atackCount < 1){
 				if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//‹OÕŒŸo
 					forecastPoint = locus.getLocusCoordinate();
 					robotAction.sankakuHitBack(malletNowC, forecastPoint);
-					hasSankakued = true;
 					backTimer.setTimer(0.5);
 					atackCount++;
+					hasSankakued = true;
 				}
 			}
 			else{
@@ -82,7 +82,7 @@ void weakModeOD(LPVOID pParam)
 		malletNowC = malletCoordinate.getCoordinate();
 		packNowC = packCoordinate.getCoordinate();
 		packPre0C = packCoordinate.getPreviousCoordinate();
-		packPre2C = packCoordinate.getPreviousCoordinate(30);
+		packPre2C = packCoordinate.getPreviousCoordinate(2);
 		if( (packPre0C.y + 4 < packNowC.y) && atackCount < 1){
 			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//‹OÕŒŸo
 				forecastPoint = locus.getLocusCoordinate();

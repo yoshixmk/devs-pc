@@ -11,7 +11,7 @@ FrequencySwitching::FrequencySwitching()
 	mTargetTime = 0;
 
 	mTimeAjustMentY = 3;
-	mInitFrequency = 400;
+	mInitFrequency = 300;
 }
 
 FrequencySwitching::~FrequencySwitching()
