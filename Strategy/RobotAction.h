@@ -26,6 +26,7 @@ protected:
 
 public:
 	void moveToCenter(CvPoint aMalletCoordinate);
+	void guardCenter(CvPoint aMalletCoordinate);
 	void moveToRightCenter(CvPoint aMalletCoordinate);
 	void moveToLeftCenter(CvPoint aMalletCoordinate);
 	void moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition);

@@ -10,6 +10,14 @@ namespace Strategy {
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 
+	void RobotAction::guardCenter(CvPoint aMalletCoordinate)
+	{
+		CvPoint waitingPosition;
+		waitingPosition.x = FrameCoordinate::getCenterLine().x;
+		waitingPosition.y = 426;
+		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
+	}
+
 	void RobotAction::moveToRightCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
@@ -21,7 +29,7 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x - 25;
-		waitingPosition.y = 421 + 1; //画像が少し斜めのため
+		waitingPosition.y = 421; //画像が少し斜めのため
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotAction::moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition)
@@ -51,7 +59,7 @@ namespace Strategy {
 		else if(aMalletCoordinate.x <= aWaitingPosition.x - xMargin){ //BまたはCの方向
 			if (aMalletCoordinate.x < aWaitingPosition.x - 40){
 				//ゴールから遠いと速くする。10ms以上時間が経過していればに+100加速
-				int nowMaxSpeed = 300 + (int)(mMoveingTimer.getOperatingTime() * 100) * 100;
+				int nowMaxSpeed = 300 + (int)(mMoveingTimer.getOperatingTime() * 80) * 100; //100 -> 80
 				int frequencyX = mCenterFrequencyManualX.getFrequencyX();
 				if(frequencyX + 100 < nowMaxSpeed){
 					frequencyX += 100;
@@ -205,10 +213,7 @@ namespace Strategy {
 			packCoordinate.x = 290;
 		}
 		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
-		int moveDistanceY = aMalletCoordinate.y - packCoordinate.y;
-		if(moveDistanceY < 0){
-			moveDistanceY = 0;
-		}
+		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
 		mFrequencySwitching.sankakuUntilHit(moveDistanceX, moveDistanceY);
 	}
 
@@ -229,8 +234,8 @@ namespace Strategy {
 	{
 		double speed = mSpeedOfPack.getSpeed(); //0.1以下ならほとんど動いていない
 
-		if(FrameCoordinate::getCenterLine().y + 50 < aPackCoordinate.y){
-			if(aPackCoordinate.y < 400){
+		if(FrameCoordinate::getCenterLine().y + 70 < aPackCoordinate.y){
+			if(aPackCoordinate.y < 370){
 				if(mAlarmTimer.getOperatingTime() > 1.0){ //一定時間以上、自フィールドにパックがあるとき
 					if(speed < 0.03){
 						sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
@@ -242,7 +247,7 @@ namespace Strategy {
 					mAlarmTimer.resetStartOperatingTime();
 				}
 			}
-			else if(400 <= aPackCoordinate.y){
+			else if(370 <= aPackCoordinate.y){
 				if(mAlarmTimer.getOperatingTime() > 1.0){ //一定時間以上、自フィールドにパックがあるとき
 					if(speed < 0.03){
 						moveRightAngle(aMalletCoordinate, aPackCoordinate);
@@ -250,6 +255,8 @@ namespace Strategy {
 					else{
 						moveRightAngle(aMalletCoordinate, aForecastPackCoordinate);
 					}
+					sankakuCenterBack();
+					mAlarmTimer.resetStartOperatingTime();
 				}
 			}
 		}
@@ -260,25 +267,11 @@ namespace Strategy {
 
 	void RobotAction::moveRightAngle(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
 	{
-		if(mFrequencyManualX.getFrequencyX() == 0 && mFrequencyManualY.getFrequencyY() == 0){
-			//リミットスイッチに当たってしまわないように補正
-			CvPoint packCoordinate = aPackCoordinate;
-			if(packCoordinate.x < 33){//45
-				packCoordinate.x = 33;
-			}
-			if(packCoordinate.x > 290){//280
-				packCoordinate.x = 290;
-			}
-			int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
-			int moveDistanceY = packCoordinate.y - aMalletCoordinate.y;
-			if(moveDistanceY < 0){
-				moveDistanceY = 0;
-			}
-			mFrequencySwitching.sankakuRightAngle(moveDistanceX, moveDistanceY);
-			mFrequencySwitching.sankakuReturnProcess();
-		}
-		else{
-			moveToCenter(aMalletCoordinate);
-		}
+		CvPoint packCoordinate = aPackCoordinate;
+		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
+		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
+
+		mFrequencySwitching.sankakuRightAngle(moveDistanceX, moveDistanceY);
+		mFrequencySwitching.sankakuReturnProcess();
 	}
 }  // namespace Strategy
