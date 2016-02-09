@@ -44,6 +44,13 @@ int FrequencyManual::getFrequencyX()
 	return mFrequencyX;
 }
 
+int FrequencyManual::getFrequencyX0()
+{
+	mFrequencyX = 0;
+	return mFrequencyX;
+}
+
+
 int FrequencyManual::getFrequencyY()
 {
 	return mFrequencyY;

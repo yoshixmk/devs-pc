@@ -30,7 +30,7 @@ bool Locus::calculateLocus(CvPoint aCoordinate1, CvPoint aCoordinate2, int aYLin
 		mBIntercept = aCoordinate2.y - mAInclination * aCoordinate2.x;
 		targetCoordinate.x = (int)((aYLine - mBIntercept) / mAInclination);
 		
-		int rebound_max = 3; //一定以上跳ね返る軌跡の場合、当たり障りのない位置（中央）を指定
+		int rebound_max = 5; //5回以上跳ね返る軌跡の場合、当たり障りのない位置（中央）を指定
 		int rebound_num = 0;
 
 		while(targetCoordinate.x < left_frame || right_frame < targetCoordinate.x){

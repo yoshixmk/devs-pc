@@ -19,44 +19,30 @@ void strongModeOD(LPVOID pParam)
 	Locus locus;
 	Hardware::Timer mTimer;
 	mTimer.setTimer(20);
-
-	bool hasSankakued = false;
-	Hardware::Timer backTimer;
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
 		packNowC = packCoordinate.getCoordinate();
-		if(hasSankakued == false){
-			packPre0C = packCoordinate.getPreviousCoordinate();
-			packPre2C = packCoordinate.getPreviousCoordinate(2);
-			if( (packPre0C.y + 5 < packNowC.y) && atackCount < 1){
-				if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//‹OÕŒŸo
-					forecastPoint = locus.getLocusCoordinate();
-					robotAction.sankakuHitBack(malletNowC, forecastPoint);
-					backTimer.setTimer(0.5);
-					atackCount++;
-					hasSankakued = true;
-				}
-			}
-			else{
-				atackCount = 0;
-				robotAction.moveToCenter(malletNowC);	//’†‰›‚ÉˆÚ“®
-			}
-		}
-		else if(hasSankakued == true){
-			int distance = sqrt(pow(malletNowC.x-packNowC.x, 2.0)+pow(malletNowC.y-packNowC.y, 2.0));
-			if(malletNowC.y < packNowC.y || distance < 5 || backTimer.getAlarm()){
+		packPre0C = packCoordinate.getPreviousCoordinate();
+		packPre2C = packCoordinate.getPreviousCoordinate(30);
+		if( (packPre0C.y + 4 < packNowC.y) && atackCount < 1){
+			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//‹OÕŒŸo
+				forecastPoint = locus.getLocusCoordinate();
+				robotAction.sankakuHitBack(malletNowC, forecastPoint);
 				robotAction.sankakuCenterBack();
-				hasSankakued = false;
+				atackCount++;
 			}
 		}
-
+		else{
+			atackCount = 0;
+			robotAction.moveToCenter(malletNowC);	//’†‰›‚ÉˆÚ“®
+		}
+			
 		//ŽžŠÔ‚ª—ˆ‚Ä‚¢‚éê‡A‘Å‚¿‚É‚¢‚­BðŒ‚Í•K—v‚È‚¢
 		if(locus.calculateLocus(packNowC, packPre2C, 360) == true){	//‹OÕŒŸo
 			forecastPoint = locus.getLocusCoordinate();
 			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
 		}
-
 		if (cv::waitKey(1) >= 0) {
 			break;
 		}
@@ -82,7 +68,7 @@ void weakModeOD(LPVOID pParam)
 		malletNowC = malletCoordinate.getCoordinate();
 		packNowC = packCoordinate.getCoordinate();
 		packPre0C = packCoordinate.getPreviousCoordinate();
-		packPre2C = packCoordinate.getPreviousCoordinate(2);
+		packPre2C = packCoordinate.getPreviousCoordinate(30);
 		if( (packPre0C.y + 4 < packNowC.y) && atackCount < 1){
 			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//‹OÕŒŸo
 				forecastPoint = locus.getLocusCoordinate();
@@ -125,6 +111,8 @@ void OffenseDefenseStrategy::execute()
 	CloseHandle(hThread[1]);
 
 	CloseHandle(hMutex);
+		
+
 	//}
 }
 

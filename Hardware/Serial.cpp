@@ -76,23 +76,23 @@ void Serial::serialWrite()
 	for(int i=0; i<SEND_BYTE; i++){
 		if(isDebug == true){
 			if(i == 2 || i == 5){
-				std::cout << i << ":" << mBuf[i] << " ";
+				//std::cout << i << ":" << mBuf[i] << " ";
 			}
 			else{
-				printf("%d:%3d ", i,  (int)(unsigned char)mBuf[i]);
+				//printf("%d:%3d ", i,  (int)(unsigned char)mBuf[i]);
 			}
 		}
 	}
 	if(isDebug == true){
 		bool hasSuccessed = WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 		if(hasSuccessed){
-			std::cout << " Success!!";
+			//std::cout << " Success!!";
 		}
 		else{
-			std::cout << " Failed!!";
+			//std::cout << " Failed!!";
 		}
 	
-		std::cout << std::endl;
+		//std::cout << std::endl;
 	}
 	ReleaseMutex(hMutex);
 }

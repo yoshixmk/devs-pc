@@ -20,6 +20,7 @@ public:
 	void setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY);
 	char getTargetDirection();
 	int getFrequencyX();
+	int getFrequencyX0();
 	int getFrequencyY();
 	void output();
 };
