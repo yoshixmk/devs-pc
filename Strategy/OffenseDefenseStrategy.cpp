@@ -11,7 +11,7 @@ void strongModeOD(LPVOID pParam)
 	CvPoint malletNowC;
 	CvPoint packNowC;
 	CvPoint packPre0C;
-	CvPoint packPre2C;
+	CvPoint packPre1C;
 	CvPoint forecastPoint = cvPoint(0, 0);
 	RobotAction robotAction;
 	MalletCoordinate malletCoordinate;
@@ -28,36 +28,42 @@ void strongModeOD(LPVOID pParam)
 		packNowC = packCoordinate.getCoordinate();
 		if(hasSankakued == false){
 			packPre0C = packCoordinate.getPreviousCoordinate();
-			packPre2C = packCoordinate.getPreviousCoordinate(30);
-			if( (packPre0C.y + 5 < packNowC.y) && atackCount < 1){
-				if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//軌跡検出
-					forecastPoint = locus.getLocusCoordinate();
-					robotAction.sankakuHitBack(malletNowC, forecastPoint);
-					hasSankakued = true;
-					backTimer.setTimer(0.5);
-					atackCount++;
+			packPre1C = packCoordinate.getPreviousCoordinate(1);
+			if(packPre0C.y + 4 < packNowC.y){
+				if(atackCount < 1){
+					if(locus.calculateLocus(packNowC, packPre0C, 380) == true){	//軌跡検出
+						forecastPoint = locus.getLocusCoordinate();
+						robotAction.sankakuHitBack(malletNowC, forecastPoint);
+						backTimer.setTimer(0.5);
+						atackCount++;
+						hasSankakued = true;
+					}
 				}
+			}
+			else if(packNowC.y > 400){ // && (120 < packNowC.x && packNowC.x < 200)
+				robotAction.guardCenter(malletNowC);
+			}
+			else if(packNowC.x < 45 && 350 < packNowC.y && packNowC.y < 390){
+				robotAction.sankakuUntilHit(packNowC, cvPoint(45, 350));
+				hasSankakued = true;
 			}
 			else{
 				atackCount = 0;
 				robotAction.moveToCenter(malletNowC);	//中央に移動
 			}
-			
-			//時間が来ている場合、打ちにいく。条件は必要ない
-			if(locus.calculateLocus(packNowC, packPre2C, 360) == true){	//軌跡検出
-				forecastPoint = locus.getLocusCoordinate();
-				robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
-			}
 		}
-		else{
+		else if(hasSankakued == true){
 			int distance = sqrt(pow(malletNowC.x-packNowC.x, 2.0)+pow(malletNowC.y-packNowC.y, 2.0));
 			if(malletNowC.y < packNowC.y || distance < 5 || backTimer.getAlarm()){
 				robotAction.sankakuCenterBack();
 				hasSankakued = false;
 			}
 		}
-		if(hasSankakued == true){
-			robotAction.sankakuCenterBack();
+
+		//時間が来ている場合、打ちにいく。条件は必要ない
+		if(locus.calculateLocus(packNowC, packPre1C, 380) == true){	//軌跡検出
+			forecastPoint = locus.getLocusCoordinate();
+			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
 		}
 
 		if (cv::waitKey(1) >= 0) {
@@ -85,7 +91,7 @@ void weakModeOD(LPVOID pParam)
 		malletNowC = malletCoordinate.getCoordinate();
 		packNowC = packCoordinate.getCoordinate();
 		packPre0C = packCoordinate.getPreviousCoordinate();
-		packPre2C = packCoordinate.getPreviousCoordinate(30);
+		packPre2C = packCoordinate.getPreviousCoordinate(2);
 		if( (packPre0C.y + 4 < packNowC.y) && atackCount < 1){
 			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//軌跡検出
 				forecastPoint = locus.getLocusCoordinate();

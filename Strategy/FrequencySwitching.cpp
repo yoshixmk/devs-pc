@@ -10,8 +10,8 @@ FrequencySwitching::FrequencySwitching()
 	mTargetDirection = 'A';
 	mTargetTime = 0;
 
-	mTimeAjustMentY = 3;
-	mInitFrequency = 400;
+	mTimeAjustMentY = 2;
+	mInitFrequency = 300;
 }
 
 FrequencySwitching::~FrequencySwitching()
@@ -136,7 +136,6 @@ void FrequencySwitching::sankakuReturnProcess()
 	int freq =0;
 	int nowFrequency = mInitFrequency;
 	int moveDistanceAbs = abs(mMoveDistanceX);
-	int yTargetCount = 60;
 
 	while(moveDistanceAbs >= next_freq * 2){
 		next_freq = next_freq + sum +0.20*freq;
