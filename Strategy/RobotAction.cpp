@@ -183,118 +183,6 @@ namespace Strategy {
 		mFrequencyManual.output();
 	}
 
-	void RobotAction::DefenseToMove(CvPoint aMalletCoordinate, CvPoint aWaitingPosition,CvPoint forecastPoint)
-	{
-		int xMargin = 3;
-		int yMargin = 5;
-		int maxSpeedUp = 2000;
-
-		//X
-		if(aWaitingPosition.x - xMargin < aMalletCoordinate.x && aMalletCoordinate.x < aWaitingPosition.x + xMargin){//定位置付近
-			mCenterFrequencyManualX.setOutputInformation(0);
-			//Y
-			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
-				mFrequencyManualY.setOutputInformation('D', 100);
-			}
-			else if(aWaitingPosition.y + yMargin < aMalletCoordinate.y){
-				mFrequencyManualY.setOutputInformation('A', 100);
-			}
-			else{
-				mFrequencyManualY.setOutputInformation(0);
-			}
-			mMoveingTimer.resetStartOperatingTime();
-		}
-		else if(aMalletCoordinate.x <= aWaitingPosition.x - xMargin){ //BまたはCの方向
-			if (aMalletCoordinate.x < aWaitingPosition.x - 40){
-				//ゴールから遠いと速くする。10ms以上時間が経過していればに+100加速
-				int nowMaxSpeed = 400 + (int)(mMoveingTimer.getOperatingTime() * 100) * 100;
-				int frequencyX = mCenterFrequencyManualX.getFrequencyX();
-				if(frequencyX + 100 < nowMaxSpeed){
-					frequencyX += 100;
-				}
-				else{
-					frequencyX = 400;
-					mMoveingTimer.resetStartOperatingTime();
-				}
-				if(frequencyX > maxSpeedUp){
-					frequencyX = maxSpeedUp;
-				}
-				if(mCenterFrequencyManualX.getTargetDirection() == 'C'){
-					mCenterFrequencyManualX.setOutputInformation('C', frequencyX);
-				}
-				else{
-					mCenterFrequencyManualX.setOutputInformation('C', 400);
-					mMoveingTimer.resetStartOperatingTime();
-				}
-			}
-			else if (aMalletCoordinate.x < aWaitingPosition.x - 10){
-				//ゴール近辺ならモータの速度を落とす
-				mCenterFrequencyManualX.setOutputInformation('C', 300);
-				mMoveingTimer.resetStartOperatingTime();
-			}
-			else if (aMalletCoordinate.x <= aWaitingPosition.x){
-				//ゴールに少し近づいてきたら速度を落とす
-				mCenterFrequencyManualX.setOutputInformation('C', 0.200);
-				mMoveingTimer.resetStartOperatingTime();
-			}
-			//Y
-			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
-				mFrequencyManualY.setOutputInformation('C', 500);
-			}
-			else if(aWaitingPosition.y + yMargin < aMalletCoordinate.y){
-				mFrequencyManualY.setOutputInformation('B', 500);
-			}
-			else{
-				mFrequencyManualY.setOutputInformation(0);
-			}
-		}
-		else if(aWaitingPosition.x + xMargin <= aMalletCoordinate.x){ //AまたはDの方向
-			if (aMalletCoordinate.x < aWaitingPosition.x + 10){
-				//ゴールに少し近づいてきたら速度を落とす
-				mCenterFrequencyManualX.setOutputInformation('D', 100);
-				mMoveingTimer.resetStartOperatingTime();
-			}
-			else if (aMalletCoordinate.x < aWaitingPosition.x + 40){
-				//ゴール近辺ならモータの速度を落とす
-				mCenterFrequencyManualX.setOutputInformation('D', 300);
-				mMoveingTimer.resetStartOperatingTime();
-			}
-			else{
-				//ゴールから遠いと速くする。10ms以上時間が経過していればに+100加速
-				int nowMaxSpeed = 400 + (int)(mMoveingTimer.getOperatingTime() * 100) * 100;
-				int frequencyX = mCenterFrequencyManualX.getFrequencyX();
-				if(frequencyX + 100 < nowMaxSpeed){
-					frequencyX += 100;
-				}
-				else{
-					frequencyX = 400;
-					mMoveingTimer.resetStartOperatingTime();
-				}
-				if(frequencyX > maxSpeedUp){
-					frequencyX = maxSpeedUp;
-				}
-				if(mCenterFrequencyManualX.getTargetDirection() == 'D'){
-					mCenterFrequencyManualX.setOutputInformation('D', frequencyX);
-				}
-				else{
-					mCenterFrequencyManualX.setOutputInformation('D', 400);
-					mMoveingTimer.resetStartOperatingTime();
-				}
-			}
-			//Y
-			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
-				mFrequencyManualY.setOutputInformation('D', 500);
-			}
-			else if(aWaitingPosition.y + yMargin < aMalletCoordinate.y){
-				mFrequencyManualY.setOutputInformation('A', 500);
-			}
-			else{
-				mFrequencyManualY.setOutputInformation(0);
-			}
-		}
-		mFrequencyManual.output();
-	}
-
 	bool RobotAction::moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
 	{
 		//リミットスイッチに当たってしまわないように補正
@@ -379,7 +267,7 @@ namespace Strategy {
 
 		if(FrameCoordinate::getCenterLine().y + 70 < aPackCoordinate.y){
 			if(aPackCoordinate.y < 370){
-				if(mAlarmTimer.getOperatingTime() > 1.0){ //一定時間以上、自フィールドにパックがあるとき
+				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
 					if(speed < 0.03){
 						sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
 					}
@@ -391,7 +279,7 @@ namespace Strategy {
 				}
 			}
 			else if(370 <= aPackCoordinate.y){
-				if(mAlarmTimer.getOperatingTime() > 1.0){ //一定時間以上、自フィールドにパックがあるとき
+				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
 					if(speed < 0.03){
 						moveRightAngle(aMalletCoordinate, aPackCoordinate);
 					}

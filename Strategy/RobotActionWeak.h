@@ -26,7 +26,6 @@ public:
 	void moveToLeftCenter(CvPoint aMalletCoordinate);
 	void moveToLeftCenter(CvPoint aMalletCoordinate, CvPoint forecastPoint);
 	void moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition);
-	void DefenseToMove(CvPoint aMalletCoordinate, CvPoint aWaitingPosition, CvPoint forecastPoint);		//defense—p
 	bool moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuDefense(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);

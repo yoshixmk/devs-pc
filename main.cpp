@@ -27,7 +27,7 @@ int main() {
 	//hardwareTest.cameraTest();
 	//hardwareTest.serialTest();
 
-	//Test::ColorTest colorTest;
+	Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
 	//colorTest.hockeyTableMaskingTest();
 	//colorTest.robotSideHockeyTableMaskingTest();
