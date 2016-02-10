@@ -7,7 +7,6 @@ namespace Strategy {
 
 void strongModeOD(LPVOID pParam)
 {
-	int atackCount = 0;
 	CvPoint malletNowC;
 	CvPoint packNowC;
 	CvPoint packPre0C;
@@ -21,7 +20,7 @@ void strongModeOD(LPVOID pParam)
 	mTimer.setTimer(20);
 	bool hasSankakued = false;
 	Hardware::Timer backTimer;
-	robotAction.setCenterYLine(421);
+	robotAction.setCenterYLine(426);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -30,39 +29,62 @@ void strongModeOD(LPVOID pParam)
 			packPre0C = packCoordinate.getPreviousCoordinate();
 			packPre1C = packCoordinate.getPreviousCoordinate(1);
 			if(packPre0C.y + 4 < packNowC.y){
-				if(atackCount < 1){
-					if(locus.calculateLocus(packNowC, packPre0C, 380) == true){	//‹OÕŒŸo
+				int randamNumber = rand();
+				if(randamNumber % 2 == 0){
+					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+							forecastPoint = locus.getLocusCoordinate();
+							robotAction.sankakuHitBack(malletNowC, forecastPoint);
+							backTimer.setTimer(0.4);
+							hasSankakued = true;
+					}
+					else{
+						robotAction.moveToCenterDefense(malletNowC);	//’†‰›‚ÉˆÚ“®
+					}
+				}
+				else{
+					if(locus.calculateLocus(packNowC, packPre0C, 426) == true){	//‹OÕŒŸo
 						forecastPoint = locus.getLocusCoordinate();
-						robotAction.sankakuHitBack(malletNowC, forecastPoint);
-						backTimer.setTimer(0.5);
-						atackCount++;
-						hasSankakued = true;
+						if(forecastPoint.x > FrameCoordinate::getRobotGoalLeft().x && FrameCoordinate::getRobotGoalRight().x > forecastPoint.x){
+							robotAction.sankakuDefense(malletNowC, forecastPoint);
+						}
+				
+						else if(forecastPoint.x < FrameCoordinate::getRobotGoalLeft().x){
+								forecastPoint.x = FrameCoordinate::getRobotGoalLeft().x; 
+								robotAction.sankakuDefense(malletNowC, forecastPoint);
+						}
+						else{
+							forecastPoint.x = FrameCoordinate::getRobotGoalRight().x;
+							robotAction.sankakuDefense(malletNowC, forecastPoint);
+						}
+					}
+					else{
+						robotAction.moveToCenterDefense(malletNowC);	//’†‰›‚ÉˆÚ“®
 					}
 				}
 			}
 			else if(packNowC.y > 400){
-				robotAction.guardCenter(malletNowC);
+				//robotAction.guardCenter(malletNowC);
+				robotAction.moveToCenterDefense(malletNowC);	//’†‰›‚ÉˆÚ“®
 			}
 			else if(0 < packNowC.x && packNowC.x < 45 && 350 < packNowC.y && packNowC.y < 390){
 				robotAction.sankakuUntilHit(packNowC, cvPoint(45, 350));
 				hasSankakued = true;
 			}
 			else{
-				atackCount = 0;
-				robotAction.moveToCenter(malletNowC);	//’†‰›‚ÉˆÚ“®
+				//robotAction.moveToCenter(malletNowC);	//’†‰›‚ÉˆÚ“®
+				robotAction.moveToCenterDefense(malletNowC);	//’†‰›‚ÉˆÚ“®
 			}
 		}
 		else if(hasSankakued == true){
 			int distance = sqrt(pow(malletNowC.x-packNowC.x, 2.0)+pow(malletNowC.y-packNowC.y, 2.0));
 			if(malletNowC.y < packNowC.y || distance < 5 || backTimer.getAlarm()){
 				robotAction.sankakuCenterBack();
-				atackCount++;
 				hasSankakued = false;
 			}
 		}
 			
 		//ŽžŠÔ‚ª—ˆ‚Ä‚¢‚éê‡A‘Å‚¿‚É‚¢‚­BðŒ‚Í•K—v‚È‚¢
-		if(locus.calculateLocus(packNowC, packPre1C, 400) == true){	//‹OÕŒŸo
+		if(locus.calculateLocus(packNowC, packPre1C, 390) == true){	//‹OÕŒŸo
 			forecastPoint = locus.getLocusCoordinate();
 			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
 		}
@@ -89,7 +111,7 @@ void weakModeOD(LPVOID pParam)
 
 	bool hasSankakued = false;
 	Hardware::Timer backTimer;
-	robotAction.setCenterYLine(410);
+	robotAction.setCenterYLine(415);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
