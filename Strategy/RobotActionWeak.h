@@ -14,7 +14,6 @@ private:
 	FrequencyManualWeakX mFrequencyManualX;
 	FrequencyManualWeakX mCenterFrequencyManualX;
 	FrequencyManualWeakY mFrequencyManualY;
-	int mCenterYLine;
 
 public:
 	RobotActionWeak();
