@@ -10,7 +10,7 @@ FrequencySwitchingWeak::FrequencySwitchingWeak()
 	mTargetDirection = 'A';
 	mTargetTime = 0;
 
-	mTimeAjustMentY = 3;
+	mTimeAjustMentY = 2;
 	mInitFrequency = 400;
 }
 
@@ -287,13 +287,87 @@ void FrequencySwitchingWeak::sankakuRightAngle(int aMoveDistanceX, int aMoveDist
 	}
 	buf[3] = 0;
 	Hardware::Serial::changeBuf(buf, 3);
-	for(int i=0; i<aMoveDistanceY/mTimeAjustMentY; i++){
+	int loopTime = aMoveDistanceY/mTimeAjustMentY;
+	if(loopTime > 21){
+		loopTime = 21;
+	}
+	for(int i=0; i<loopTime; i++){
 		buf[4] = (500 + i*100) / 20;
 		Hardware::Serial::changeBufRange(buf, 3, 5);
 		FrequencySwitchingWeak::output();
 		Sleep(10);
 	}
 
+	buf[4] = 0;
+	Hardware::Serial::changeBufRange(buf, 3, 5);
+	FrequencySwitchingWeak::output();
+}
+
+void FrequencySwitchingWeak::sankakuCenterProcess(int aMoveDistanceX, int aMoveDistanceY)
+{
+	int closest_frequency;
+	float ossum = 0;
+	float sum = 0.176;
+	float next_freq = 0;
+	int max_freq = 50; //100
+	int freq =0;
+	int nowFrequency = mInitFrequency;
+	int moveDistanceAbs = abs(aMoveDistanceX);
+	int yTargetCount = 50;
+	int yCount = 0;
+	//mMoveDistanceX = aMoveDistance;
+	//mMoveDistanceY = 0;
+
+	while(moveDistanceAbs >= next_freq * 2){
+		next_freq = next_freq + sum +0.20*freq;
+		freq++;
+		max_freq = max_freq + 100;
+	}
+	max_freq = max_freq - 100;
+
+	char buf[8];
+	buf[3] = nowFrequency / 20;
+	buf[4] = 500 / 20;
+	if(aMoveDistanceX > 0){
+		buf[5] = 'C';
+	}
+	else{
+		buf[5] = 'D';
+	}
+	Hardware::Serial::changeBufRange(buf, 3, 5);
+	FrequencySwitchingWeak::output();
+
+	while(max_freq > nowFrequency){
+		buf[3] = nowFrequency / 20;
+		buf[4] = 500 / 20;
+		Hardware::Serial::changeBufRange(buf, 3, 5);
+		nowFrequency = nowFrequency + 100;
+		FrequencySwitchingWeak::output();
+		Sleep(10);	//10ms
+		yCount++;
+	}
+	while(mInitFrequency <= nowFrequency){
+		buf[3] = nowFrequency / 20;
+		buf[4] = 500 / 20;
+		Hardware::Serial::changeBufRange(buf, 3, 5);
+		nowFrequency = nowFrequency - 100;
+		FrequencySwitchingWeak::output();
+		Sleep(10);	//10ms
+		yCount++;
+	}
+	buf[3] = 0;
+	int loopTime = aMoveDistanceY/mTimeAjustMentY;
+	if(loopTime > 23){
+		loopTime = 23;
+	}
+	for(int i=0; i<loopTime; i++){
+		std::cout << aMoveDistanceY/3<< std::endl;
+		buf[4] = (500 + i*100) / 20;
+		Hardware::Serial::changeBufRange(buf, 3, 5);
+		FrequencySwitchingWeak::output();
+		Sleep(10);
+	}
+	buf[3] = 0;
 	buf[4] = 0;
 	Hardware::Serial::changeBufRange(buf, 3, 5);
 	FrequencySwitchingWeak::output();

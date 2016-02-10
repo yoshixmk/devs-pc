@@ -17,6 +17,7 @@ private:
 	FrequencyManualY mFrequencyManualY;
 
 protected:
+	int mCenterYLine;
 	FrequencyManual mFrequencyManual;
 	SpeedOfPack mSpeedOfPack;
 	Hardware::Timer mMoveingTimer;
@@ -25,6 +26,8 @@ protected:
 	void limitCheck();
 
 public:
+	RobotAction();
+	void setCenterYLine(int aCenterYLine);
 	void moveToCenter(CvPoint aMalletCoordinate);
 	void guardCenter(CvPoint aMalletCoordinate);
 	void moveToRightCenter(CvPoint aMalletCoordinate);

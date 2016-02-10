@@ -1,12 +1,22 @@
 #include "RobotAction.h"
 
 namespace Strategy {
+	RobotAction::RobotAction()
+	{
+		//default value
+		mCenterYLine = 426;
+	}
+
+	void RobotAction::setCenterYLine(int aCenterYLine)
+	{
+		mCenterYLine = aCenterYLine;
+	}
 
 	void RobotAction::moveToCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x;
-		waitingPosition.y = 421;
+		waitingPosition.y = mCenterYLine;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 
@@ -22,14 +32,14 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x + 25;
-		waitingPosition.y = 421;
+		waitingPosition.y = mCenterYLine;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotAction::moveToLeftCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x - 25;
-		waitingPosition.y = 421 - 1; //âÊëúÇ™è≠ÇµéŒÇﬂÇÃÇΩÇﬂ
+		waitingPosition.y = mCenterYLine - 1; //âÊëúÇ™è≠ÇµéŒÇﬂÇÃÇΩÇﬂ
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotAction::moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition)

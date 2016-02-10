@@ -1,27 +1,40 @@
 #include "RobotActionWeak.h"
 
 namespace Strategy {
+	RobotActionWeak::RobotActionWeak()
+	{
+		//default value
+		mCenterYLine = 410;
+	}
 
 	void RobotActionWeak::moveToCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x;
-		waitingPosition.y = 380;
+		waitingPosition.y = mCenterYLine;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
+	}
+
+	void RobotActionWeak::guardCenter(CvPoint aMalletCoordinate)
+	{
+		int moveDistanceX = FrameCoordinate::getCenterLine().x - aMalletCoordinate.x;
+		int moveDistanceY = 426 - aMalletCoordinate.y;
+		mFrequencySwitching.sankakuCenterProcess(moveDistanceX, moveDistanceY);
 	}
 
 	void RobotActionWeak::moveToRightCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x + 25;
-		waitingPosition.y = 380;
+		waitingPosition.y = mCenterYLine;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
+
 	void RobotActionWeak::moveToLeftCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x - 25;
-		waitingPosition.y = 380 + 1; //画像が少し斜めのため
+		waitingPosition.y = mCenterYLine + 1; //画像が少し斜めのため
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 	void RobotActionWeak::moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition)
@@ -35,10 +48,10 @@ namespace Strategy {
 			mFrequencyManualX.setOutputInformation(0);
 			//Y
 			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
-				mFrequencyManualY.setOutputInformation('D', 500);
+				mFrequencyManualY.setOutputInformation('D', 400);
 			}
 			else if(aWaitingPosition.y + yMargin < aMalletCoordinate.y){
-				mFrequencyManualY.setOutputInformation('A', 500);
+				mFrequencyManualY.setOutputInformation('A', 400);
 			}
 			else{
 				mFrequencyManualY.setOutputInformation(0);
@@ -80,10 +93,10 @@ namespace Strategy {
 			}
 			//Y
 			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
-				mFrequencyManualY.setOutputInformation('C', 500);
+				mFrequencyManualY.setOutputInformation('C', 400);
 			}
 			else if(aWaitingPosition.y + yMargin < aMalletCoordinate.y){
-				mFrequencyManualY.setOutputInformation('B', 500);
+				mFrequencyManualY.setOutputInformation('B', 400);
 			}
 			else{
 				mFrequencyManualY.setOutputInformation(0);
@@ -124,10 +137,10 @@ namespace Strategy {
 			}
 			//Y
 			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
-				mFrequencyManualY.setOutputInformation('D', 500);
+				mFrequencyManualY.setOutputInformation('D', 400);
 			}
 			else if(aWaitingPosition.y + yMargin < aMalletCoordinate.y){
-				mFrequencyManualY.setOutputInformation('A', 500);
+				mFrequencyManualY.setOutputInformation('A', 400);
 			}
 			else{
 				mFrequencyManualY.setOutputInformation(0);
@@ -262,17 +275,8 @@ namespace Strategy {
 		if(mFrequencyManualX.getFrequencyX() == 0 && mFrequencyManualY.getFrequencyY() == 0){
 			//リミットスイッチに当たってしまわないように補正
 			CvPoint packCoordinate = aPackCoordinate;
-			if(packCoordinate.x < 33){//45
-				packCoordinate.x = 33;
-			}
-			if(packCoordinate.x > 290){//280
-				packCoordinate.x = 290;
-			}
 			int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
 			int moveDistanceY = packCoordinate.y - aMalletCoordinate.y;
-			if(moveDistanceY < 0){
-				moveDistanceY = 0;
-			}
 			mFrequencySwitching.sankakuRightAngle(moveDistanceX, moveDistanceY);
 			mFrequencySwitching.sankakuReturnProcess();
 		}
