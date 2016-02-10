@@ -10,6 +10,7 @@ int Camera::mWidth;
 int Camera::mHeight;
 int Camera::mNumCamera;
 CLEyeCameraCapture* Camera::cam[2];
+HANDLE Camera::hMutex; //ミューテックスのハンドル
 
 void Camera::initialize(int aWidth, int aHeight)
 {
@@ -118,10 +119,17 @@ IplImage* Camera::getHumanSideImage()
 
 void Camera::renew()
 {
+	WaitForSingleObject(hMutex, INFINITE); //mutex 間は他のスレッドから変数を変更できない
 	cam[0]->run();
 	cam[1]->run();
 	mRobotSideImage = cam[0]->getCameraImage();
 	mHumanSideImage = cam[1]->getCameraImage();
+	ReleaseMutex(hMutex);
+}
+
+void Camera::setMutex(HANDLE* aMutex)
+{
+	hMutex = *aMutex;
 }
 
 }  // namespace Hardware

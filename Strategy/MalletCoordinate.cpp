@@ -50,17 +50,21 @@ CvPoint MalletCoordinate::getCoordinate()
 	//serialのバッファも更新する
 	renewSerialBuf();
 
+	if(mXYCoordinate.x < 0 || mXYCoordinate.y < 0){
+		mXYCoordinate.x = 160;
+		mXYCoordinate.y = 421;
+	}
+	//std::cout << mXYCoordinate.x << "  " << mXYCoordinate.y << std::endl;
+
 	return mXYCoordinate;
 }
 
 void MalletCoordinate::renewSerialBuf()
 {
-	//7, 8バイト目のみの更新用
-	char buf[8] = {0, 1, 'A', 3, 4, 'B', mNowMalletX/2, mNowMalletY/2};
-	Hardware::Serial::changeBuf(buf, 6);
-	Hardware::Serial::changeBuf(buf, 7);
+	//buf[6], [7]のみの更新用
+	char buf[8] = {0, 0, 'A', 0, 0, 'A', mNowMalletX/2, mNowMalletY/2};
+	Hardware::Serial::changeBufRange(buf, 6, 7);
 	Hardware::Serial::serialWrite();
-	//Hardware::Serial::serialWriteRange((char*)buf, 6, 7);
 }
 
 }  // namespace Strategy

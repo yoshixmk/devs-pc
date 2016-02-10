@@ -19,6 +19,7 @@ private:
 	static int mHeight;
 	static int mNumCamera;
 	static CLEyeCameraCapture *cam[2];
+	static HANDLE hMutex; //ミューテックスのハンドル
 
 public:
 	//Camera(int aWidth=320, int aHeight=240);
@@ -29,6 +30,7 @@ public:
 	static void renew();
 	static IplImage* getRobotSideImage();
 	static IplImage* getHumanSideImage();
+	static void setMutex(HANDLE* aMutex);
 };
 
 }  // namespace Hardware
