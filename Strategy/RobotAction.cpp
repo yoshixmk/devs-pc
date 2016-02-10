@@ -195,7 +195,6 @@ namespace Strategy {
 		}
 		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 
-		printf("moveDistance:%d\n", moveDistance);
 		//moveDistanceはパックが
 		//右に飛んでくる予想の場合＋、左に飛んでくる予想の場合－
 		if(abs(moveDistance) < 3)

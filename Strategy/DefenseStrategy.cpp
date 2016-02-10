@@ -42,7 +42,7 @@ void strongModeD(LPVOID pParam)
 				robotAction.moveToCenterDefense(malletNowC);	//中央に移動
 			}
 		}
-		else{ //if(malletNowC.y-150 > packNowC.y)
+		else{
 			robotAction.moveToCenterDefense(malletNowC);	//中央に移動
 		}
 		//時間が来ている場合、打ちにいく。条件は必要ない
@@ -83,7 +83,6 @@ void weakModeD(LPVOID pParam)
 				if(forecastPoint.x > FrameCoordinate::getRobotGoalLeft().x && FrameCoordinate::getRobotGoalRight().x > forecastPoint.x){
 					robotAction.sankakuDefense(malletNowC, forecastPoint);
 				}
-				
 				else if(forecastPoint.x < FrameCoordinate::getRobotGoalLeft().x){
 					 forecastPoint.x = FrameCoordinate::getRobotGoalLeft().x; 
 					 robotAction.sankakuDefense(malletNowC, forecastPoint);
