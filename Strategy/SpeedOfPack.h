@@ -18,6 +18,7 @@ private:
 public:
 	SpeedOfPack();
 	double getSpeed();
+	double getMomentSpeed();
 };
 
 }  // namespace Strategy

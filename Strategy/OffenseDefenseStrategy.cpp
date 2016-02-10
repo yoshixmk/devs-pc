@@ -13,6 +13,7 @@ void strongModeOD(LPVOID pParam)
 	CvPoint packPre1C;
 	CvPoint forecastPoint = cvPoint(0, 0);
 	RobotAction robotAction;
+	SpeedOfPack speedOfPack;
 	MalletCoordinate malletCoordinate;
 	PackCoordinate packCoordinate;
 	Locus locus;
@@ -29,8 +30,8 @@ void strongModeOD(LPVOID pParam)
 			packPre0C = packCoordinate.getPreviousCoordinate();
 			packPre1C = packCoordinate.getPreviousCoordinate(1);
 			if(packPre0C.y + 4 < packNowC.y){
-				int randamNumber = rand();
-				if(randamNumber % 2 == 0){
+				int speed = speedOfPack.getMomentSpeed();
+				if(speed < 0.5){
 					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
 							forecastPoint = locus.getLocusCoordinate();
 							robotAction.sankakuHitBack(malletNowC, forecastPoint);
