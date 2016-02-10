@@ -361,7 +361,6 @@ void FrequencySwitchingWeak::sankakuCenterProcess(int aMoveDistanceX, int aMoveD
 		loopTime = 23;
 	}
 	for(int i=0; i<loopTime; i++){
-		std::cout << aMoveDistanceY/3<< std::endl;
 		buf[4] = (500 + i*100) / 20;
 		Hardware::Serial::changeBufRange(buf, 3, 5);
 		FrequencySwitchingWeak::output();
