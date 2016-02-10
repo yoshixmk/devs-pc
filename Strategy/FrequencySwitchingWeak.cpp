@@ -388,8 +388,8 @@ void FrequencySwitchingWeak::sankakuCenterProcess(int aMoveDistanceX, int aMoveD
 	int moveDistanceAbs = abs(aMoveDistanceX);
 	int yTargetCount = 50;
 	int yCount = 0;
-	//mMoveDistanceX = aMoveDistance;
-	//mMoveDistanceY = 0;
+	mMoveDistanceX = aMoveDistanceX;
+	mMoveDistanceY = aMoveDistanceY;
 
 	while(moveDistanceAbs >= next_freq * 2){
 		next_freq = next_freq + sum +0.20*freq;
@@ -437,6 +437,12 @@ void FrequencySwitchingWeak::sankakuCenterProcess(int aMoveDistanceX, int aMoveD
 		buf[4] = (500 + i*100) / 20;
 		Hardware::Serial::changeBufRange(buf, 3, 5);
 		FrequencySwitchingWeak::output();
+		Sleep(10);
+	}
+	for(int i=2; 0<=i; i--){
+		buf[4] = 500 + i*200;
+		Hardware::Serial::changeBufRange(buf, 3, 5);
+		FrequencySwitching::output();
 		Sleep(10);
 	}
 	buf[3] = 0;

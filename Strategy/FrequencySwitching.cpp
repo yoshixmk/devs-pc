@@ -345,12 +345,7 @@ void FrequencySwitching::sankakuRightAngle(int aMoveDistanceX, int aMoveDistance
 	else if(aMoveDistanceX <= 0){
 		buf[2] = 'A';
 	}
-	/*else if(aMoveDistanceX > 0 && aMoveDistanceY >= 0){
-		buf[2] = 'C';
-	}
-	else if(aMoveDistanceX <= 0 && aMoveDistanceY >= 0){
-		buf[2] = 'D';
-	}*/
+
 	Hardware::Serial::changeBufRange(buf, 0, 2);
 
 	if(buf[2] == 'B' || buf[2] == 'A'){
@@ -385,14 +380,20 @@ void FrequencySwitching::sankakuRightAngle(int aMoveDistanceX, int aMoveDistance
 	}
 	buf[0] = 0;
 	
-	int yTargetCount = 20;
+	int yTargetCount = 15;
 	for(int i=0; i<yTargetCount; i++){
-		buf[1] = (500 + i*100) / 20;
+		buf[1] = (500 + i*200) / 20;
 		Hardware::Serial::changeBufRange(buf, 0, 2);
 		FrequencySwitching::output();
 		Sleep(10);
 	}
-
+	for(int i=2; 0<=i; i--){
+		buf[1] = 500 + i*200;
+		Hardware::Serial::changeBufRange(buf, 0, 2);
+		FrequencySwitching::output();
+		Sleep(10);
+	}
+	buf[0] = 0;
 	buf[1] = 0;
 	Hardware::Serial::changeBufRange(buf, 0, 2);
 	FrequencySwitching::output();
