@@ -294,19 +294,25 @@ void FrequencySwitching::sankakuUntilHit(int aMoveDistanceX, int aMoveDistanceY)
 	buf[0] = 0;
 	Hardware::Serial::changeBuf(buf, 0);
 	FrequencySwitching::output();
-	/*int yTargetCount = 5;
-	int loopNum = aMoveDistanceY/mTimeAjustMentY;
-	if(loopNum < yTargetCount){
-		loopNum = yTargetCount;
-	}*/
-	for(int i=0; i<aMoveDistanceY/mTimeAjustMentY; i++){ //Y‚Ì‹——£‚©‚çŽžŠÔ‚Ì•ÏŠ·
-		buf[1] = (500 + i*100) / 20;
+
+	int loopTime = aMoveDistanceY/mTimeAjustMentY;
+	if(loopTime > 14){
+		loopTime = 14;
+	}
+	for(int i=0; i<loopTime; i++){ //Y‚Ì‹——£‚©‚çŽžŠÔ‚Ì•ÏŠ·
+		buf[1] = (500 + i*200) / 20;
+		Hardware::Serial::changeBufRange(buf, 0, 2);
+		FrequencySwitching::output();
+		Sleep(10);
+	}
+	for(int i=2; 0<=i; i--){
+		buf[1] = 500 + i*200;
 		Hardware::Serial::changeBufRange(buf, 0, 2);
 		FrequencySwitching::output();
 		Sleep(10);
 	}
 	buf[1] = 0;
-	Hardware::Serial::changeBuf(buf, 1);
+	Hardware::Serial::changeBufRange(buf, 0, 2);
 	FrequencySwitching::output();
 }
 
