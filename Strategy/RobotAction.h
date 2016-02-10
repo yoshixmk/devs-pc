@@ -8,6 +8,7 @@
 #include "../Strategy/SpeedOfPack.h"
 #include "../Hardware/Timer.h"
 
+
 namespace Strategy {
 class RobotAction {
 private:
@@ -29,16 +30,22 @@ public:
 	RobotAction();
 	void setCenterYLine(int aCenterYLine);
 	void moveToCenter(CvPoint aMalletCoordinate);
+	void moveToCenterDefense(CvPoint aMalletCoordinate);
 	void guardCenter(CvPoint aMalletCoordinate);
 	void moveToRightCenter(CvPoint aMalletCoordinate);
+	void moveToRightCenter(CvPoint aMalletCoordinate, CvPoint forecastPoint);
 	void moveToLeftCenter(CvPoint aMalletCoordinate);
+	void moveToLeftCenter(CvPoint aMalletCoordinate, CvPoint forecastPoint);
 	void moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition);
+	void DefenseToMove(CvPoint aMalletCoordinate, CvPoint aWaitingPosition, CvPoint forecastPoint);		//defense—p
 	bool moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
+	void sankakuDefense(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuCenterBack();
 	void sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
-	void sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
+	void sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate,CvPoint forecastPoint);
 	void alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint aForecastPackCoordinate);
+	void alarmHitBackDefense(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint aForecastPackCoordinate);
 	void moveRightAngle(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 };
 }  // namespace Strategy

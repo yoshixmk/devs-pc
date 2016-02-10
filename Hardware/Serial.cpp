@@ -13,10 +13,6 @@ void Serial::initialize() {
 	if(isOpened == false){
 		serialOpen();
 	}
-	
-	for(int i=0; i<8; i++){
-		mBuf[i] = 0;
-	}
 	//0だと表示されないバイトは0以外に初期化
 	mBuf[2] = 'A';
 	mBuf[5] = 'A';
@@ -44,7 +40,7 @@ void Serial::serialOpen()
 
 		if (mComPort == INVALID_HANDLE_VALUE){
 			std::cout << "Error in opening serial port" << std::endl;
-			//exit(-1);
+			exit(-1);
 		}
 		else{
 			std::cout << "opening serial port successful" << std::endl;

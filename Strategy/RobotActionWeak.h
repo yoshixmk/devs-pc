@@ -12,21 +12,29 @@ class RobotActionWeak : public RobotAction
 private:
 	FrequencySwitchingWeak mFrequencySwitching;
 	FrequencyManualWeakX mFrequencyManualX;
+	FrequencyManualWeakX mCenterFrequencyManualX;
 	FrequencyManualWeakY mFrequencyManualY;
+	int mCenterYLine;
 
 public:
 	RobotActionWeak();
 	void moveToCenter(CvPoint aMalletCoordinate);
+	void moveToCenterDefense(CvPoint aMalletCoordinate);
 	void guardCenter(CvPoint aMalletCoordinate);
 	void moveToRightCenter(CvPoint aMalletCoordinate);
+	void moveToRightCenter(CvPoint aMalletCoordinate, CvPoint forecastPoint);
 	void moveToLeftCenter(CvPoint aMalletCoordinate);
+	void moveToLeftCenter(CvPoint aMalletCoordinate, CvPoint forecastPoint);
 	void moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition);
+	void DefenseToMove(CvPoint aMalletCoordinate, CvPoint aWaitingPosition, CvPoint forecastPoint);		//defense—p
 	bool moveToHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
+	void sankakuDefense(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuCenterBack();
 	void sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 	void sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 	void alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint aForecastPackCoordinate);
+	void alarmHitBackDefence(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint aForecastPackCoordinate);
 	void moveRightAngle(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 };
 }  // namespace Strategy
