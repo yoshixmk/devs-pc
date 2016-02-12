@@ -156,4 +156,20 @@ void ColorTest::nonFlipTwoImageSynthesisTest()
 	}
 }
 
+void ColorTest::cameraMovieSaveTest()
+{
+	std::cout << "NonFlip_TwoImageSynthesis_test" << std::endl;
+	Color::NonFlipTwoImageSynthesis nonFlipTwoImageSynthesis;
+	CvVideoWriter *vw;
+	vw = cvCreateVideoWriter ("../../cap.avi", -1, 15, cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()));
+	while(1)
+	{
+		Hardware::Camera::renew();
+		cvWriteFrame (vw, nonFlipTwoImageSynthesis.synthesizeNonDistortion());
+		if (cv::waitKey(1) >= 0) {
+			break;
+		}		
+	}
+}
+
 } /* namespace Test */

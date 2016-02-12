@@ -34,6 +34,7 @@ int main() {
 	//colorTest.perspectiveTransformationTest();
 	//colorTest.nonFlipTwoImageSynthesisTest();
 	//colorTest.colorExtractionTest();
+	colorTest.cameraMovieSaveTest();
 
 	Test::StrategyTest strategyTest;
 	//strategyTest.packCoordinateTest();
@@ -56,7 +57,7 @@ int main() {
 	//strategyTest.offenseDefenseStrategyTest();
 
 	Test::UITest uiTest;
-	uiTest.uiStrategyTest();
+	//uiTest.uiStrategyTest();
 
 	//Test::ShowWindowTest showWindowTest;
 	//showWindowTest.windowTest();

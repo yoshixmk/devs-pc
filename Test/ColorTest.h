@@ -23,6 +23,7 @@ public:
 	void perspectiveTransformationTest();
 	void colorExtractionTest();
 	void nonFlipTwoImageSynthesisTest();
+	void cameraMovieSaveTest();
 };
 
 } /* namespace Test */
