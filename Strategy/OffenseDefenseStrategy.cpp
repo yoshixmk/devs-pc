@@ -172,7 +172,7 @@ void OffenseDefenseStrategy::execute()
 {
 	std::cout << "OffenseDeffense Strategy!!" << std::endl;
 
-	HANDLE	hThread[1];
+	HANDLE	hThread[2];
 	hMutex = CreateMutex(NULL,FALSE,NULL);
 	Hardware::Serial::setMutex(&hMutex);
 	hThread[0] = (HANDLE)_beginthread(strongModeOD, 0, NULL);	//ƒXƒŒƒbƒh‚Pì¬
