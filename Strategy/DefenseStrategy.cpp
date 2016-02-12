@@ -93,16 +93,16 @@ void weakModeD(LPVOID pParam)
 				}
 			}
 			else{
-				//robotAction.moveToCenter(malletNowC);	//中央に移動
-				robotAction.moveToCenterDefense(malletNowC);	//中央に移動
+				robotAction.moveToCenter(malletNowC);	//中央に移動
+				//robotAction.moveToCenterDefense(malletNowC);	//中央に移動
 			}
 		}
 		else{
-			//robotAction.moveToCenter(malletNowC);	//中央に移動
-			robotAction.moveToCenterDefense(malletNowC);	//中央に移動
+			robotAction.moveToCenter(malletNowC);	//中央に移動
+			//robotAction.moveToCenterDefense(malletNowC);	//中央に移動
 		}
 		//時間が来ている場合、打ちにいく。条件は必要ない
-		if(locus.calculateLocus(packNowC, packPre1C, 390) == true){	//軌跡検出
+		if(locus.calculateLocus(packNowC, packPre1C, 370) == true){	//軌跡検出
 			forecastPoint = locus.getLocusCoordinate();
 			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
 		}
