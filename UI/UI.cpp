@@ -8,10 +8,10 @@ void UI::main() {
 	int randamNumber = 0;
 	while(1){
 		//0-9のランダムな数字を生成。
-		//int randamNumber = rand() % 10;
-
+		//int randamNumber = rand() % 5;
+		int randamNumber = 1;
 		//3(OffenseDefense):7(Defense)の割合
-		if(randamNumber%2 == 0){
+		if(randamNumber%5 == 0){
 			offenseDefenseStrategy.execute();
 		}
 		else{

@@ -161,7 +161,7 @@ void FrequencySwitchingWeak::sankakuDefense(int aMoveDistanse)
 	Hardware::Serial::changeBufRange(buf, 3, 5);
 	Sleep(10);
 	while(max_freq > nowFrequency){
-		buf[0] = nowFrequency / 20;
+		buf[3] = nowFrequency / 20;
 		//マルチタスクで更新タイミング考慮のため、全て更新
 		Hardware::Serial::changeBufRange(buf, 3, 5);
 		nowFrequency = nowFrequency + 100;
@@ -296,13 +296,13 @@ void FrequencySwitchingWeak::sankakuUntilHit(int aMoveDistanceX, int aMoveDistan
 		loopTime = 15;
 	}
 	for(int i=0; i<loopTime; i++){ //Yの距離から時間の変換
-		buf[1] = (500 + i*150) / 20;
+		buf[4] = (500 + i*150) / 20;
 		Hardware::Serial::changeBufRange(buf, 3, 5);
 		FrequencySwitching::output();
 		Sleep(10);
 	}
 	for(int i=2; 0<=i; i--){
-		buf[1] = 500 + i*150;
+		buf[4] = 500 + i*150;
 		Hardware::Serial::changeBufRange(buf, 3, 5);
 		FrequencySwitching::output();
 		Sleep(10);
