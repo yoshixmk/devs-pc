@@ -23,7 +23,7 @@ void strongModeD(LPVOID pParam)
 		packPre0C = packCoordinate.getPreviousCoordinate();
 		packPre1C = packCoordinate.getPreviousCoordinate(1);
 		if( (packPre0C.y + 4 < packNowC.y) && packNowC.y < 400){
-			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//軌跡検出
+			if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//軌跡検出
 				forecastPoint = locus.getLocusCoordinate();
 				if(forecastPoint.x > FrameCoordinate::getRobotGoalLeft().x && FrameCoordinate::getRobotGoalRight().x > forecastPoint.x){
 					robotAction.sankakuDefense(malletNowC, forecastPoint);
@@ -79,7 +79,7 @@ void weakModeD(LPVOID pParam)
 		packPre0C = packCoordinate.getPreviousCoordinate();
 		packPre1C = packCoordinate.getPreviousCoordinate(1);
 		if( (packPre0C.y + 4 < packNowC.y) && packNowC.y < 400){
-			if(locus.calculateLocus(packNowC, packPre0C, 360) == true){	//軌跡検出
+			if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//軌跡検出
 				forecastPoint = locus.getLocusCoordinate();
 				if(forecastPoint.x > FrameCoordinate::getRobotGoalLeft().x && FrameCoordinate::getRobotGoalRight().x > forecastPoint.x){
 					robotAction.sankakuDefense(malletNowC, forecastPoint);
@@ -117,17 +117,19 @@ void DefenseStrategy::execute()
 {
 	std::cout << "Defense Strategy!!" << std::endl;
 
-	HANDLE	hThread[2];
+	HANDLE	hThread[1];
+	//HANDLE	hThread[2];
 	hMutex = CreateMutex(NULL,FALSE,NULL);
 	Hardware::Serial::setMutex(&hMutex);
 	hThread[0] = (HANDLE)_beginthread(strongModeD, 0, NULL);	//スレッド１作成
-	hThread[1] = (HANDLE)_beginthread(weakModeD, 0, NULL);	//スレッド２作成
+	//hThread[1] = (HANDLE)_beginthread(weakModeD, 0, NULL);	//スレッド２作成
 	//スレッド１、２終了待ち
-	WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
+	WaitForMultipleObjects(1, hThread, TRUE, INFINITE);
+	//WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
 
 	//ハンドルクローズ
 	CloseHandle(hThread[0]);
-	CloseHandle(hThread[1]);
+	//CloseHandle(hThread[1]);
 
 	CloseHandle(hMutex);
 }

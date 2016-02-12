@@ -21,7 +21,7 @@ void strongModeOD(LPVOID pParam)
 	mTimer.setTimer(20);
 	bool hasSankakued = false;
 	Hardware::Timer backTimer;
-	robotAction.setCenterYLine(445);
+	robotAction.setCenterYLine(450);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -32,7 +32,7 @@ void strongModeOD(LPVOID pParam)
 			if(packPre0C.y + 4 < packNowC.y){
 				int speed = speedOfPack.getMomentSpeed();
 				if(speed < 0.5){
-					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//軌跡検出
+					if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//軌跡検出
 							forecastPoint = locus.getLocusCoordinate();
 							robotAction.sankakuHitBack(malletNowC, forecastPoint);
 							backTimer.setTimer(0.4);
@@ -43,7 +43,7 @@ void strongModeOD(LPVOID pParam)
 					}
 				}
 				else{
-					if(locus.calculateLocus(packNowC, packPre0C, 426) == true){	//軌跡検出
+					if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//軌跡検出
 						forecastPoint = locus.getLocusCoordinate();
 						if(forecastPoint.x > FrameCoordinate::getRobotGoalLeft().x && FrameCoordinate::getRobotGoalRight().x > forecastPoint.x){
 							robotAction.sankakuDefense(malletNowC, forecastPoint);
@@ -114,7 +114,7 @@ void weakModeOD(LPVOID pParam)
 
 	bool hasSankakued = false;
 	Hardware::Timer backTimer;
-	robotAction.setCenterYLine(445);
+	robotAction.setCenterYLine(450);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -124,7 +124,7 @@ void weakModeOD(LPVOID pParam)
 			packPre1C = packCoordinate.getPreviousCoordinate(1);
 			if(packPre0C.y + 4 < packNowC.y){
 				if(atackCount < 1){
-					if(locus.calculateLocus(packNowC, packPre0C, 380) == true){	//軌跡検出
+					if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//軌跡検出
 						forecastPoint = locus.getLocusCoordinate();
 						robotAction.sankakuHitBack(malletNowC, forecastPoint);
 						backTimer.setTimer(0.5);
@@ -173,17 +173,19 @@ void OffenseDefenseStrategy::execute()
 	std::cout << "OffenseDeffense Strategy!!" << std::endl;
 
 	HANDLE	hThread[1];
+	//HANDLE	hThread[2];
 	hMutex = CreateMutex(NULL,FALSE,NULL);
 	Hardware::Serial::setMutex(&hMutex);
 	hThread[0] = (HANDLE)_beginthread(strongModeOD, 0, NULL);	//スレッド１作成
-	hThread[1] = (HANDLE)_beginthread(weakModeOD, 0, NULL);	//スレッド２作成
+	//hThread[1] = (HANDLE)_beginthread(weakModeOD, 0, NULL);	//スレッド２作成
 
 	//スレッド１、２終了待ち
-	WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
+	WaitForMultipleObjects(1, hThread, TRUE, INFINITE);
+	//WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
 
 	//ハンドルクローズ
 	CloseHandle(hThread[0]);
-	CloseHandle(hThread[1]);
+	//CloseHandle(hThread[1]);
 
 	CloseHandle(hMutex);
 		
