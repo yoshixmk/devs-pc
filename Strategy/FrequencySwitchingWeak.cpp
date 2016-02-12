@@ -292,17 +292,17 @@ void FrequencySwitchingWeak::sankakuUntilHit(int aMoveDistanceX, int aMoveDistan
 	FrequencySwitchingWeak::output();
 
 	int loopTime = aMoveDistanceY/mTimeAjustMentY;
-	if(loopTime > 14){
-		loopTime = 14;
+	if(loopTime > 15){
+		loopTime = 15;
 	}
 	for(int i=0; i<loopTime; i++){ //Y‚Ì‹——£‚©‚çŽžŠÔ‚Ì•ÏŠ·
-		buf[1] = (500 + i*200) / 20;
+		buf[1] = (500 + i*150) / 20;
 		Hardware::Serial::changeBufRange(buf, 3, 5);
 		FrequencySwitching::output();
 		Sleep(10);
 	}
 	for(int i=2; 0<=i; i--){
-		buf[1] = 500 + i*200;
+		buf[1] = 500 + i*150;
 		Hardware::Serial::changeBufRange(buf, 3, 5);
 		FrequencySwitching::output();
 		Sleep(10);
@@ -440,7 +440,7 @@ void FrequencySwitchingWeak::sankakuCenterProcess(int aMoveDistanceX, int aMoveD
 		Sleep(10);
 	}
 	for(int i=2; 0<=i; i--){
-		buf[4] = 500 + i*200;
+		buf[4] = 500 + i*150;
 		Hardware::Serial::changeBufRange(buf, 3, 5);
 		FrequencySwitching::output();
 		Sleep(10);
