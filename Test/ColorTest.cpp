@@ -161,15 +161,19 @@ void ColorTest::cameraMovieSaveTest()
 	std::cout << "NonFlip_TwoImageSynthesis_test" << std::endl;
 	Color::NonFlipTwoImageSynthesis nonFlipTwoImageSynthesis;
 	CvVideoWriter *vw;
-	vw = cvCreateVideoWriter ("../../cap.avi", -1, 15, cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()));
+	vw = cvCreateVideoWriter ("../../cap.avi", CV_FOURCC('D', 'I', 'B', ' '), 60, cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()*2), 1);
+	IplImage* ipl;
 	while(1)
 	{
 		Hardware::Camera::renew();
-		cvWriteFrame (vw, nonFlipTwoImageSynthesis.synthesizeNonDistortion());
+		ipl = nonFlipTwoImageSynthesis.synthesizeNonDistortion();
+		cvShowImage("SynthesisImage", ipl);
+		cvWriteFrame (vw, ipl);
 		if (cv::waitKey(1) >= 0) {
 			break;
-		}		
+		}
 	}
+	cvReleaseVideoWriter(&vw);
 }
 
 } /* namespace Test */
