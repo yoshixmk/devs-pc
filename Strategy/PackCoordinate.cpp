@@ -25,7 +25,7 @@ PackCoordinate::PackCoordinate()
 	//初期化時は前回の座標と現在の座標は同じ。
 	mXYCoordinate = cvPoint(gX_now_pack, gY_now_pack);
 	for(int i=0; i<sizeof(mPreviousXYCoordinate)/sizeof(mPreviousXYCoordinate[0]); i++){
-		mPreviousXYCoordinate[i] = cvPoint(gX_now_pack, gY_now_pack);
+		getCoordinate();
 	}
 }
 
@@ -55,6 +55,11 @@ CvPoint PackCoordinate::getCoordinate()
 
 	//現在の座標を格納
 	mXYCoordinate = cvPoint(gX_now_pack, gY_now_pack);
+	if(mXYCoordinate.x < 0 || mXYCoordinate.y < 0){
+		mXYCoordinate.x = 160;
+		mXYCoordinate.y = 120;
+	}
+	//std::cout << mXYCoordinate.x << "  " << mXYCoordinate.y << std::endl;
 	return mXYCoordinate;
 }
 

@@ -639,7 +639,7 @@ namespace Test {
 			cvCircle(extractMallet, packPre0C, 5, cvScalar(0,255,0));
 			cvCircle(extractMallet, packNowC, 5, cvScalar(0,255,255));
 
-			robotAction.sideGuard(malletNowC, packNowC);
+			robotAction.sideGuard(malletNowC, packNowC, forecastPoint);
 
 			cvCircle(extractMallet, forecastPoint, 5, cvScalar(255,255,0));
 			cvShowImage("ColorExtractionRS", extractMallet);
@@ -771,10 +771,10 @@ namespace Test {
 					atackCount++;
 				}
 			}
-			else if(malletNowC.y-10 <= packNowC.y && atackCount < 1){
+			/*else if(malletNowC.y-10 <= packNowC.y && atackCount < 1){
 				robotAction.moveRightAngle(malletNowC, packNowC);
 				atackCount++;
-			}
+			}*/
 			else{
 				atackCount = 0;
 				robotAction.moveToCenter(malletNowC);	//中央に移動
@@ -792,5 +792,11 @@ namespace Test {
 				break;
 			}
 		}
+	}
+
+	void StrategyTest::offenseDefenseStrategyTest()
+	{
+		Strategy::OffenseDefenseStrategy offenseDefenseStrategy;
+		offenseDefenseStrategy.execute();
 	}
 }  // namespace Test

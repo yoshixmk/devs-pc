@@ -1,39 +1,85 @@
 #include "RobotAction.h"
 
 namespace Strategy {
+	RobotAction::RobotAction()
+	{
+		//default value
+		mCenterYLine = 426;
+	}
+
+	void RobotAction::setCenterYLine(int aCenterYLine)
+	{
+		mCenterYLine = aCenterYLine;
+	}
 
 	void RobotAction::moveToCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x;
-		waitingPosition.y = 421;
+		waitingPosition.y = mCenterYLine;
+		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
+	}
+
+	void RobotAction::moveToCenterDefense(CvPoint aMalletCoordinate)
+	{
+		CvPoint waitingPosition;
+		waitingPosition.x = FrameCoordinate::getCenterLine().x;
+		waitingPosition.y = 432;
+		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
+	}
+
+	void RobotAction::guardCenter(CvPoint aMalletCoordinate)
+	{
+		CvPoint waitingPosition;
+		waitingPosition.x = FrameCoordinate::getCenterLine().x;
+		waitingPosition.y = 426;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 
 	void RobotAction::moveToRightCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
-		waitingPosition.x = FrameCoordinate::getCenterLine().x + 25;
-		waitingPosition.y = 421;
+		waitingPosition.x = FrameCoordinate::getCenterLine().x + 35;
+		waitingPosition.y = mCenterYLine;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
+
+	void RobotAction::moveToRightCenter(CvPoint aMalletCoordinate, CvPoint forecastPoint)
+	{
+		CvPoint waitingPosition;
+		waitingPosition.x = FrameCoordinate::getCenterLine().x + 35;
+		waitingPosition.y = mCenterYLine;
+		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
+	}
+
 	void RobotAction::moveToLeftCenter(CvPoint aMalletCoordinate)
 	{
 		CvPoint waitingPosition;
-		waitingPosition.x = FrameCoordinate::getCenterLine().x - 25;
-		waitingPosition.y = 421 + 1; //画像が少し斜めのため
+		waitingPosition.x = FrameCoordinate::getCenterLine().x - 35;
+		waitingPosition.y = mCenterYLine + 1; //画像が少し斜めのため
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
+
+	void RobotAction::moveToLeftCenter(CvPoint aMalletCoordinate, CvPoint forecastPoint)
+	{
+		CvPoint waitingPosition;
+		waitingPosition.x = FrameCoordinate::getCenterLine().x - 35;
+		waitingPosition.y = mCenterYLine + 1; //画像が少し斜めのため
+		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
+	}
+
 	void RobotAction::moveToWaitingPosition(CvPoint aMalletCoordinate, CvPoint aWaitingPosition)
 	{
 		int xMargin = 3;
 		int yMargin = 5;
+		int maxSpeedUp = 2000;
+
+		if(mMoveingTimer.getOperatingTime() > 1.0){
+			mMoveingTimer.resetStartOperatingTime();
+		}
 		//X
 		if(aWaitingPosition.x - xMargin < aMalletCoordinate.x && aMalletCoordinate.x < aWaitingPosition.x + xMargin){//定位置付近
-			//-3 ～ 3 の範囲は停止
-			//mFrequencySwitchingX.stop();
-			mFrequencyManualX.setOutputInformation(0);
-			
+			mCenterFrequencyManualX.setOutputInformation(0);
 			//Y
 			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
 				mFrequencyManualY.setOutputInformation('D', 500);
@@ -44,21 +90,40 @@ namespace Strategy {
 			else{
 				mFrequencyManualY.setOutputInformation(0);
 			}
+			mMoveingTimer.resetStartOperatingTime();
 		}
 		else if(aMalletCoordinate.x <= aWaitingPosition.x - xMargin){ //BまたはCの方向
 			if (aMalletCoordinate.x < aWaitingPosition.x - 40){
-				//ゴールから遠いと速くする
-				//mFrequencySwitchingX.setOutputInformation('C', 0.700);//640ms以上で3500Hz台形
-				mFrequencyManualX.setOutputInformation('C', 400);
+				//ゴールから遠いと速くする。10ms以上時間が経過していればに+100加速
+				int nowMaxSpeed = 300 + (int)(mMoveingTimer.getOperatingTime() * 80) * 100; //100 -> 80
+				int frequencyX = mCenterFrequencyManualX.getFrequencyX();
+				if(frequencyX + 100 < nowMaxSpeed){
+					frequencyX += 100;
+				}
+				else{
+					frequencyX = 300;
+					mMoveingTimer.resetStartOperatingTime();
+				}
+				if(frequencyX > maxSpeedUp){
+					frequencyX = maxSpeedUp;
+				}
+				if(mCenterFrequencyManualX.getTargetDirection() == 'B' || mCenterFrequencyManualX.getTargetDirection() == 'C'){
+					mCenterFrequencyManualX.setOutputInformation('C', frequencyX);
+				}
+				else{
+					mCenterFrequencyManualX.setOutputInformation('C', 300);
+					mMoveingTimer.resetStartOperatingTime();
+				}
 			}
 			else if (aMalletCoordinate.x < aWaitingPosition.x - 10){
 				//ゴール近辺ならモータの速度を落とす
-				//mFrequencySwitchingX.setOutputInformation('C', 0.350);
-				mFrequencyManualX.setOutputInformation('C', 300);
+				mCenterFrequencyManualX.setOutputInformation('C', 300);
+				mMoveingTimer.resetStartOperatingTime();
 			}
 			else if (aMalletCoordinate.x <= aWaitingPosition.x){
 				//ゴールに少し近づいてきたら速度を落とす
-				mFrequencyManualX.setOutputInformation('C', 0.200);
+				mCenterFrequencyManualX.setOutputInformation('C', 0.200);
+				mMoveingTimer.resetStartOperatingTime();
 			}
 			//Y
 			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
@@ -74,17 +139,35 @@ namespace Strategy {
 		else if(aWaitingPosition.x + xMargin <= aMalletCoordinate.x){ //AまたはDの方向
 			if (aMalletCoordinate.x < aWaitingPosition.x + 10){
 				//ゴールに少し近づいてきたら速度を落とす
-				//mFrequencySwitchingX.setOutputInformation('D', 0.200);
-				mFrequencyManualX.setOutputInformation('D', 100);
+				mCenterFrequencyManualX.setOutputInformation('D', 100);
+				mMoveingTimer.resetStartOperatingTime();
 			}
 			else if (aMalletCoordinate.x < aWaitingPosition.x + 40){
 				//ゴール近辺ならモータの速度を落とす
-				//mFrequencySwitchingX.setOutputInformation('D', 0.350);
-				mFrequencyManualX.setOutputInformation('D', 300);
+				mCenterFrequencyManualX.setOutputInformation('D', 300);
+				mMoveingTimer.resetStartOperatingTime();
 			}
 			else{
-				//mFrequencySwitchingX.setOutputInformation('D', 0.700);//640ms以上で3500Hz台形
-				mFrequencyManualX.setOutputInformation('D', 400);
+				//ゴールから遠いと速くする。10ms以上時間が経過していればに+100加速
+				int nowMaxSpeed = 400 + (int)(mMoveingTimer.getOperatingTime() * 100) * 100;
+				int frequencyX = mCenterFrequencyManualX.getFrequencyX();
+				if(frequencyX + 100 < nowMaxSpeed){
+					frequencyX += 100;
+				}
+				else{
+					frequencyX = 400;
+					mMoveingTimer.resetStartOperatingTime();
+				}
+				if(frequencyX > maxSpeedUp){
+					frequencyX = maxSpeedUp;
+				}
+				if(mCenterFrequencyManualX.getTargetDirection() == 'A' || mCenterFrequencyManualX.getTargetDirection() == 'D'){
+					mCenterFrequencyManualX.setOutputInformation('D', frequencyX);
+				}
+				else{
+					mCenterFrequencyManualX.setOutputInformation('D', 400);
+					mMoveingTimer.resetStartOperatingTime();
+				}
 			}
 			//Y
 			if(aMalletCoordinate.y < aWaitingPosition.y - yMargin){ //定位置付近でないなら
@@ -104,37 +187,32 @@ namespace Strategy {
 	{
 		//リミットスイッチに当たってしまわないように補正
 		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
-		if(forecastPackCoordinate.x < 60){
-			forecastPackCoordinate.x = 60;
+		if(forecastPackCoordinate.x < 33){
+			forecastPackCoordinate.x = 33;
 		}
-		if(forecastPackCoordinate.x > 270){
-			forecastPackCoordinate.x = 270;
+		if(forecastPackCoordinate.x > 290){
+			forecastPackCoordinate.x = 290;
 		}
 		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 
 		printf("moveDistance:%d\n", moveDistance);
 		//moveDistanceはパックが
 		//右に飛んでくる予想の場合＋、左に飛んでくる予想の場合－
-		//mFrequencySwitching.sankakuProcess(moveDistance);
-		//FrequencyManual::FrequencyManual();
 		if(abs(moveDistance) < 3)
 		{
 			mFrequencyManualX.setOutputInformation('A', 0);
 			mFrequencyManualX.output();
-			//mFrequencyManualY.output();
 			return true;
 		}
 		else if(moveDistance >= 3)
 		{
 			mFrequencyManualX.setOutputInformation('C', 300);
 			mFrequencyManualX.output();
-			//mFrequencyManualY.output();
 		}
 		else if(moveDistance <= -3)
 		{
 			mFrequencyManualX.setOutputInformation('D', 300);
 			mFrequencyManualX.output();
-			//mFrequencyManualY.output();
 		}
 
 		return false;
@@ -142,17 +220,19 @@ namespace Strategy {
 
 	void RobotAction::sankakuHitBack(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
 	{
-		//リミットスイッチに当たってしまわないように補正
 		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
-		if(forecastPackCoordinate.x < 33){//45
-			forecastPackCoordinate.x = 33;
-		}
-		if(forecastPackCoordinate.x > 290){//280
-			forecastPackCoordinate.x = 290;
-		}
 		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 
 		mFrequencySwitching.sankakuProcess(moveDistance);
+	}
+
+	void RobotAction::sankakuDefense(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate)
+	{
+		//リミットスイッチに当たってしまわないように補正
+		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
+		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
+
+		mFrequencySwitching.sankakuDefense(moveDistance);
 	}
 
 	void RobotAction::sankakuCenterBack()
@@ -162,29 +242,19 @@ namespace Strategy {
 
 	void RobotAction::sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
 	{
-		//リミットスイッチに当たってしまわないように補正
 		CvPoint packCoordinate = aPackCoordinate;
-		if(packCoordinate.x < 33){//45
-			packCoordinate.x = 33;
-		}
-		if(packCoordinate.x > 290){//280
-			packCoordinate.x = 290;
-		}
 		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
-		int moveDistanceY = aMalletCoordinate.y - packCoordinate.y;
-		if(moveDistanceY < 0){
-			moveDistanceY = 0;
-		}
+		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
 		mFrequencySwitching.sankakuUntilHit(moveDistanceX, moveDistanceY);
 	}
 
-	void RobotAction::sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
+	void RobotAction::sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint forecastPoint)
 	{
 		if(FrameCoordinate::getCenterLine().x+3 < aPackCoordinate.x){
-			moveToRightCenter(aMalletCoordinate);
+			moveToRightCenter(aMalletCoordinate, forecastPoint);
 		}
 		else if(aPackCoordinate.x < FrameCoordinate::getCenterLine().x-3){
-			moveToLeftCenter(aMalletCoordinate);
+			moveToLeftCenter(aMalletCoordinate, forecastPoint);
 		}
 		else{
 			moveToCenter(aMalletCoordinate);
@@ -195,56 +265,82 @@ namespace Strategy {
 	{
 		double speed = mSpeedOfPack.getSpeed(); //0.1以下ならほとんど動いていない
 
-		if(FrameCoordinate::getCenterLine().y + 50 < aPackCoordinate.y){
-			if(aPackCoordinate.y < 400){
-				if(mTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
-					if(speed < 0.1){
+		if(FrameCoordinate::getCenterLine().y + 70 < aPackCoordinate.y){
+			if(aPackCoordinate.y < 370){
+				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.03){
 						sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
 					}
 					else{
 						sankakuUntilHit(aMalletCoordinate, aForecastPackCoordinate);
 					}
 					sankakuCenterBack();
-					mTimer.resetStartOperatingTime();
+					mAlarmTimer.resetStartOperatingTime();
 				}
 			}
-			else if(400 <= aPackCoordinate.y){
-				if(mTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
-					if(speed < 0.1){
+			else if(370 <= aPackCoordinate.y){
+				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.03){
 						moveRightAngle(aMalletCoordinate, aPackCoordinate);
 					}
 					else{
 						moveRightAngle(aMalletCoordinate, aForecastPackCoordinate);
 					}
+					//sankakuCenterBack() は不要
+					mAlarmTimer.resetStartOperatingTime();
 				}
 			}
 		}
 		else{
-			mTimer.resetStartOperatingTime();
+			mAlarmTimer.resetStartOperatingTime();
+		}
+	}
+
+	void RobotAction::alarmHitBackDefense(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint aForecastPackCoordinate)
+	{
+		double speed = mSpeedOfPack.getSpeed(); //0.1以下ならほとんど動いていない
+
+		if(FrameCoordinate::getCenterLine().y + 50 < aPackCoordinate.y){
+			if(aPackCoordinate.y < 400){
+				if(mAlarmTimer.getOperatingTime() > 2.0){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.01){
+						sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
+						sankakuCenterBack();
+						mAlarmTimer.resetStartOperatingTime();
+					}
+					/*
+					else{
+						sankakuUntilHit(aMalletCoordinate, aForecastPackCoordinate);
+					}
+					*/
+					
+				}
+			}
+			else if(400 <= aPackCoordinate.y){
+				if(mAlarmTimer.getOperatingTime() > 2.0){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.01){
+						moveRightAngle(aMalletCoordinate, aPackCoordinate);
+					}
+					/*
+					else{
+						moveRightAngle(aMalletCoordinate, aForecastPackCoordinate);
+					}
+					*/
+				}
+			}
+		}
+		else{
+			mAlarmTimer.resetStartOperatingTime();
 		}
 	}
 
 	void RobotAction::moveRightAngle(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
 	{
-		if(mFrequencyManualX.getFrequencyX() == 0 && mFrequencyManualY.getFrequencyY() == 0){
-			//リミットスイッチに当たってしまわないように補正
-			CvPoint packCoordinate = aPackCoordinate;
-			if(packCoordinate.x < 33){//45
-				packCoordinate.x = 33;
-			}
-			if(packCoordinate.x > 290){//280
-				packCoordinate.x = 290;
-			}
-			int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
-			int moveDistanceY = packCoordinate.y - aMalletCoordinate.y;
-			if(moveDistanceY < 0){
-				moveDistanceY = 0;
-			}
-			mFrequencySwitching.sankakuRightAngle(moveDistanceX, moveDistanceY);
-			mFrequencySwitching.sankakuReturnProcess();
-		}
-		else{
-			moveToCenter(aMalletCoordinate);
-		}
+		CvPoint packCoordinate = aPackCoordinate;
+		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
+		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
+
+		mFrequencySwitching.sankakuRightAngle(moveDistanceX, moveDistanceY);
+		mFrequencySwitching.sankakuReturnProcess();
 	}
 }  // namespace Strategy

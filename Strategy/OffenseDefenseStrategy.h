@@ -7,14 +7,14 @@
 #include "Locus.h"
 #include "RobotAction.h"
 #include "FrameCoordinate.h"
+#include "../Hardware/Serial.h"
+
+#include <stdio.h>
+#include <windows.h>
+#include <process.h>
 
 namespace Strategy {
 class OffenseDefenseStrategy: public Strategy {
-private:
-	PackCoordinate mPackCoordinate;
-	MalletCoordinate mMalletCoordinate;
-	Locus mLocus;
-	RobotAction mRobotAction;
 
 public:
 	//void initialize();

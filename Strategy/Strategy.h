@@ -3,18 +3,18 @@
 
 #include "OriginRetrun.h"
 #include "RobotAction.h"
+#include "RobotActionWeak.h"
 #include "Locus.h"
 #include "MalletCoordinate.h"
 #include "PackCoordinate.h"
+#include "../Hardware/Timer.h"
 
 namespace Strategy {
 class Strategy {
+
 protected:
-	OriginRetrun mOriginRetrun;
-	RobotAction mRobotAction;
-	Locus mLocus;
-	MalletCoordinate mMalletCoordinate;
-	PackCoordinate mPackCoordinate;
+	Hardware::Timer mTimer;
+	HANDLE hMutex; //ミューテックスのハンドル
 
 public:
 	//virtual void initialize()=0;

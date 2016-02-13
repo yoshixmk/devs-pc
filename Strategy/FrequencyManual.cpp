@@ -8,20 +8,14 @@ FrequencyManual::FrequencyManual()
 {
 	mTargetDirection = 'A';
 	mFrequencyX = 100;
-	int mFrequencyY = 0;
+	mFrequencyY = 0;
 	char buf[8];
 	for (int i = 0; i < 8; i++){
 		buf[i] = 0;
 	}
 	buf[2] = 'A';
 	buf[5] = 'A';
-	for (int i = 0; i < 8; i++){
-		Hardware::Serial::changeBuf(buf, i);
-	}
-}
-
-FrequencyManual::~FrequencyManual()
-{
+	Hardware::Serial::changeBufRange(buf, 0, 7);
 }
 
 void FrequencyManual::setOutputInformation(char aDirection, int aFrequencyX, int aFrequencyY)
@@ -32,9 +26,17 @@ void FrequencyManual::setOutputInformation(char aDirection, int aFrequencyX, int
 	mFrequencyY = aFrequencyY;
 	buf[1] = aFrequencyY / 20;
 	mTargetDirection = buf[2] = aDirection;
-	Hardware::Serial::changeBuf(buf, 0);
-	Hardware::Serial::changeBuf(buf, 1);
-	Hardware::Serial::changeBuf(buf, 2);
+	Hardware::Serial::changeBufRange(buf, 0, 2);
+
+	buf[3] = aFrequencyX / 20;
+	buf[4] = aFrequencyY / 20;
+	buf[5] = mTargetDirection;
+	Hardware::Serial::changeBufRange(buf, 3, 5);
+}
+
+char FrequencyManual::getTargetDirection()
+{
+	return mTargetDirection;
 }
 
 int FrequencyManual::getFrequencyX()

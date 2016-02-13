@@ -9,6 +9,7 @@
 
 namespace Strategy {
 class FrequencySwitching {
+
 protected:
 	char mTargetDirection; //'A' 'B' 'C' 'D'
 
@@ -37,6 +38,7 @@ public:
 	void setFrequencyX(int aFrequency);
 	void setFrequencyY(int aFrequency);
 	void sankakuProcess(int aMoveDistance);
+	void sankakuDefense(int aMoveDistance);
 	void sankakuReturnProcess();
 	void sankakuUntilHit(int aMoveDistanceX, int aMoveDistanceY);
 	void sankakuReturnUntilHit();

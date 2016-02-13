@@ -24,8 +24,7 @@ void FrequencyManualY::setOutputInformation(char aDirection, int aFrequencyY)
 	mFrequencyY = aFrequencyY;
 	buf[1] = aFrequencyY / 20;
 	mTargetDirection = buf[2] = aDirection;
-	Hardware::Serial::changeBuf(buf, 1);
-	Hardware::Serial::changeBuf(buf, 2);
+	Hardware::Serial::changeBufRange(buf, 1, 2);
 }
 
 void FrequencyManualY::output()
