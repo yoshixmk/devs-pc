@@ -236,12 +236,12 @@ void FrequencySwitching::sankakuReturnProcess()
 			Sleep(10);	//10ms
 		}
 		buf[0] = 0;
-		for(int i=0; i<mMoveDistanceX/mTimeAjustMentY; i++){
+		/*for(int i=0; i<mMoveDistanceX/mTimeAjustMentY; i++){
 			buf[1] = (500 + i*100) / 20;
 			Hardware::Serial::changeBufRange(buf, 0, 2);
 			FrequencySwitching::output();
 			Sleep(10);
-		}
+		}*/
 	}
 	while(mInitFrequency <= nowFrequency){
 		buf[0] = nowFrequency / 20;
@@ -252,8 +252,11 @@ void FrequencySwitching::sankakuReturnProcess()
 	}
 	buf[0] = 0;
 	
-	int yTargetCount = 15;
-	for(int i=0; i<yTargetCount; i++){
+	int loopTime = mMoveDistanceY/mTimeAjustMentY;
+	if(loopTime > 15){
+		loopTime = 15;
+	}
+	for(int i=0; i<loopTime; i++){ //Y‚Ì‹——£‚©‚çŽžŠÔ‚Ì•ÏŠ·
 		buf[1] = (500 + i*150) / 20;
 		Hardware::Serial::changeBufRange(buf, 0, 2);
 		FrequencySwitching::output();
