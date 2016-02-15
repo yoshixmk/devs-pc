@@ -23,8 +23,8 @@ void UI::main() {
 		}*/
 
 		//offenseStrategy.execute();
-		//offenseDefenseStrategy.execute();
-		defenseStrategy.execute();
+		offenseDefenseStrategy.execute();
+		//defenseStrategy.execute();
 	}
 }
 }  // namespace UI

@@ -21,7 +21,7 @@ void strongModeO(LPVOID pParam)
 	mTimer.setTimer(20);
 	bool hasSankakued = false;
 	Hardware::Timer backTimer;
-	robotAction.setCenterYLine(444);
+	robotAction.setCenterYLine(440);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -99,7 +99,7 @@ void weakModeO(LPVOID pParam)
 	mTimer.setTimer(20);
 	bool hasSankakued = false;
 	Hardware::Timer backTimer;
-	robotAction.setCenterYLine(444);
+	robotAction.setCenterYLine(440);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
