@@ -210,30 +210,60 @@ void FrequencySwitching::sankakuReturnProcess()
 
 	char buf[8];
 	buf[0] = nowFrequency / 20;
-	buf[1] = 500 / 20;
+	buf[1] = 0;
 	if(mMoveDistanceX > 0){
 		buf[2] = 'D';
 	}
-	else{
+	else if(mMoveDistanceX <= 0){
 		buf[2] = 'C';
 	}
+
 	Hardware::Serial::changeBufRange(buf, 0, 2);
 
-	while(max_freq > nowFrequency){
-		buf[0] = nowFrequency / 20;
-		buf[1] = 500 / 20;
-		Hardware::Serial::changeBufRange(buf, 0, 2);
-		nowFrequency = nowFrequency + 100;
-		FrequencySwitching::output();
-		Sleep(10);	//10ms
+	if(buf[2] == 'D' || buf[2] == 'C'){
+		while(max_freq > nowFrequency){
+			buf[0] = nowFrequency / 20;
+			Hardware::Serial::changeBufRange(buf, 0, 2);
+			nowFrequency = nowFrequency + 100;
+			FrequencySwitching::output();
+			Sleep(10);	//10ms
+		}
+		while(mInitFrequency <= nowFrequency){
+			buf[0] = nowFrequency / 20;
+			Hardware::Serial::changeBufRange(buf, 0, 2);
+			nowFrequency = nowFrequency - 100;
+			FrequencySwitching::output();
+			Sleep(10);	//10ms
+		}
+		buf[0] = 0;
+		for(int i=0; i<mMoveDistanceX/mTimeAjustMentY; i++){
+			buf[1] = (500 + i*100) / 20;
+			Hardware::Serial::changeBufRange(buf, 0, 2);
+			FrequencySwitching::output();
+			Sleep(10);
+		}
 	}
 	while(mInitFrequency <= nowFrequency){
 		buf[0] = nowFrequency / 20;
-		buf[1] = 500 / 20;
 		Hardware::Serial::changeBufRange(buf, 0, 2);
 		nowFrequency = nowFrequency - 100;
 		FrequencySwitching::output();
 		Sleep(10);	//10ms
+	}
+	buf[0] = 0;
+	
+	int yTargetCount = 15;
+	for(int i=0; i<yTargetCount; i++){
+		buf[1] = (500 + i*150) / 20;
+		Hardware::Serial::changeBufRange(buf, 0, 2);
+		FrequencySwitching::output();
+		Sleep(10);
+	}
+	for(int i=2; 0<=i; i--){
+		buf[1] = 500 + i*150;
+		Hardware::Serial::changeBufRange(buf, 0, 2);
+		FrequencySwitching::output();
+		Sleep(10);
 	}
 	buf[0] = 0;
 	buf[1] = 0;
@@ -296,8 +326,8 @@ void FrequencySwitching::sankakuUntilHit(int aMoveDistanceX, int aMoveDistanceY)
 	FrequencySwitching::output();
 
 	int loopTime = aMoveDistanceY/mTimeAjustMentY;
-	if(loopTime > 15){
-		loopTime = 15;
+	if(loopTime > 10){
+		loopTime = 10;
 	}
 	for(int i=0; i<loopTime; i++){ //Y‚Ì‹——£‚©‚çŽžŠÔ‚Ì•ÏŠ·
 		buf[1] = (500 + i*150) / 20;
