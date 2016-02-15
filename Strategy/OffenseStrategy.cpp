@@ -29,9 +29,19 @@ void strongModeO(LPVOID pParam)
 		if(hasSankakued == false){
 			packPre0C = packCoordinate.getPreviousCoordinate();
 			packPre1C = packCoordinate.getPreviousCoordinate(1);
-			if(packPre0C.y + 6 < packNowC.y){
+			if(packPre0C.y + 5 < packNowC.y){
 				int speed = speedOfPack.getMomentSpeed();
 				if(speed < 0.45){
+					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+						forecastPoint = locus.getLocusCoordinate();
+						robotAction.sankakuUntilHit(malletNowC, forecastPoint);
+						robotAction.sankakuCenterBack();
+					}
+					else{
+						robotAction.moveToCenter(malletNowC);
+					}
+				}
+				else{
 					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
 						forecastPoint = locus.getLocusCoordinate();
 						robotAction.sankakuHitBack(malletNowC, forecastPoint);
@@ -42,24 +52,13 @@ void strongModeO(LPVOID pParam)
 						robotAction.moveToCenter(malletNowC);
 					}
 				}
-				else{
-					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
-						forecastPoint = locus.getLocusCoordinate();
-						robotAction.sankakuUntilHit(malletNowC, forecastPoint);
-						backTimer.setTimer(0.4);
-						hasSankakued = true;
-					}
-					else{
-						robotAction.moveToCenter(malletNowC);
-					}
-				}
+			}
+			else if(packNowC.y > 390){
+				robotAction.moveToCenter(malletNowC);
 			}
 			else if(0 < packNowC.x && packNowC.x < 45 && 350 < packNowC.y && packNowC.y < 390){
 				robotAction.sankakuUntilHit(packNowC, cvPoint(45, 350));
 				hasSankakued = true;
-			}
-			else if(packNowC.y > 350){
-				robotAction.moveToCenter(malletNowC);
 			}
 			else{
 				robotAction.moveToCenter(malletNowC);	//’†‰›‚ÉˆÚ“®
@@ -91,7 +90,7 @@ void weakModeO(LPVOID pParam)
 	CvPoint packPre0C;
 	CvPoint packPre1C;
 	CvPoint forecastPoint = cvPoint(0, 0);
-	RobotAction robotAction;
+	RobotActionWeak robotAction;
 	SpeedOfPack speedOfPack;
 	MalletCoordinate malletCoordinate;
 	PackCoordinate packCoordinate;
@@ -109,22 +108,38 @@ void weakModeO(LPVOID pParam)
 			packPre0C = packCoordinate.getPreviousCoordinate();
 			packPre1C = packCoordinate.getPreviousCoordinate(1);
 			if(packPre0C.y + 5 < packNowC.y){
-				if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+				int speed = speedOfPack.getMomentSpeed();
+				//‹­‚Æ•ÏX‚µ‚½B
+				if(speed < 0.45){
+					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+						//‰º‚Æ‹t‚É‚µ‚Ä‚¢‚é
 						forecastPoint = locus.getLocusCoordinate();
 						robotAction.sankakuHitBack(malletNowC, forecastPoint);
 						backTimer.setTimer(0.4);
 						hasSankakued = true;
+					}
+					else{
+						robotAction.moveToCenter(malletNowC);
+					}
 				}
 				else{
-					robotAction.moveToCenterDefense(malletNowC);	//’†‰›‚ÉˆÚ“®
+					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+						//ã‚Æ‹t‚É‚µ‚Ä‚¢‚é
+						forecastPoint = locus.getLocusCoordinate();
+						robotAction.sankakuUntilHit(malletNowC, forecastPoint);
+						robotAction.sankakuCenterBack();
+					}
+					else{
+						robotAction.moveToCenter(malletNowC);
+					}
 				}
+			}
+			else if(packNowC.y > 390){
+				robotAction.moveToCenter(malletNowC);
 			}
 			else if(0 < packNowC.x && packNowC.x < 45 && 350 < packNowC.y && packNowC.y < 390){
 				robotAction.sankakuUntilHit(packNowC, cvPoint(45, 350));
 				hasSankakued = true;
-			}
-			else if(packNowC.y > 350){
-				robotAction.moveToCenter(malletNowC);
 			}
 			else{
 				robotAction.moveToCenter(malletNowC);	//’†‰›‚ÉˆÚ“®
