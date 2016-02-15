@@ -11,16 +11,20 @@ void UI::main() {
 		//0-9のランダムな数字を生成。
 		int randamNumber = rand() % 10;
 		//2(Offense):2(OffenseDefense):6(Defense)の割合
-		//randamNumber = 1;
-		if(randamNumber < 2){
-			offenseDefenseStrategy.execute();
+		
+		/*if(randamNumber < 2){
+			offenseStrategy.execute();
 		}
 		else if(randamNumber < 4){
-			offenseStrategy.execute();
+			offenseDefenseStrategy.execute();
 		}
 		else{
 			defenseStrategy.execute();
-		}
+		}*/
+
+		//offenseStrategy.execute();
+		//offenseDefenseStrategy.execute();
+		defenseStrategy.execute();
 	}
 }
 }  // namespace UI

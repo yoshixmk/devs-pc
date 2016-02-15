@@ -15,7 +15,7 @@ void strongModeD(LPVOID pParam)
 	Locus locus;
 	Hardware::Timer mTimer;
 	mTimer.setTimer(20);
-	robotAction.setCenterYLine(448);
+	robotAction.setCenterYLine(446);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -71,7 +71,7 @@ void weakModeD(LPVOID pParam)
 	Locus locus;
 	Hardware::Timer mTimer;
 	mTimer.setTimer(20);
-	robotAction.setCenterYLine(448);
+	robotAction.setCenterYLine(446);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
