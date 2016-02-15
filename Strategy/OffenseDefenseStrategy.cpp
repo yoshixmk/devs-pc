@@ -65,8 +65,6 @@ void strongModeOD(LPVOID pParam)
 				}
 			}
 			else if(packNowC.y > 400){
-				//robotAction.guardCenter(malletNowC);
-				//robotAction.moveToCenterDefense(malletNowC);	//’†‰›‚ÉˆÚ“®
 				robotAction.moveToCenter(malletNowC);
 			}
 			else if(0 < packNowC.x && packNowC.x < 45 && 350 < packNowC.y && packNowC.y < 390){
@@ -75,7 +73,6 @@ void strongModeOD(LPVOID pParam)
 			}
 			else{
 				robotAction.moveToCenter(malletNowC);	//’†‰›‚ÉˆÚ“®
-				//robotAction.moveToCenterDefense(malletNowC);	//’†‰›‚ÉˆÚ“®
 			}
 		}
 		else if(hasSankakued == true){

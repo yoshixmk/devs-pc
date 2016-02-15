@@ -95,7 +95,7 @@ void ColorTest::colorExtractionTest()
 	cvCreateTrackbar("maxS", "ColorExtractionAll", &iSliderValuePack4, 255);
 	int iSliderValuePack5 = 0;
 	cvCreateTrackbar("minV", "ColorExtractionAll", &iSliderValuePack5, 255);
-	int iSliderValuePack6 = 130;
+	int iSliderValuePack6 = 255; //130
 	cvCreateTrackbar("maxV", "ColorExtractionAll", &iSliderValuePack6, 255);
 	//mallet threthold 0, 255, 100, 255, 140, 200
 	int iSliderValuemallet1 = 13;

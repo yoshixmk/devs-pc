@@ -190,7 +190,7 @@ void ColorExtraction::setPackHSV()
 	mSMin = 99;//31
 	mSMax = 130;//88
 	mVMin = 0;//39
-	mVMax = 130;//63
+	mVMax = 130;//255
 }
 
 IplImage* ColorExtraction::getSingleColorExtraction()
