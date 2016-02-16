@@ -64,11 +64,12 @@ void FrequencySwitching::sankakuDefense(int aMoveDistanse)
 {
 	int closest_frequency;
 	float ossum = 0;
-	float sum = 0.176;
 	float next_freq = 0;
 	int max_freq = 50; //100
 	int freq =0;
 	int nowFrequency = mInitFrequency;
+	//float sum = 0.176;
+	float sum = (nowFrequency/100)*0.044;
 	int moveDistanceAbs = abs(aMoveDistanse);
 	int yTargetCount = 30;
 	int yCount = 0;
@@ -113,8 +114,8 @@ void FrequencySwitching::sankakuDefense(int aMoveDistanse)
 		Sleep(10);	//10ms
 		yCount++;
 	}
-	buf[0] = 0;
-	Hardware::Serial::changeBuf(buf, 0);
+//	buf[0] = 0;
+//	Hardware::Serial::changeBuf(buf, 0);
 
 	buf[0] = 0;
 	buf[1] = 0;

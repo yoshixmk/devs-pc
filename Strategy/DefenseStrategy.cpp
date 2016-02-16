@@ -23,7 +23,7 @@ void strongModeD(LPVOID pParam)
 		packPre0C = packCoordinate.getPreviousCoordinate();
 		packPre1C = packCoordinate.getPreviousCoordinate(1);
 		if( (packPre0C.y + 4 < packNowC.y) && packNowC.y < 400){
-			if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+			if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//‹OÕŒŸo
 				forecastPoint = locus.getLocusCoordinate();
 				if(forecastPoint.x > FrameCoordinate::getRobotGoalLeft().x && FrameCoordinate::getRobotGoalRight().x > forecastPoint.x){
 					robotAction.sankakuDefense(malletNowC, forecastPoint);
@@ -39,8 +39,8 @@ void strongModeD(LPVOID pParam)
 				}
 			}
 			else{
-				//robotAction.moveToCenterDefense(malletNowC);	//’†‰›‚ÉˆÚ“®
-				robotAction.moveToCenter(malletNowC);
+				robotAction.moveToCenterDefense(malletNowC);	//’†‰›‚ÉˆÚ“®
+				//robotAction.moveToCenter(malletNowC);
 			}
 		}
 		else{
@@ -79,7 +79,7 @@ void weakModeD(LPVOID pParam)
 		packPre0C = packCoordinate.getPreviousCoordinate();
 		packPre1C = packCoordinate.getPreviousCoordinate(1);
 		if( (packPre0C.y + 4 < packNowC.y) && packNowC.y < 400){
-			if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+			if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//‹OÕŒŸo
 				forecastPoint = locus.getLocusCoordinate();
 				if(forecastPoint.x > FrameCoordinate::getRobotGoalLeft().x && FrameCoordinate::getRobotGoalRight().x > forecastPoint.x){
 					robotAction.sankakuDefense(malletNowC, forecastPoint);

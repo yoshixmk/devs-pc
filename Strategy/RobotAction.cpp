@@ -24,7 +24,7 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x;
-		waitingPosition.y = 432;
+		waitingPosition.y = 435;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 
