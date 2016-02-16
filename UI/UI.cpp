@@ -6,6 +6,7 @@ void UI::main() {
 	Strategy::OffenseDefenseStrategy offenseDefenseStrategy;
 	Strategy::DefenseStrategy defenseStrategy;
 	Strategy::OffenseStrategy offenseStrategy;
+	Strategy::PerfectDefenseStrategy perfectDefenseStrategy;
 	//int randamNumber = 0;
 	while(1){
 		//0-9のランダムな数字を生成。
@@ -23,8 +24,9 @@ void UI::main() {
 		}*/
 
 		//offenseStrategy.execute();
-		offenseDefenseStrategy.execute();
+		//offenseDefenseStrategy.execute();
 		//defenseStrategy.execute();
+		perfectDefenseStrategy.execute();
 	}
 }
 }  // namespace UI
