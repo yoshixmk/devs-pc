@@ -12,7 +12,7 @@ private:
 
 public:
 	virtual IplImage* mask()=0;
-	IplImage* getMaskingImage()=0;
+	virtual IplImage* getMaskingImage()=0;
 };
 
 }  // namespace Color
