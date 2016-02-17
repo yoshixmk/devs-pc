@@ -24,7 +24,7 @@ namespace Strategy {
 	{
 		CvPoint waitingPosition;
 		waitingPosition.x = FrameCoordinate::getCenterLine().x;
-		waitingPosition.y = 432;
+		waitingPosition.y = 435;
 		moveToWaitingPosition(aMalletCoordinate, waitingPosition);
 	}
 
@@ -195,7 +195,6 @@ namespace Strategy {
 		}
 		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 
-		printf("moveDistance:%d\n", moveDistance);
 		//moveDistanceはパックが
 		//右に飛んでくる予想の場合＋、左に飛んでくる予想の場合－
 		if(abs(moveDistance) < 3)
@@ -267,8 +266,8 @@ namespace Strategy {
 
 		if(FrameCoordinate::getCenterLine().y + 70 < aPackCoordinate.y){
 			if(aPackCoordinate.y < 370){
-				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
-					if(speed < 0.03){
+				if(mAlarmTimer.getOperatingTime() > 2.0){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.05){
 						sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
 					}
 					else{
@@ -279,8 +278,8 @@ namespace Strategy {
 				}
 			}
 			else if(370 <= aPackCoordinate.y){
-				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
-					if(speed < 0.03){
+				if(mAlarmTimer.getOperatingTime() > 2.0){ //一定時間以上、自フィールドにパックがあるとき
+					if(speed < 0.05){
 						moveRightAngle(aMalletCoordinate, aPackCoordinate);
 					}
 					else{

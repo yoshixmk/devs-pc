@@ -5,6 +5,7 @@
 #include "../Strategy/OffenseStrategy.h"
 #include "../Strategy/OffenseDefenseStrategy.h"
 #include "../Strategy/DefenseStrategy.h"
+#include "../Strategy/PerfectDefenseStrategy.h"
 #include <iostream>
 
 namespace UI {
