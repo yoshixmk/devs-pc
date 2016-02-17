@@ -13,7 +13,7 @@ void UI::main() {
 		int randamNumber = rand() % 10;
 		//2(Offense):2(OffenseDefense):6(Defense)の割合
 		
-		/*if(randamNumber < 2){
+		if(randamNumber < 2){
 			offenseStrategy.execute();
 		}
 		else if(randamNumber < 4){
@@ -21,12 +21,12 @@ void UI::main() {
 		}
 		else{
 			defenseStrategy.execute();
-		}*/
+		}
 
 		//===========単体テスト===========
 		//offenseStrategy.execute();
 		//offenseDefenseStrategy.execute();
-		defenseStrategy.execute();
+		//defenseStrategy.execute();
 		//perfectDefenseStrategy.execute();
 		//===========単体テスト END===========
 	}

@@ -289,11 +289,9 @@ namespace Strategy {
 				if(mAlarmTimer.getOperatingTime() > 2.0){ //一定時間以上、自フィールドにパックがあるとき
 					if(speed < 0.05){
 						moveRightAngle(aMalletCoordinate, aPackCoordinate);
-						std::cout << "a" << std::endl;
 					}
 					else{
 						moveRightAngle(aMalletCoordinate, aForecastPackCoordinate);
-						std::cout << "a2" << std::endl;
 					}
 					//sankakuCenterBack() は不要
 					mAlarmTimer.resetStartOperatingTime();
