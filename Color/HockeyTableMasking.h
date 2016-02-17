@@ -2,7 +2,6 @@
 #define COLOR_HOCKEY_TABLE_MASKING_H
 
 #include "Masking.h"
-#include "../CLEye/opencv.hpp"
 #include "NonFlipTwoImageSynthesis.h"
 
 namespace Color
@@ -16,6 +15,7 @@ private:
 
 public:
 	HockeyTableMasking();
+	~HockeyTableMasking();
 	IplImage* mask();
 	IplImage* getMaskingImage();
 };
