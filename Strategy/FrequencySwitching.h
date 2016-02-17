@@ -41,8 +41,12 @@ public:
 	void sankakuDefense(int aMoveDistance);
 	void sankakuReturnProcess();
 	void sankakuUntilHit(int aMoveDistanceX, int aMoveDistanceY);
+	void sankakuUntilHitDefense(int aMoveDistanceX, int aMoveDistanceY);
+
+	
 	void sankakuReturnUntilHit();
 	void sankakuRightAngle(int aMoveDistanceX, int aMoveDistanceY);
+	void sankakuRightAngleDefense(int aMoveDistanceX, int aMoveDistanceY);
 	void sankakuSlanting(int aMoveDistanceX, int aMoveDistanceY);
 	//void sankakuReturnRightAngle();
 };

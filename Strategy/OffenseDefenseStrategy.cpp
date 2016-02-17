@@ -21,7 +21,7 @@ void strongModeOD(LPVOID pParam)
 	mTimer.setTimer(20);
 	bool hasSankakued = false;
 	Hardware::Timer backTimer;
-	robotAction.setCenterYLine(440);
+	robotAction.setCenterYLine(442);
 	while(!mTimer.getAlarm()){
 		Hardware::Camera::renew();
 		malletNowC = malletCoordinate.getCoordinate();
@@ -31,7 +31,7 @@ void strongModeOD(LPVOID pParam)
 			packPre1C = packCoordinate.getPreviousCoordinate(1);
 			if(packPre0C.y + 4 < packNowC.y){
 				int speed = speedOfPack.getMomentSpeed();
-				if(speed < 0.45){
+				if(speed < 0.40){
 					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//軌跡検出
 							forecastPoint = locus.getLocusCoordinate();
 							robotAction.sankakuHitBack(malletNowC, forecastPoint);
@@ -84,10 +84,16 @@ void strongModeOD(LPVOID pParam)
 		}
 			
 		//時間が来ている場合、打ちにいく。条件は必要ない
-		if(locus.calculateLocus(packNowC, packPre1C, 390) == true){	//軌跡検出
+		if(locus.calculateLocus(packNowC, packPre0C, packNowC.y-10) == true){	//軌跡検出
 			forecastPoint = locus.getLocusCoordinate();
-			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
+			if(370 < packNowC.y){
+				robotAction.alarmHitBackDefense(malletNowC, packNowC, forecastPoint);
+			}
+			else{
+				robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
+			}
 		}
+
 		if (cv::waitKey(1) >= 0) {
 			break;
 		}
@@ -155,7 +161,7 @@ void weakModeOD(LPVOID pParam)
 		}
 			
 		//時間が来ている場合、打ちにいく。条件は必要ない
-		if(locus.calculateLocus(packNowC, packPre1C, 400) == true){	//軌跡検出
+		if(locus.calculateLocus(packNowC, packPre0C, packNowC.y-10) == true){	//軌跡検出
 			forecastPoint = locus.getLocusCoordinate();
 			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
 		}

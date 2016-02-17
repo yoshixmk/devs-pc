@@ -11,12 +11,18 @@ namespace Color
 class TwoImageSynthesis
 {
 private:
+	IplImage* mImgRobotSide;
+	IplImage* mImgHumanSide;
 	Color::PerspectiveTransformation perspectiveTransformation;
+
+protected:
+	IplImage* mSynthesisImage;
 	cv::Mat mMatSynthesisImage;
 	cv::Mat mMatNonDistortionImage;
 
 public:
 	TwoImageSynthesis();
+	~TwoImageSynthesis();
 	IplImage* synthesize();
 	IplImage* synthesizeNonDistortion();
 
