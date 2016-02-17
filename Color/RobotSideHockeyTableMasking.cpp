@@ -10,7 +10,7 @@ RobotSideHockeyTableMasking::RobotSideHockeyTableMasking() :mTwoImageSynthesis()
 
 RobotSideHockeyTableMasking::~RobotSideHockeyTableMasking()
 {
-	cvReleaseImage(&mRobotSideHockeyTableImage);
+	//cvReleaseImage(&mRobotSideHockeyTableImage);
 }
 
 IplImage* RobotSideHockeyTableMasking::mask()

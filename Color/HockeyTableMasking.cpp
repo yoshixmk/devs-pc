@@ -10,7 +10,7 @@ HockeyTableMasking::HockeyTableMasking()
 
 HockeyTableMasking::~HockeyTableMasking()
 {
-	cvReleaseImage(&mHockeyTableImage);
+	//cvReleaseImage(&mHockeyTableImage);
 }
 
 IplImage* HockeyTableMasking::mask()
