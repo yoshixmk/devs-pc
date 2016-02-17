@@ -216,12 +216,6 @@ namespace Strategy {
 	{
 		//リミットスイッチに当たってしまわないように補正
 		CvPoint forecastPackCoordinate = aForecastPackCoordinate;
-		if(forecastPackCoordinate.x < 33){//45
-			forecastPackCoordinate.x = 33;
-		}
-		if(forecastPackCoordinate.x > 290){//280
-			forecastPackCoordinate.x = 290;
-		}
 		int moveDistance = forecastPackCoordinate.x - aMalletCoordinate.x;
 
 		mFrequencySwitching.sankakuProcess(moveDistance);
@@ -243,19 +237,9 @@ namespace Strategy {
 
 	void RobotActionWeak::sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
 	{
-		//リミットスイッチに当たってしまわないように補正
 		CvPoint packCoordinate = aPackCoordinate;
-		if(packCoordinate.x < 33){
-			packCoordinate.x = 33;
-		}
-		if(packCoordinate.x > 290){
-			packCoordinate.x = 290;
-		}
 		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
-		int moveDistanceY = aMalletCoordinate.y - packCoordinate.y;
-		if(moveDistanceY < 0){
-			moveDistanceY = 0;
-		}
+		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
 		mFrequencySwitching.sankakuUntilHit(moveDistanceX, moveDistanceY);
 	}
 
@@ -279,7 +263,7 @@ namespace Strategy {
 		if(FrameCoordinate::getCenterLine().y + 70 < aPackCoordinate.y){
 			if(aPackCoordinate.y < 370){
 				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
-					if(speed < 0.03){
+					if(speed < 0.08){
 						sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
 					}
 					else{
@@ -291,7 +275,7 @@ namespace Strategy {
 			}
 			else if(370 <= aPackCoordinate.y){
 				if(mAlarmTimer.getOperatingTime() > 1.5){ //一定時間以上、自フィールドにパックがあるとき
-					if(speed < 0.03){
+					if(speed < 0.08){
 						moveRightAngle(aMalletCoordinate, aPackCoordinate);
 					}
 					else{
@@ -344,16 +328,11 @@ namespace Strategy {
 
 	void RobotActionWeak::moveRightAngle(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
 	{
-		if(mFrequencyManualX.getFrequencyX() == 0 && mFrequencyManualY.getFrequencyY() == 0){
-			//リミットスイッチに当たってしまわないように補正
-			CvPoint packCoordinate = aPackCoordinate;
-			int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
-			int moveDistanceY = packCoordinate.y - aMalletCoordinate.y;
-			mFrequencySwitching.sankakuRightAngle(moveDistanceX, moveDistanceY);
-			mFrequencySwitching.sankakuReturnProcess();
-		}
-		else{
-			moveToCenter(aMalletCoordinate);
-		}
+		CvPoint packCoordinate = aPackCoordinate;
+		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
+		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
+
+		mFrequencySwitching.sankakuRightAngle(moveDistanceX, moveDistanceY);
+		mFrequencySwitching.sankakuReturnProcess();
 	}
 }  // namespace Strategy

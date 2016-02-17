@@ -43,6 +43,7 @@ public:
 	void sankakuUntilHit(int aMoveDistanceX, int aMoveDistanceY);
 	void sankakuReturnUntilHit();
 	void sankakuRightAngle(int aMoveDistanceX, int aMoveDistanceY);
+	void sankakuSlanting(int aMoveDistanceX, int aMoveDistanceY);
 	//void sankakuReturnRightAngle();
 };
 

@@ -1,8 +1,8 @@
-#include "DefenseStrategy.h"
+#include "PerfectDefenseStrategy.h"
 
 namespace Strategy {
 
-void strongModeD(LPVOID pParam)
+void strongModePD(LPVOID pParam)
 {
 	CvPoint malletNowC;
 	CvPoint packNowC;
@@ -22,7 +22,7 @@ void strongModeD(LPVOID pParam)
 		packNowC = packCoordinate.getCoordinate();
 		packPre0C = packCoordinate.getPreviousCoordinate();
 		packPre1C = packCoordinate.getPreviousCoordinate(1);
-		if( (packPre0C.y + 4 < packNowC.y) && packNowC.y < 400){
+		if( (packPre0C.y + 4 < packNowC.y) && (packNowC.y < 400 && packNowC.y > 200)){
 			if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//軌跡検出
 				forecastPoint = locus.getLocusCoordinate();
 				if(forecastPoint.x > FrameCoordinate::getRobotGoalLeft().x && FrameCoordinate::getRobotGoalRight().x > forecastPoint.x){
@@ -46,11 +46,6 @@ void strongModeD(LPVOID pParam)
 		else{
 			robotAction.moveToCenterDefense(malletNowC);	//中央に移動
 		}
-		//時間が来ている場合、打ちにいく。条件は必要ない
-		if(locus.calculateLocus(packNowC, packPre1C, 390) == true){	//軌跡検出
-			forecastPoint = locus.getLocusCoordinate();
-			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
-		}
 		if (cv::waitKey(1) >= 0) {
 			break;
 		}
@@ -58,7 +53,7 @@ void strongModeD(LPVOID pParam)
 }
 
 
-void weakModeD(LPVOID pParam)
+void weakModePD(LPVOID pParam)
 {
 	CvPoint malletNowC;
 	CvPoint packNowC;
@@ -102,26 +97,21 @@ void weakModeD(LPVOID pParam)
 		else{
 			robotAction.moveToCenterDefense(malletNowC);	//中央に移動
 		}
-		//時間が来ている場合、打ちにいく。条件は必要ない
-		if(locus.calculateLocus(packNowC, packPre1C, 390) == true){	//軌跡検出
-			forecastPoint = locus.getLocusCoordinate();
-			robotAction.alarmHitBack(malletNowC, packNowC, forecastPoint);
-		}
 		if (cv::waitKey(1) >= 0) {
 			break;
 		}
 	}
 }
 
-void DefenseStrategy::execute()
+void PerfectDefenseStrategy::execute()
 {
-	std::cout << "Defense Strategy!!" << std::endl;
+	std::cout << "Perfect Defense Strategy!!" << std::endl;
 
 	HANDLE	hThread[2];
 	hMutex = CreateMutex(NULL,FALSE,NULL);
 	Hardware::Serial::setMutex(&hMutex);
-	hThread[0] = (HANDLE)_beginthread(strongModeD, 0, NULL);	//スレッド１作成
-	hThread[1] = (HANDLE)_beginthread(weakModeD, 0, NULL);	//スレッド２作成
+	hThread[0] = (HANDLE)_beginthread(strongModePD, 0, NULL);	//スレッド１作成
+	hThread[1] = (HANDLE)_beginthread(weakModePD, 0, NULL);	//スレッド２作成
 	//スレッド１、２終了待ち
 	WaitForMultipleObjects(2, hThread, TRUE, INFINITE);
 

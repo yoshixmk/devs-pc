@@ -95,7 +95,7 @@ void ColorTest::colorExtractionTest()
 	cvCreateTrackbar("maxS", "ColorExtractionAll", &iSliderValuePack4, 255);
 	int iSliderValuePack5 = 0;
 	cvCreateTrackbar("minV", "ColorExtractionAll", &iSliderValuePack5, 255);
-	int iSliderValuePack6 = 130;
+	int iSliderValuePack6 = 255; //130
 	cvCreateTrackbar("maxV", "ColorExtractionAll", &iSliderValuePack6, 255);
 	//mallet threthold 0, 255, 100, 255, 140, 200
 	int iSliderValuemallet1 = 13;
@@ -150,10 +150,30 @@ void ColorTest::nonFlipTwoImageSynthesisTest()
 		if (cv::waitKey(1) >= 0) {
 			break;
 		}
-		//int param[]={CV_IMWRITE_JPEG_QUALITY,100};
-		//cvSaveImage("../output.jpg", nonFlipTwoImageSynthesis.synthesizeNonDistortion(), param);
+		int param[]={CV_IMWRITE_JPEG_QUALITY,100};
+		cvSaveImage("../output.jpg", nonFlipTwoImageSynthesis.synthesizeNonDistortion(), param);
 		
 	}
+}
+
+void ColorTest::cameraMovieSaveTest()
+{
+	std::cout << "NonFlip_TwoImageSynthesis_test" << std::endl;
+	Color::NonFlipTwoImageSynthesis nonFlipTwoImageSynthesis;
+	CvVideoWriter *vw;
+	vw = cvCreateVideoWriter ("../../cap.avi", CV_FOURCC('D', 'I', 'B', ' '), 60, cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()*2), 1);
+	IplImage* ipl;
+	while(1)
+	{
+		Hardware::Camera::renew();
+		ipl = nonFlipTwoImageSynthesis.synthesizeNonDistortion();
+		cvShowImage("SynthesisImage", ipl);
+		cvWriteFrame (vw, ipl);
+		if (cv::waitKey(1) >= 0) {
+			break;
+		}
+	}
+	cvReleaseVideoWriter(&vw);
 }
 
 } /* namespace Test */
