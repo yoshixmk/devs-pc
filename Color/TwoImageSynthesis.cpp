@@ -19,8 +19,8 @@ TwoImageSynthesis::~TwoImageSynthesis()
 
 IplImage* TwoImageSynthesis::synthesize()
 {
-	mImgRobotSide = Hardware::Camera::getRobotSideImage();
-	mImgHumanSide = Hardware::Camera::getHumanSideImage();
+	cvCopy(Hardware::Camera::getRobotSideImage(), mImgRobotSide);
+	cvCopy(Hardware::Camera::getHumanSideImage(), mImgHumanSide);
 	cv::Mat matFrameRobotSide;
 	cv::Mat matFrameHumanSide;
 	matFrameRobotSide = cv::cvarrToMat(mImgRobotSide);
@@ -28,7 +28,6 @@ IplImage* TwoImageSynthesis::synthesize()
 	cv::flip(matFrameRobotSide, matFrameRobotSide, 0); //水平軸で反転（垂直反転）
 	cv::flip(matFrameRobotSide, matFrameRobotSide, 1); //垂直軸で反転（水平反転）
 	vconcat(matFrameHumanSide, matFrameRobotSide, mMatSynthesisImage);
-	IplImage* mSynthesisImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()* 2), IPL_DEPTH_8U, 4);
 	*mSynthesisImage = mMatSynthesisImage;
 
 	return mSynthesisImage;
@@ -36,8 +35,8 @@ IplImage* TwoImageSynthesis::synthesize()
 
 IplImage* TwoImageSynthesis::synthesizeNonDistortion()
 {
-	mImgRobotSide = perspectiveTransformation.transformRobotSideImage();
-	mImgHumanSide = perspectiveTransformation.transformHumanSideImage();
+	cvCopy(perspectiveTransformation.transformRobotSideImage(), mImgRobotSide);
+	cvCopy(perspectiveTransformation.transformHumanSideImage(), mImgHumanSide);
 	cv::Mat matFrameRobotSide;
 	cv::Mat matFrameHumanSide;
 	matFrameRobotSide = cv::cvarrToMat(mImgRobotSide);
