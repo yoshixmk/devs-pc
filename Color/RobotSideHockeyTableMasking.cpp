@@ -8,10 +8,14 @@ RobotSideHockeyTableMasking::RobotSideHockeyTableMasking() :mTwoImageSynthesis()
 	mRobotSideHockeyTableImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight() * 2), IPL_DEPTH_8U, 4);
 }
 
+RobotSideHockeyTableMasking::~RobotSideHockeyTableMasking()
+{
+	cvReleaseImage(&mRobotSideHockeyTableImage);
+}
+
 IplImage* RobotSideHockeyTableMasking::mask()
 {
-	IplImage* src_img;
-	src_img = mTwoImageSynthesis.synthesizeNonDistortion();
+	IplImage* src_img = mTwoImageSynthesis.synthesizeNonDistortion();
 	int width = Hardware::Camera::getWidth();
 	int height = Hardware::Camera::getHeight();
 

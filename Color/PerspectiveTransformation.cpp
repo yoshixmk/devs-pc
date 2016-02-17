@@ -12,11 +12,9 @@ PerspectiveTransformation::PerspectiveTransformation() :mCamera()
 
 IplImage* PerspectiveTransformation::transformRobotSideImage()
 {
-	IplImage *src_img = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()), IPL_DEPTH_8U, 3);
+	IplImage *src_img = mCamera.getRobotSideImage();
     CvMat *map_matrix;
     CvPoint2D32f src_pnt[4], dst_pnt[4];
-
-    src_img = mCamera.getRobotSideImage();
 
 	src_pnt[0] = cvPoint2D32f (25, 12);
 	src_pnt[1] = cvPoint2D32f (4, 120);
@@ -38,11 +36,9 @@ IplImage* PerspectiveTransformation::transformRobotSideImage()
 
 IplImage* PerspectiveTransformation::transformHumanSideImage()
 {
-	IplImage *src_img = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()), IPL_DEPTH_8U, 3);
+	IplImage *src_img = mCamera.getHumanSideImage();
     CvMat *map_matrix;
     CvPoint2D32f src_pnt[4], dst_pnt[4];
-
-    src_img = mCamera.getHumanSideImage();
 
 	src_pnt[0] = cvPoint2D32f (23, 22);
 	src_pnt[1] = cvPoint2D32f (7, 120);
