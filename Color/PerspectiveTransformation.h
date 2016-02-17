@@ -17,6 +17,7 @@ private:
 
 public:
 	PerspectiveTransformation();
+	~PerspectiveTransformation();
 	IplImage* transformRobotSideImage();
 	IplImage* transformHumanSideImage();
 };

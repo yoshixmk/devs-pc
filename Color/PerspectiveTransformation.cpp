@@ -1,13 +1,18 @@
 #include "PerspectiveTransformation.h"
-#include "../Hardware/Camera.h"
 
 namespace Color
 {
 
-PerspectiveTransformation::PerspectiveTransformation() :mCamera()
+PerspectiveTransformation::PerspectiveTransformation()
 {
 	mRobotSideImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()), IPL_DEPTH_8U, 3);
 	mHumanSideImage = cvCreateImage(cvSize(Hardware::Camera::getWidth(), Hardware::Camera::getHeight()), IPL_DEPTH_8U, 3);
+}
+
+PerspectiveTransformation::~PerspectiveTransformation()
+{
+	cvReleaseImage(&mRobotSideImage);
+	cvReleaseImage(&mHumanSideImage);
 }
 
 IplImage* PerspectiveTransformation::transformRobotSideImage()

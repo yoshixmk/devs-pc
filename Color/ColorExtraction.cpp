@@ -150,6 +150,7 @@ void ColorExtraction::setHSV(int aHMin, int aHMax, int aSMin, int aSMax, int aVM
 IplImage* ColorExtraction::extractHockeyTable()
 {
 	IplImage* src_img = mHockeyTableMasking.mask();
+	//cvCopy(mHockeyTableMasking.mask(), src_img);
 	cvCvtColor(src_img, mSrc3Ch, CV_BGRA2BGR);
 	cvColorExtraction(mSrc3Ch, mColorExtractionImage, CV_BGR2HSV, mHMin, mHMax, mSMin, mSMax, mVMin, mVMax);
 	return mColorExtractionImage;
