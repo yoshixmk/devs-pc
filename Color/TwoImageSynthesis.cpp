@@ -14,7 +14,9 @@ TwoImageSynthesis::~TwoImageSynthesis()
 {
 	cvReleaseImage(&mImgRobotSide);
 	cvReleaseImage(&mImgHumanSide);
-	cvReleaseImage(&mSynthesisImage);
+
+	//開放すると一定時間後停止する
+	//cvReleaseImage(&mSynthesisImage);
 }
 
 IplImage* TwoImageSynthesis::synthesize()
