@@ -42,10 +42,15 @@ public:
 	void sankakuDefense(CvPoint aMalletCoordinate, CvPoint aForecastPackCoordinate);
 	void sankakuCenterBack();
 	void sankakuUntilHit(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
+	void sankakuUntilHitDefense(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
+
+
+	
 	void sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate,CvPoint forecastPoint);
 	void alarmHitBack(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint aForecastPackCoordinate);
 	void alarmHitBackDefense(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint aForecastPackCoordinate);
 	void moveRightAngle(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
+	void moveRightAngleDefense(CvPoint aMalletCoordinate, CvPoint aPackCoordinate);
 };
 }  // namespace Strategy
 #endif

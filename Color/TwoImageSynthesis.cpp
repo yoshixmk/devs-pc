@@ -12,9 +12,9 @@ TwoImageSynthesis::TwoImageSynthesis()
 
 TwoImageSynthesis::~TwoImageSynthesis()
 {
-	cvReleaseImage(&mImgRobotSide);
+	/*cvReleaseImage(&mImgRobotSide);
 	cvReleaseImage(&mImgHumanSide);
-	cvReleaseImage(&mSynthesisImage);
+	cvReleaseImage(&mSynthesisImage);*/
 }
 
 IplImage* TwoImageSynthesis::synthesize()

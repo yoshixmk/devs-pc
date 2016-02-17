@@ -247,6 +247,14 @@ namespace Strategy {
 		mFrequencySwitching.sankakuUntilHit(moveDistanceX, moveDistanceY);
 	}
 
+	void RobotAction::sankakuUntilHitDefense(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
+	{
+		CvPoint packCoordinate = aPackCoordinate;
+		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
+		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
+		mFrequencySwitching.sankakuUntilHitDefense(moveDistanceX, moveDistanceY);
+	}
+
 	void RobotAction::sideGuard(CvPoint aMalletCoordinate, CvPoint aPackCoordinate, CvPoint forecastPoint)
 	{
 		if(FrameCoordinate::getCenterLine().x+3 < aPackCoordinate.x){
@@ -281,9 +289,11 @@ namespace Strategy {
 				if(mAlarmTimer.getOperatingTime() > 2.0){ //一定時間以上、自フィールドにパックがあるとき
 					if(speed < 0.05){
 						moveRightAngle(aMalletCoordinate, aPackCoordinate);
+						std::cout << "a" << std::endl;
 					}
 					else{
 						moveRightAngle(aMalletCoordinate, aForecastPackCoordinate);
+						std::cout << "a2" << std::endl;
 					}
 					//sankakuCenterBack() は不要
 					mAlarmTimer.resetStartOperatingTime();
@@ -299,32 +309,35 @@ namespace Strategy {
 	{
 		double speed = mSpeedOfPack.getSpeed(); //0.1以下ならほとんど動いていない
 
-		if(FrameCoordinate::getCenterLine().y + 50 < aPackCoordinate.y){
-			if(aPackCoordinate.y < 400){
+		if(FrameCoordinate::getCenterLine().y + 100 < aPackCoordinate.y){
+			if(aPackCoordinate.y < 370){
 				if(mAlarmTimer.getOperatingTime() > 2.0){ //一定時間以上、自フィールドにパックがあるとき
-					if(speed < 0.01){
-						sankakuUntilHit(aMalletCoordinate, aPackCoordinate);
-						sankakuCenterBack();
-						mAlarmTimer.resetStartOperatingTime();
+					if(speed < 0.04){
+						sankakuUntilHitDefense(aMalletCoordinate, aPackCoordinate);
 					}
-					/*
 					else{
-						sankakuUntilHit(aMalletCoordinate, aForecastPackCoordinate);
+						sankakuUntilHitDefense(aMalletCoordinate, aForecastPackCoordinate);
 					}
-					*/
-					
+					mAlarmTimer.resetStartOperatingTime();
 				}
 			}
-			else if(400 <= aPackCoordinate.y){
+			else if(370 <= aPackCoordinate.y){
 				if(mAlarmTimer.getOperatingTime() > 2.0){ //一定時間以上、自フィールドにパックがあるとき
 					if(speed < 0.01){
-						moveRightAngle(aMalletCoordinate, aPackCoordinate);
+						//moveRightAngleDefense(aMalletCoordinate, aPackCoordinate);
+						CvPoint packCoordinate = aPackCoordinate;
+						int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
+						int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
+						mFrequencySwitching.sankakuRightAngleDefense(moveDistanceX, moveDistanceY);
 					}
-					/*
 					else{
-						moveRightAngle(aMalletCoordinate, aForecastPackCoordinate);
+						//moveRightAngleDefense(aMalletCoordinate, aForecastPackCoordinate);
+						CvPoint packCoordinate = aPackCoordinate;
+						int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
+						int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
+						mFrequencySwitching.sankakuRightAngleDefense(moveDistanceX, moveDistanceY);
 					}
-					*/
+					mAlarmTimer.resetStartOperatingTime();
 				}
 			}
 		}
@@ -340,6 +353,16 @@ namespace Strategy {
 		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
 
 		mFrequencySwitching.sankakuRightAngle(moveDistanceX, moveDistanceY);
+		mFrequencySwitching.sankakuReturnProcess();
+	}
+	
+	void RobotAction::moveRightAngleDefense(CvPoint aMalletCoordinate, CvPoint aPackCoordinate)
+	{
+		CvPoint packCoordinate = aPackCoordinate;
+		int moveDistanceX = packCoordinate.x - aMalletCoordinate.x;
+		int moveDistanceY = abs(packCoordinate.y - aMalletCoordinate.y);
+
+		mFrequencySwitching.sankakuRightAngleDefense(moveDistanceX, moveDistanceY);
 		mFrequencySwitching.sankakuReturnProcess();
 	}
 }  // namespace Strategy
