@@ -28,12 +28,13 @@ IplImage* RobotSideHockeyTableMasking::mask()
 	pts[0][2] = cvPoint(width, height*2);
 	pts[0][3] = cvPoint(0, height*2);
 
-	pts[1][0] = cvPoint(35, height);
+	//ƒ}ƒŒƒbƒg‚ÌŒ©‚¦‚é”ÍˆÍ‚Ì‚Ý
+	pts[1][0] = cvPoint(35, height+60);
 	pts[1][1] = cvPoint(33, 398);
 	pts[1][2] = cvPoint(83, 441);
 	pts[1][3] = cvPoint(233, 448);
 	pts[1][4] = cvPoint(290, 410);
-	pts[1][5] = cvPoint(297, height);
+	pts[1][5] = cvPoint(297, height+60);
 
 	cvCopy(src_img, mRobotSideHockeyTableImage);
     cvFillPoly(mRobotSideHockeyTableImage, pts, npts, 2, CV_RGB(0, 0, 0));

@@ -79,8 +79,8 @@ void Serial::serialWrite()
 			}
 		}
 	}
+	bool hasSuccessed = WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 	if(isDebug == true){
-		bool hasSuccessed = WriteFile(mComPort, mBuf, SEND_BYTE, &mNumberOfPut, NULL); // ポートへ送信
 		if(hasSuccessed){
 			std::cout << " Success!!";
 		}

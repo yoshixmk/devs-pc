@@ -2,16 +2,20 @@
 #include "Test/ColorTest.h"
 #include "Test/StrategyTest.h"
 #include "Test/UITest.h"
-#include "Strategy/RobotAction.h"
-#include "Strategy/RobotActionWeak.h"
-#include "Strategy/Locus.h"
+#include "UI/UI.h"
 //#include "Test/ShowWindowTest.h"
 #include <stdio.h>
 
 int main() {
 	Hardware::Camera::initialize();
 	Hardware::Serial::initialize();
-	Hardware::Serial::setPrintDebug(true);
+
+	//本番用
+	UI::UI ui;
+	ui.main();
+
+	//===========Test Code===========
+	//Hardware::Serial::setPrintDebug(true);
 
 	//Test::HardwareTest hardwareTest;
 	//hardwareTest.timerTest();
@@ -27,15 +31,16 @@ int main() {
 	//hardwareTest.cameraTest();
 	//hardwareTest.serialTest();
 
-	Test::ColorTest colorTest;
+	//Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
 	//colorTest.hockeyTableMaskingTest();
 	//colorTest.robotSideHockeyTableMaskingTest();
 	//colorTest.perspectiveTransformationTest();
 	//colorTest.nonFlipTwoImageSynthesisTest();
 	//colorTest.colorExtractionTest();
+	//colorTest.cameraMovieSaveTest();
 
-	Test::StrategyTest strategyTest;
+	//Test::StrategyTest strategyTest;
 	//strategyTest.packCoordinateTest();
 	//strategyTest.malletCoordinateTest();
 	//strategyTest.frameCoordinateTest();
@@ -55,13 +60,14 @@ int main() {
 	//strategyTest.robotActionMoveRightAngleTest();
 	//strategyTest.offenseDefenseStrategyTest();
 
-	Test::UITest uiTest;
-	uiTest.uiStrategyTest();
+	//Test::UITest uiTest;
+	//uiTest.uiStrategyTest();
 
 	//Test::ShowWindowTest showWindowTest;
 	//showWindowTest.windowTest();
 	//showWindowTest.drawingTest();
 	//showWindowTest.manageTest();
+	//===========Test Code END===========
 
 	Hardware::Serial::terminate();
 
