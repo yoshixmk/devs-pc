@@ -7,10 +7,10 @@ void UI::main() {
 	Strategy::DefenseStrategy defenseStrategy;
 	Strategy::OffenseStrategy offenseStrategy;
 	Strategy::PerfectDefenseStrategy perfectDefenseStrategy;
-	//int randamNumber = 0;
+	int randamNumber = 0;
 	while(1){
 		//0-9のランダムな数字を生成。
-		int randamNumber = rand() % 10;
+		//int randamNumber = rand() % 10;
 		//2(Offense):2(OffenseDefense):6(Defense)の割合
 		
 		if(randamNumber < 2){
@@ -22,6 +22,23 @@ void UI::main() {
 		else{
 			defenseStrategy.execute();
 		}
+		
+		/*if(randamNumber == 0){
+			defenseStrategy.execute();
+		}
+		else if(randamNumber == 1){
+			defenseStrategy.execute();
+		}
+		else if(randamNumber == 2){
+			defenseStrategy.execute();
+		}
+		else if(randamNumber == 3){
+			offenseDefenseStrategy.execute();
+		}
+		else if(randamNumber == 4){
+			randamNumber == 0;
+		}
+		randamNumber++;*/
 
 		//===========単体テスト===========
 		//offenseStrategy.execute();

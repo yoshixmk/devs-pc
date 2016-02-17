@@ -31,7 +31,7 @@ void strongModeO(LPVOID pParam)
 			if(packPre0C.y + 5 < packNowC.y){
 				int speed = speedOfPack.getMomentSpeed();
 				if(speed < 0.45){
-					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+					if(locus.calculateLocus(packNowC, packPre1C, 390) == true){	//‹OÕŒŸo
 						forecastPoint = locus.getLocusCoordinate();
 						robotAction.sankakuUntilHit(malletNowC, forecastPoint);
 						robotAction.sankakuCenterBack();
@@ -41,7 +41,7 @@ void strongModeO(LPVOID pParam)
 					}
 				}
 				else{
-					if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//‹OÕŒŸo
+					if(locus.calculateLocus(packNowC, packPre0C, 410) == true){	//‹OÕŒŸo
 						forecastPoint = locus.getLocusCoordinate();
 						robotAction.sankakuHitBack(malletNowC, forecastPoint);
 						hasSankakued = true;
@@ -111,7 +111,7 @@ void weakModeO(LPVOID pParam)
 				int speed = speedOfPack.getMomentSpeed();
 				//‹­‚Æ•ÏX‚µ‚½B
 				if(speed < 0.45){
-					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+					if(locus.calculateLocus(packNowC, packPre1C, 390) == true){	//‹OÕŒŸo
 						//‰º‚Æ‹t‚É‚µ‚Ä‚¢‚é
 						forecastPoint = locus.getLocusCoordinate();
 						robotAction.sankakuHitBack(malletNowC, forecastPoint);

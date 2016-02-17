@@ -31,8 +31,8 @@ void strongModeOD(LPVOID pParam)
 			packPre1C = packCoordinate.getPreviousCoordinate(1);
 			if(packPre0C.y + 4 < packNowC.y){
 				int speed = speedOfPack.getMomentSpeed();
-				if(speed < 0.40){
-					if(locus.calculateLocus(packNowC, packPre0C, 390) == true){	//‹OÕŒŸo
+				if(speed < 0.45){
+					if(locus.calculateLocus(packNowC, packPre1C, 390) == true){	//‹OÕŒŸo
 							forecastPoint = locus.getLocusCoordinate();
 							robotAction.sankakuHitBack(malletNowC, forecastPoint);
 							backTimer.setTimer(0.4);
@@ -43,7 +43,7 @@ void strongModeOD(LPVOID pParam)
 					}
 				}
 				else{
-					if(locus.calculateLocus(packNowC, packPre0C, 420) == true){	//‹OÕŒŸo
+					if(locus.calculateLocus(packNowC, packPre0C, 410) == true){	//‹OÕŒŸo
 						forecastPoint = locus.getLocusCoordinate();
 						if(forecastPoint.x > FrameCoordinate::getRobotGoalLeft().x && FrameCoordinate::getRobotGoalRight().x > forecastPoint.x){
 							robotAction.sankakuDefense(malletNowC, forecastPoint);
