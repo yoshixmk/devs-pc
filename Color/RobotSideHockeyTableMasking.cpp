@@ -35,8 +35,8 @@ IplImage* RobotSideHockeyTableMasking::mask()
 	//ƒ}ƒŒƒbƒg‚ÌŒ©‚¦‚é”ÍˆÍ‚Ì‚Ý
 	pts[1][0] = cvPoint(35, height+60);
 	pts[1][1] = cvPoint(33, 398);
-	pts[1][2] = cvPoint(83, 441);
-	pts[1][3] = cvPoint(233, 448);
+	pts[1][2] = cvPoint(83, 450);//441
+	pts[1][3] = cvPoint(233, 455);//448
 	pts[1][4] = cvPoint(290, 410);
 	pts[1][5] = cvPoint(297, height+60);
 

@@ -168,10 +168,10 @@ void ColorExtraction::setMalletHSV()
 	//黄色の場合
 	mHMin = 13;
 	mHMax = 44;
-	mSMin = 124;//92
-	mSMax = 255;
-	mVMin = 110;
-	mVMax = 174;
+	mSMin = 105;//124;
+	mSMax = 167;//255;
+	mVMin = 78;//110;
+	mVMax = 147;//174;
 
 //  青の場合
 	//mHMin = 106;
@@ -185,12 +185,12 @@ void ColorExtraction::setMalletHSV()
 void ColorExtraction::setPackHSV()
 {
 	//緑
-	mHMin = 81;//61
-	mHMax = 88;//72
-	mSMin = 99;//31
-	mSMax = 130;//88
-	mVMin = 0;//39
-	mVMax = 130;//255
+	mHMin = 44;//81;
+	mHMax = 84;//88;
+	mSMin = 78;//99;
+	mSMax = 131;//130;
+	mVMin = 9;//0;
+	mVMax = 119;//130;
 }
 
 IplImage* ColorExtraction::getSingleColorExtraction()

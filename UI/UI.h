@@ -7,6 +7,7 @@
 #include "../Strategy/DefenseStrategy.h"
 #include "../Strategy/PerfectDefenseStrategy.h"
 #include <iostream>
+#include "../CLEye/opencv.hpp"
 
 namespace UI {
 class UI {
