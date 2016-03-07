@@ -11,8 +11,8 @@ int main() {
 	Hardware::Serial::initialize();
 
 	//本番用
-	UI::UI ui;
-	ui.main();
+	//UI::UI ui;
+	//ui.main();
 
 	//===========Test Code===========
 	//Hardware::Serial::setPrintDebug(true);
@@ -31,13 +31,13 @@ int main() {
 	//hardwareTest.cameraTest();
 	//hardwareTest.serialTest();
 
-	//Test::ColorTest colorTest;
+	Test::ColorTest colorTest;
 	//colorTest.twoImageSynthesisTest();
 	//colorTest.hockeyTableMaskingTest();
 	//colorTest.robotSideHockeyTableMaskingTest();
 	//colorTest.perspectiveTransformationTest();
 	//colorTest.nonFlipTwoImageSynthesisTest();
-	//colorTest.colorExtractionTest();
+	colorTest.colorExtractionTest();
 	//colorTest.cameraMovieSaveTest();
 
 	//Test::StrategyTest strategyTest;

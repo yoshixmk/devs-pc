@@ -85,30 +85,30 @@ void ColorTest::colorExtractionTest()
 	colorExtractionMallet.setMalletHSV();
 	colorExtractionPack.setPackHSV();
 
-	int iSliderValuePack1 = 44;//81; 
+	int iSliderValuePack1 = 74;//81; 
 	cvCreateTrackbar("minH", "ColorExtractionAll", &iSliderValuePack1, 255);
-	int iSliderValuePack2 = 84;//88;
+	int iSliderValuePack2 = 91;//88;
 	cvCreateTrackbar("maxH", "ColorExtractionAll", &iSliderValuePack2, 255);
-	int iSliderValuePack3 = 78;//99;
+	int iSliderValuePack3 = 48;//99;
 	cvCreateTrackbar("minS", "ColorExtractionAll", &iSliderValuePack3, 255);
-	int iSliderValuePack4 = 131;//130;
+	int iSliderValuePack4 = 74;//130;
 	cvCreateTrackbar("maxS", "ColorExtractionAll", &iSliderValuePack4, 255);
-	int iSliderValuePack5 = 9;//0;
+	int iSliderValuePack5 = 0;//0;
 	cvCreateTrackbar("minV", "ColorExtractionAll", &iSliderValuePack5, 255);
-	int iSliderValuePack6 = 119;//255; //130
+	int iSliderValuePack6 = 255;//255; //130
 	cvCreateTrackbar("maxV", "ColorExtractionAll", &iSliderValuePack6, 255);
 	//mallet threthold 0, 255, 100, 255, 140, 200
 	int iSliderValuemallet1 = 13;
 	cvCreateTrackbar("minH", "ColorExtractionRS", &iSliderValuemallet1, 255);
 	int iSliderValuemallet2 = 44;
 	cvCreateTrackbar("maxH", "ColorExtractionRS", &iSliderValuemallet2, 255);
-	int iSliderValuemallet3 = 105;//124;
+	int iSliderValuemallet3 = 70;//124;
 	cvCreateTrackbar("minS", "ColorExtractionRS", &iSliderValuemallet3, 255);
-	int iSliderValuemallet4 = 167;//255;
+	int iSliderValuemallet4 = 122;//255;
 	cvCreateTrackbar("maxS", "ColorExtractionRS", &iSliderValuemallet4, 255);
-	int iSliderValuemallet5 = 78;//110;
+	int iSliderValuemallet5 = 0;//110;
 	cvCreateTrackbar("minV", "ColorExtractionRS", &iSliderValuemallet5, 255);
-	int iSliderValuemallet6 = 66;//174;
+	int iSliderValuemallet6 = 255;//174;
 	cvCreateTrackbar("maxV", "ColorExtractionRS", &iSliderValuemallet6, 255);
 
 	Color::HockeyTableMasking hockeyTableMasking;
