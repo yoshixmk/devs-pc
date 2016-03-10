@@ -37,7 +37,7 @@ IplImage* HockeyTableMasking::mask()
 	pts[1][2] = cvPoint(83, 450);
 	pts[1][3] = cvPoint(233, 455);
 	pts[1][4] = cvPoint(290, 410);
-	pts[1][5] = cvPoint(297, 73);
+	pts[1][5] = cvPoint(292, 73);
 	pts[1][6] = cvPoint(247, 25);
 	pts[1][7] = cvPoint(76, 28);
 
