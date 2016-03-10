@@ -24,6 +24,7 @@ private:
 public:
 	//Camera(int aWidth=320, int aHeight=240);
 	static void initialize(int aWidth=320, int aHeight=240);
+	static void finalize();
 	static void setSize(int aWidth=320, int aHeight=240);
 	static int getWidth();
 	static int getHeight();

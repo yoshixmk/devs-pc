@@ -585,58 +585,5 @@ void FrequencySwitching::sankakuRightAngleDefense(int aMoveDistanceX, int aMoveD
 	Hardware::Serial::changeBufRange(buf, 0, 2);
 	FrequencySwitching::output();
 }
-void FrequencySwitching::sankakuSlanting(int aMoveDistanceX, int aMoveDistanceY)
-{
-	int closest_frequency;
-	float ossum = 0;
-	float sum = 0.176;
-	float next_freq = 0;
-	int max_freq = 50;
-	int freq =0;
-	int nowFrequency = mInitFrequency;
-	int moveDistanceAbs = abs(aMoveDistanceX);
-	mMoveDistanceX = aMoveDistanceX;
-	mMoveDistanceY = aMoveDistanceY;
-
-	while(moveDistanceAbs >= next_freq * 2){
-		next_freq = next_freq + sum +0.20*freq;
-		freq++;
-		max_freq = max_freq + 100;
-	}
-	max_freq = max_freq - 100;																	
-
-	char buf[8];
-	buf[0] = nowFrequency / 20;
-	buf[1] = 400;
-	if(aMoveDistanceX > 0){
-		buf[2] = 'B';
-	}
-	else if(aMoveDistanceX <= 0){
-		buf[2] = 'A';
-	}
-
-	Hardware::Serial::changeBufRange(buf, 0, 2);
-
-	if(buf[2] == 'B' || buf[2] == 'A'){
-		while(max_freq > nowFrequency){
-			buf[0] = nowFrequency / 20;
-			Hardware::Serial::changeBufRange(buf, 0, 2);
-			nowFrequency = nowFrequency + 100;
-			FrequencySwitching::output();
-			Sleep(10);	//10ms
-		}
-		while(mInitFrequency <= nowFrequency){
-			buf[0] = nowFrequency / 20;
-			Hardware::Serial::changeBufRange(buf, 0, 2);
-			nowFrequency = nowFrequency - 100;
-			FrequencySwitching::output();
-			Sleep(10);	//10ms
-		}
-		buf[0] = 0;
-	}
-	buf[0] = 0;
-	Hardware::Serial::changeBufRange(buf, 0, 2);
-	FrequencySwitching::output();
-}
 
 }  // namespace Strategy

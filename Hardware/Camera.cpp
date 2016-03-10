@@ -87,6 +87,14 @@ void Camera::initialize(int aWidth, int aHeight)
 	}
 }
 
+void Camera::finalize()
+{
+	for(int i = 0; i < mNumCamera; i++)
+	{
+		cam[i]->finalCamera();
+	}
+}
+
 void Camera::setSize(int aWidth, int aHeight)
 {
 	cvSetCaptureProperty(mCvCapture0, CV_CAP_PROP_FRAME_WIDTH,aWidth);

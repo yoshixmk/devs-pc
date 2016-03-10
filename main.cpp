@@ -69,6 +69,7 @@ int main() {
 	//showWindowTest.manageTest();
 	//===========Test Code END===========
 
+	Hardware::Camera::finalize();
 	Hardware::Serial::terminate();
 
 	return 0;

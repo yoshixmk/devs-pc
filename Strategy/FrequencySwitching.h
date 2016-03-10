@@ -47,8 +47,6 @@ public:
 	void sankakuReturnUntilHit();
 	void sankakuRightAngle(int aMoveDistanceX, int aMoveDistanceY);
 	void sankakuRightAngleDefense(int aMoveDistanceX, int aMoveDistanceY);
-	void sankakuSlanting(int aMoveDistanceX, int aMoveDistanceY);
-	//void sankakuReturnRightAngle();
 };
 
 }  // namespace Strategy

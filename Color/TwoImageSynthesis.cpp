@@ -15,7 +15,7 @@ TwoImageSynthesis::~TwoImageSynthesis()
 	cvReleaseImage(&mImgRobotSide);
 	cvReleaseImage(&mImgHumanSide);
 
-	//開放すると一定時間後停止する
+	//開放すると一定時間後停止する。解放の必要はない
 	//cvReleaseImage(&mSynthesisImage);
 }
 
@@ -31,7 +31,7 @@ IplImage* TwoImageSynthesis::synthesize()
 	cv::flip(matFrameRobotSide, matFrameRobotSide, 1); //垂直軸で反転（水平反転）
 	vconcat(matFrameHumanSide, matFrameRobotSide, mMatSynthesisImage);
 	*mSynthesisImage = mMatSynthesisImage;
-
+	
 	return mSynthesisImage;
 }
 
